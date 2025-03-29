@@ -51,6 +51,19 @@ Uma venda consiste na compra de produtos e pagamento pelo cliente.
 
 ---
 
+# Requisitos Não Funcionais e Dependências
+
+## Requisitos Não Funcionais
+
+| Código  | Requisito       | Descrição                                                                                 | Prioridade   |
+|---------|----------------|-------------------------------------------------------------------------------------------|--------------|
+| RNF01   | Desempenho     | O sistema deve processar transações e atualizar o estoque em tempo real.                  | Essencial    |
+| RNF02   | Segurança      | O sistema deve ter autenticação de usuários e controle de permissões de acesso.           | Essencial    |
+| RNF03   | Usabilidade    | O sistema deve ser intuitivo e fácil de usar, com suporte a funcionalidades acessíveis.  | Importante   |
+| RNF04   | Confiabilidade | O sistema deve estar disponível durante o horário de funcionamento e possuir backups.     | Essencial    |
+
+---
+
 
 ### Modelo Conceitual
 
