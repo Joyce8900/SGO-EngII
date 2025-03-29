@@ -51,7 +51,7 @@ Uma venda consiste na compra de produtos e pagamento pelo cliente.
 
 ---
 
-# Requisitos Não Funcionais e Dependências
+# Requisitos Não Funcionais 
 
 ## Requisitos Não Funcionais
 
