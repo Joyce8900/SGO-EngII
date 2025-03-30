@@ -1,3 +1,25 @@
+## Descrição do Projeto
+
+O sistema de controle de estoque para ótica tem como objetivo otimizar a gestão do estoque, controlando bem a entrada e a saída de produtos como, por exemplo: armações, lentes e óculos de sol. Esse sistema permite o monitoramento em tempo real do estoque, facilitando muito a organização e também a reposição das mercadorias. Esse sistema também oferece funcionalidades para registrar vendas, acompanhar transações e gerar relatórios detalhados, garantindo uma gestão mais precisa.
+
+Benefícios do Sistema:
+-Controle de Estoque em Tempo Real: Monitoramento da disponibilidade dos produtos.
+
+
+-Gestão de Vendas Eficiente: Registro seguro das transações realizadas.
+
+
+-Relatórios Detalhados: Emissão de relatórios sobre estoque e vendas.
+
+
+-Segurança e Acesso Controlado: Definição de permissões conforme o papel do usuário.
+
+
+-Interface Simples: Facilidade de uso para todos os perfis de usuário.
+
+
+
+
 ### Modelo Conceitual
 
 Abaixo apresentamos o modelo conceitual usando o **Mermaid**.
