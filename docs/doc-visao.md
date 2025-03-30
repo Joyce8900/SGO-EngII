@@ -3,19 +3,33 @@
 O sistema de controle de estoque para ótica tem como objetivo otimizar a gestão do estoque, controlando bem a entrada e a saída de produtos como, por exemplo: armações, lentes e óculos de sol. Esse sistema permite o monitoramento em tempo real do estoque, facilitando muito a organização e também a reposição das mercadorias. Esse sistema também oferece funcionalidades para registrar vendas, acompanhar transações e gerar relatórios detalhados, garantindo uma gestão mais precisa.
 
 Benefícios do Sistema:
--Controle de Estoque em Tempo Real: Monitoramento da disponibilidade dos produtos.
 
 
--Gestão de Vendas Eficiente: Registro seguro das transações realizadas.
+ -Controle de Estoque em Tempo Real: Monitoramento da disponibilidade dos produtos.
 
 
--Relatórios Detalhados: Emissão de relatórios sobre estoque e vendas.
+ -Gestão de Vendas Eficiente: Registro seguro das transações realizadas.
 
 
--Segurança e Acesso Controlado: Definição de permissões conforme o papel do usuário.
+ -Relatórios Detalhados: Emissão de relatórios sobre estoque e vendas.
 
 
--Interface Simples: Facilidade de uso para todos os perfis de usuário.
+ -Segurança e Acesso Controlado: Definição de permissões conforme o papel do usuário.
+
+
+ -Interface Simples: Facilidade de uso para todos os perfis de usuário.
+
+
+## Equipe e Definição de Papéis
+
+Membro     |     Papel   |   E-mail   |
+---------  | ----------- | ---------- |
+Cayo | Analista  | cayo.lopes.129@ufrn.edu.br
+Gabriel Gomes | Analista | gabriel.gomes.710@ufrn.edu.br
+Gustavo | Primeiro Líder técnico | gustavo.cruz.133@ufrn.edu.br
+Joyce | Analista | maria@silva.com
+Taciano | Cliente/Professor | tacianosilva@gmail.com
+Arthur | Cliente | stegelemon.com.br@gmail.com
 
 
 
