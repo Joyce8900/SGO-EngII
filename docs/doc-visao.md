@@ -26,10 +26,28 @@ Membro     |     Papel   |   E-mail   |
 ---------  | ----------- | ---------- |
 Cayo | Analista  | cayo.lopes.129@ufrn.edu.br
 Gabriel Gomes | Analista | gabriel.gomes.710@ufrn.edu.br
-Gustavo | Primeiro Líder técnico | gustavo.cruz.133@ufrn.edu.br
-Joyce | Analista | maria@silva.com
+Gustavo | Primeiro Líder Técnico | gustavo.cruz.133@ufrn.edu.br
+Joyce | Analista | joyce.santos.709@ufrn.edu.br
 Taciano | Cliente/Professor | tacianosilva@gmail.com
 Arthur | Cliente | stegelemon.com.br@gmail.com
+
+## Perfis dos Usuários  
+O sistema poderá ser utilizado por dois usuários. Temos os seguintes perfis:
+
+**Perfil Funcionário**  
+O perfil funcionário irá utilizar o sistema para visualizar estoque, realizar vendas e realizar pagamentos.
+
+**Perfil Gerente**  
+Este usuário tem acesso a todas as funcionalidades do sistema, exemplos: cadastrar e editar informações de produtos, funcionários  e fornecedores, registrar entradas e saídas de produtos.
+
+
+## Matriz de Competências  
+| Nome         | Competências                                        |
+|--------------|----------------------------------------------------|
+| Cayo César  | Desenvolvedor Python, C, Dart e Web. Com habilidades na área de gestão de equipe e projetos |
+| Gabriel Gomes | Desenvolvedor Python, C, Dart e Web. Com habilidades na área de gestão de equipe e projetos |
+| Gustavo Douglas | Desenvolvedor Python, C, Dart e Web. Com habilidades na área de gestão de equipe e projetos |
+| Joyce Oliveira | Desenvolvedor Python, C, Dart e Web. Com habilidades na área de gestão de equipe e projetos |
 
 
 
