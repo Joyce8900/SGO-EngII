@@ -1,54 +1,61 @@
-## Descrição do Projeto
+# Sistema de Controle de Estoque para Ótica  
 
-O sistema de controle de estoque para ótica tem como objetivo otimizar a gestão do estoque, controlando bem a entrada e a saída de produtos como, por exemplo: armações, lentes e óculos de sol. Esse sistema permite o monitoramento em tempo real do estoque, facilitando muito a organização e também a reposição das mercadorias. Esse sistema também oferece funcionalidades para registrar vendas, acompanhar transações e gerar relatórios detalhados, garantindo uma gestão mais precisa.
+## Descrição do Projeto  
+O sistema de controle de estoque para ótica tem como objetivo otimizar a gestão do estoque, controlando a entrada e saída de produtos (armações, lentes, óculos de sol). Oferece:  
 
-Benefícios do Sistema:
+- **Controle em tempo real** do estoque  
+- **Registro de vendas** e transações  
+- **Relatórios detalhados**  
+- **Acesso seguro** por perfil de usuário  
+- **Interface intuitiva**  
 
+## Equipe  
 
- -Controle de Estoque em Tempo Real: Monitoramento da disponibilidade dos produtos.
+| Membro            | Papel                   | E-mail                          |
+|-------------------|-------------------------|---------------------------------|
+| Cayo César        | Analista                | cayo.lopes.129@ufrn.edu.br      |
+| Gabriel Gomes     | Analista                | gabriel.gomes.710@ufrn.edu.br   |
+| Gustavo Douglas   | Líder Técnico           | gustavo.cruz.133@ufrn.edu.br    |
+| Joyce Oliveira    | Analista                | joyce.santos.709@ufrn.edu.br    |
+| Taciano Silva     | Cliente/Professor       | tacianosilva@gmail.com          |
+| Arthur            | Cliente                 | stegelemon.com.br@gmail.com     |
 
+## Perfis de Usuários  
 
- -Gestão de Vendas Eficiente: Registro seguro das transações realizadas.
+### Funcionário  
+- Visualizar estoque  
+- Registrar vendas  
+- Emitir comprovantes  
 
+### Gerente  
+- Gerenciar produtos, funcionários e fornecedores  
+- Acessar relatórios  
+- Controlar permissões  
 
- -Relatórios Detalhados: Emissão de relatórios sobre estoque e vendas.
+## Requisitos Funcionais  
 
+### US01 - Manter Funcionário  
+| Código       | Descrição                          | Ator      |
+|--------------|------------------------------------|-----------|
+| RF01.01      | Cadastrar novo funcionário         | Gerente   |
+| RF01.02      | Listar funcionários com filtros    | Gerente   |
 
- -Segurança e Acesso Controlado: Definição de permissões conforme o papel do usuário.
+### US02 - Manter Fornecedor  
+| Código       | Descrição                          | Ator      |
+|--------------|------------------------------------|-----------|
+| RF02.01      | Cadastrar novo fornecedor          | Gerente   |
 
+### US03 - Manter Produto  
+| Código       | Descrição                          | Ator      |
+|--------------|------------------------------------|-----------|
+| RF03.01      | Cadastrar novo produto             | Gerente   |
 
- -Interface Simples: Facilidade de uso para todos os perfis de usuário.
+## Requisitos Não Funcionais  
 
-
-## Equipe e Definição de Papéis
-
-Membro     |     Papel   |   E-mail   |
----------  | ----------- | ---------- |
-Cayo | Analista  | cayo.lopes.129@ufrn.edu.br
-Gabriel Gomes | Analista | gabriel.gomes.710@ufrn.edu.br
-Gustavo | Primeiro Líder Técnico | gustavo.cruz.133@ufrn.edu.br
-Joyce | Analista | joyce.santos.709@ufrn.edu.br
-Taciano | Cliente/Professor | tacianosilva@gmail.com
-Arthur | Cliente | stegelemon.com.br@gmail.com
-
-## Perfis dos Usuários  
-O sistema poderá ser utilizado por dois usuários. Temos os seguintes perfis:
-
-**Perfil Funcionário**  
-O perfil funcionário irá utilizar o sistema para visualizar estoque, realizar vendas e realizar pagamentos.
-
-**Perfil Gerente**  
-Este usuário tem acesso a todas as funcionalidades do sistema, exemplos: cadastrar e editar informações de produtos, funcionários  e fornecedores, registrar entradas e saídas de produtos.
-
-
-## Matriz de Competências  
-| Nome         | Competências                                        |
-|--------------|----------------------------------------------------|
-| Cayo César  | Desenvolvedor Python, C, Dart e Web. Com habilidades na área de gestão de equipe e projetos |
-| Gabriel Gomes | Desenvolvedor Python, C, Dart e Web. Com habilidades na área de gestão de equipe e projetos |
-| Gustavo Douglas | Desenvolvedor Python, C, Dart e Web. Com habilidades na área de gestão de equipe e projetos |
-| Joyce Oliveira | Desenvolvedor Python, C, Dart e Web. Com habilidades na área de gestão de equipe e projetos |
-
+| Código  | Categoria      | Descrição                              | Prioridade |
+|---------|----------------|----------------------------------------|------------|
+| RNF01   | Desempenho     | Atualização de estoque em tempo real   | Alta       |
+| RNF02   | Segurança      | Autenticação de usuários               | Crítica    |
 
 
 
