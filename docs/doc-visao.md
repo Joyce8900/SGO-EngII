@@ -169,3 +169,64 @@ erDiagram
         int venda_id FK
     }
 ```
+# Principais Características do Modelo Conceitual
+
+## 1. Estrutura de Usuários
+- **Herança (Specialização/Generalização)**:
+  - `USUARIO` como entidade pai (superclasse)
+  - `GERENTE` e `FUNCIONARIO` como entidades filhas (subclasses)
+  - Implementado via chave estrangeira (`usuario_id`)
+
+## 2. Relacionamentos Hierárquicos
+- **Gerência**:
+  - `GERENTE` → `FUNCIONARIO` (1:N)
+- **Cadastro**:
+  - `GERENTE` → `FORNECEDOR` (1:N)
+
+## 3. Cadeia de Suprimentos
+- **Fornecimento**:
+  - `FORNECEDOR` → `PRODUTO` (1:N)
+- **Controle de Estoque**:
+  - `ESTOQUE` → `PRODUTO` (1:1)
+
+## 4. Processo de Vendas
+- **Operacional**:
+  - `FUNCIONARIO` → `VENDA` (1:N)
+- **Composição**:
+  - `VENDA` → `ITEM_VENDA` (1:N)
+  - `ITEM_VENDA` → `PRODUTO` (N:1)
+
+## 5. Transações Financeiras
+- **Pagamento**:
+  - `VENDA` → `PAGAMENTO` (1:1)
+
+## 6. Atributos e Identificadores
+| Entidade       | PK    | Atributos Relevantes               | FK              |
+|----------------|-------|------------------------------------|-----------------|
+| USUARIO        | id    | nome, login                        | -               |
+| GERENTE        | -     | -                                  | usuario_id      |
+| FUNCIONARIO    | -     | -                                  | usuario_id      |
+| FORNECEDOR     | id    | nome, contato                      | -               |
+| PRODUTO        | id    | nome, preço, quantidade            | fornecedor_id   |
+| ESTOQUE        | -     | quantidade_atual                   | produto_id      |
+| VENDA          | id    | data, total                        | funcionario_id  |
+| ITEM_VENDA     | -     | quantidade, subtotal               | venda_id, produto_id |
+| PAGAMENTO      | id    | valor, método, status              | venda_id        |
+
+## 7. Integridade e Normalização
+- **Chaves Primárias**: Todas as entidades possuem identificadores únicos
+- **Chaves Estrangeiras**: Todos os relacionamentos são devidamente implementados
+- **Cardinalidades**: Especificadas corretamente para cada relacionamento
+- **Ausência de Redundância**: Dados não duplicados entre entidades
+
+## 8. Tipos de Dados
+- **Numéricos**: `int` para IDs e quantidades, `decimal` para valores monetários
+- **Textuais**: `string` para nomes e descrições
+- **Temporais**: `date` para registro de datas
+
+## 9. Modelagem de Negócios
+- **Controle de Acesso**: Distinção clara entre gerentes e funcionários
+- **Gestão de Inventário**: Controle de estoque vinculado a produtos
+- **Processo Completo de Venda**: Desde o cadastro até o pagamento
+
+  
