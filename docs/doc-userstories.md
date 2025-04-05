@@ -10,25 +10,29 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | Data       | Versão  | Descrição                          | Autor                          |
 | :--------- | :-----: | :--------------------------------: | :----------------------------- |
 | 03/04/2025 | 0.0.1   | Template e descrição do documento  | Gustavo |
-| 03/04/2025 | 0.0.1   | Adicionando US.01 US.02 US.03 US.04 US.05 US.06 US.07 US.08                 | Gabriel |
+| 04/04/2025 | 0.0.2   | Adicionando US.01 US.02 US.03 US.04 US.05 US.06 US.07 US.08                 | Gabriel |
+| 05/04/2025 | 0.0.3   | Correções de inconsistências nas descrições, requisitos envolvidos e testes de aceitação | Gabriel |
 
 
 ### User Story US01 - Manter Funcionário
 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
-| **Descrição** | O sistema deve permitir ao gerente (adicionar, editar, visualizar e excluir) informações sobre os funcionários. Isso inclui detalhes como nome, cargo, contato, etc. |
+| **Descrição** | O sistema deve permetir ao gerente cadastrar, editar, visualizar, e excluir informações sobre os funcionários. Isso inclui detalhes como nome, cargo e contato |
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF01          | Manter Funcionário |
+| RF01.01          | Inserir Funcionário |
+| RF01.02          | Listar Funcionários |
+| RF01.03          | Atualizar Funcionário |
+| RF01.04          | Deletar Funcionário |
 
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
 | **Prioridade**            | Essencial                           | 
 | **Estimativa**            | 5 h                                 | 
-| **Tempo Gasto (real):**   |                                     | 
+| **Tempo Gasto (real):**   | -                                   | 
 | **Tamanho Funcional**     | 8 PF                                | 
 | **Analista**              | Pessoa 1                            | 
 | **Desenvolvedor**         | Pessoa 2                            | 
@@ -56,17 +60,20 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
-| **Descrição** | O sistema deve permitir ao gerente (adicionar, editar, visualizar e excluir) informações sobre os fornecedores. Isso inclui detalhes como nome, contato e produto fornecido. |
+| **Descrição** | O sistema deve permitir ao gerente adicionar, editar, visualizar e excluir informações sobre os fornecedores. Isso inclui detalhes como nome e contato |
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF02          | Manter Fornecedor |
+| RF02.01          | Inserir Fornecedor |
+| RF02.02          | Listar Fornecedores |
+| RF02.03          | Atualizar Fornecedor |
+| RF02.04          | Deletar Fornecedor |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
 | **Prioridade**            | Essencial                           | 
 | **Estimativa**            | 5 h                                 | 
-| **Tempo Gasto (real):**   |                                     | 
+| **Tempo Gasto (real):**   | -                                   | 
 | **Tamanho Funcional**     | 8 PF                                | 
 | **Analista**              | Pessoa 1                            | 
 | **Desenvolvedor**         | Pessoa 2                            | 
@@ -94,11 +101,14 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
-| **Descrição** | O sistema deve permitir ao gerente (adicionar, editar, visualizar e excluir) informações sobre os produtos. Isso inclui detalhes como nome, marca, quantidade e valor. |
+| **Descrição** | O sistema deve permitir ao gerente adicionar, editar, visualizar e excluir informações sobre os produtos. Isso inclui detalhes como nome e preço |
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF03          | Manter Produto |
+| RF03.01          | Inserir Produto |
+| RF03.02          | Listar Produtos |
+| RF03.03          | Atualizar Produto |
+| RF03.04          | Deletar Produto |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
@@ -129,28 +139,29 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 ### User Story US04 - Entrar Produto
 
-|               |                                                                |
-| ------------- | :------------------------------------------------------------- |
-| **Descrição** | O sistema deve permitir que o gerente registre a entrada de novos produtos no estoque do sistema, incluindo a data da entrada, a quantidade do produto e os detalhes do fornecedor. |
+|               |                                                                 |
+| ------------- | :-------------------------------------------------------------- |
+| **Descrição** | O sistema deve permitir ao gerente registrar a entrada de novos produtos no estoque do sistema, incluindo a data da entrada, a quantidade do produto e os detalhes do fornecedor. |
 
-| **Requisitos envolvidos** | RF04 |
-| ------------------------- | ---- |
-| **Prioridade**            | Essencial |
-| **Estimativa**            | 5 h |
-| **Tempo Gasto (real):**   |       |
-| **Tamanho Funcional**     | 8 PF |
+| **Requisitos envolvidos** |                                                    |
+| ------------------------- | -------------------------------------------------- |
+| Não especificado no doc de visão                   | ?                       |
 
-| Função        | Pessoa         |
-| ------------- | -------------- |
-| **Analista**  | Pessoa 1       |
-| **Desenvolvedor** | Pessoa 2   |
-| **Revisor**   | Pessoa 1       |
-| **Testador**  | Pessoa 3       |
 
-#### Testes de Aceitação (TA)
+|                           |                                     |
+| ------------------------- | ----------------------------------- |
+| **Prioridade**            | Essencial                           |
+| **Estimativa**            | 5 h                                 |
+| **Tempo Gasto (real):**   | -                                   |
+| **Tamanho Funcional**     | 8 PF                                |
+| **Analista**              | Pessoa 1                            |
+| **Desenvolvedor**         | Pessoa 2                            |
+| **Revisor**               | Pessoa 1                            |
+| **Testador**              | Pessoa 3                            |
 
-| Código   | Descrição |
-|----------|-----------|
+| Testes de Aceitação (TA)  |                                     |
+| ----------- | --------- |
+| **Código**      | **Descrição** |
 | **TA04.01** | **Registrar Entrada de Produto com sucesso:** O gerente acessa o sistema, seleciona um produto existente, insere a quantidade a ser adicionada ao estoque e confirma. O sistema exibe: "Entrada registrada com sucesso". |
 | **TA04.02** | **Registrar Entrada de Produto com erro:** O gerente tenta registrar a entrada de um produto inexistente ou insere uma quantidade inválida (por exemplo, valor negativo). O sistema exibe: "Erro ao registrar entrada". |
 | **TA04.03** | **Visualizar Histórico de Entradas:** O gerente acessa o histórico de entradas e o sistema exibe uma lista com detalhes como data, quantidade e produto correspondente. |
@@ -162,28 +173,28 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 ### User Story US05 - Visualizar Estoque
 
-|               |                                                                |
-| ------------- | :------------------------------------------------------------- |
+|               |                                                                 |
+| ------------- | :-------------------------------------------------------------- |
 | **Descrição** | O sistema deve permitir ao gerente ou ao funcionário da ótica visualizar o estoque atual no sistema. |
 
-| **Requisitos envolvidos** | RF05 |
-| ------------------------- | ---- |
-| **Prioridade**            | Essencial |
-| **Estimativa**            | 5 h |
-| **Tempo Gasto (real):**   |       |
-| **Tamanho Funcional**     | 8 PF |
+| **Requisitos envolvidos** |                                                    |
+| ------------------------- | -------------------------------------------------- |
+| Não especificado no doc de visão                      | ?                                 |
 
-| Função        | Pessoa         |
-| ------------- | -------------- |
-| **Analista**  | Pessoa 1       |
-| **Desenvolvedor** | Pessoa 2   |
-| **Revisor**   | Pessoa 3       |
-| **Testador**  | Pessoa 1       |
+|                           |                                     |
+| ------------------------- | ----------------------------------- |
+| **Prioridade**            | Essencial                           |
+| **Estimativa**            | 5 h                                 |
+| **Tempo Gasto (real):**   | -                                   |
+| **Tamanho Funcional**     | 8 PF                                |
+| **Analista**              | Pessoa 1                            |
+| **Desenvolvedor**         | Pessoa 2                            |
+| **Revisor**               | Pessoa 3                            |
+| **Testador**              | Pessoa 1                            |
 
-#### Testes de Aceitação (TA)
-
-| Código   | Descrição |
-|----------|-----------|
+| Testes de Aceitação (TA)  |                                     |
+| ----------- | --------- |
+| **Código**      | **Descrição** |
 | **TA05.01** | **Visualizar Estoque com sucesso:** O gerente ou funcionário acessa o sistema com suas credenciais, seleciona a opção "Visualizar Estoque" e o sistema apresenta as informações atuais dos produtos em estoque. |
 | **TA05.02** | **Filtrar Estoque com sucesso:** O gerente ou funcionário utiliza um filtro para buscar por categoria ou tipo de produto, e o sistema retorna apenas os itens correspondentes ao filtro aplicado. |
 | **TA05.03** | **Estoque vazio ou sem resultados:** O gerente ou funcionário realiza uma busca ou aplica um filtro que não retorna resultados. O sistema exibe a mensagem: "Nenhum produto encontrado". |
@@ -198,24 +209,24 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | ------------- | :-------------------------------------------------------------- |
 | **Descrição** | O sistema deve permitir ao gerente da ótica gerar um relatório detalhado do estoque mais atual no sistema. |
 
-| **Requisitos envolvidos** | RF07 |
-| ------------------------- | ---- |
-| **Prioridade**            | Desejável |
-| **Estimativa**            | 5 h |
-| **Tempo Gasto (real):**   |       |
-| **Tamanho Funcional**     | 8 PF |
+| **Requisitos envolvidos** |                                                    |
+| ------------------------- | -------------------------------------------------- |
+| Não especificado no doc de visão                      | ?                        |
 
-| Função        | Pessoa         |
-| ------------- | -------------- |
-| **Analista**  | Pessoa 1       |
-| **Desenvolvedor** | Pessoa 2   |
-| **Revisor**   | Pessoa 3       |
-| **Testador**  | Pessoa 3       |
+|                           |                                     |
+| ------------------------- | ----------------------------------- |
+| **Prioridade**            | Desejável                          |
+| **Estimativa**            | 5 h                                 |
+| **Tempo Gasto (real):**   | -                                   |
+| **Tamanho Funcional**     | 8 PF                                |
+| **Analista**              | Pessoa 1                            |
+| **Desenvolvedor**         | Pessoa 2                            |
+| **Revisor**               | Pessoa 3                            |
+| **Testador**              | Pessoa 3                            |
 
-#### Testes de Aceitação (TA)
-
-| Código   | Descrição |
-|----------|-----------|
+| Testes de Aceitação (TA)  |                                     |
+| ----------- | --------- |
+| **Código**      | **Descrição** |
 | **TA06.01** | **Gerar Relatório com sucesso:** O gerente acessa o sistema, seleciona a opção "Emitir Relatório de Estoque" e o sistema gera um relatório detalhado com todas as informações do estoque atual. |
 | **TA06.02** | **Filtrar Relatório com sucesso:** O gerente aplica filtros (como categoria, quantidade ou intervalo de datas) para o relatório, e o sistema retorna o relatório filtrado corretamente. |
 | **TA06.03** | **Relatório vazio:** O gerente tenta emitir um relatório com filtros que não correspondem a nenhum produto no estoque. O sistema exibe a mensagem: "Nenhum produto encontrado para os critérios especificados". |
@@ -228,32 +239,34 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 |               |                                                                 |
 | ------------- | :-------------------------------------------------------------- |
-| **Descrição** | O sistema deve permitir ao funcionário registrar a venda (saída) de produtos, o que deve atualizar automaticamente as informações do estoque. |
+| **Descrição** | O sistema deve permitir ao funcionário realizar a venda de produtos, com atualização automática do estoque, emissão de comprovante e acesso ao histórico de vendas. |
 
-| **Requisitos envolvidos** | RF06 |
-| ------------------------- | ---- |
-| **Prioridade**            | Essencial |
-| **Estimativa**            | 5 h |
-| **Tempo Gasto (real):**   |       |
-| **Tamanho Funcional**     | 8 PF |
+| **Requisitos envolvidos** |                                                    |
+| ------------------------- | -------------------------------------------------- |
+| RF04.01                      | Registrar Venda                                 |
+| RF04.02                      | Emitir Comprovante                              |
+| RF04.03                      | Consultar Histórico de Vendas                                 |
 
-| Função        | Pessoa         |
-| ------------- | -------------- |
-| **Analista**  | Pessoa 1       |
-| **Desenvolvedor** | Pessoa 2   |
-| **Revisor**   | Pessoa 3       |
-| **Testador**  | Pessoa 3       |
+|                           |                                     |
+| ------------------------- | ----------------------------------- |
+| **Prioridade**            | Essencial                           |
+| **Estimativa**            | 5 h                                 |
+| **Tempo Gasto (real):**   | -                                   |
+| **Tamanho Funcional**     | 8 PF                                |
+| **Analista**              | Pessoa 1                            |
+| **Desenvolvedor**         | Pessoa 2                            |
+| **Revisor**               | Pessoa 3                            |
+| **Testador**              | Pessoa 3                            |
 
-#### Testes de Aceitação (TA)
-
-| Código   | Descrição |
-|----------|-----------|
-| **TA07.01** | **Realizar Venda com sucesso:** O gerente acessa o sistema com suas credenciais, seleciona a opção "Realizar Venda", adiciona produtos ao carrinho, confirma os dados do cliente e clica em "Concluir Venda". O sistema exibe: "Venda realizada com sucesso". |
-| **TA07.02** | **Adicionar Produto ao Carrinho com erro:** O gerente tenta adicionar um produto que não está disponível em estoque. O sistema exibe a mensagem: "Erro: Produto indisponível no estoque". |
-| **TA07.03** | **Editar Carrinho de Compras:** Durante a venda, o gerente altera a quantidade de produtos ou remove itens do carrinho. O sistema atualiza os valores totais e exibe: "Carrinho atualizado com sucesso". |
-| **TA07.04** | **Finalizar Venda com erro:** O gerente tenta finalizar uma venda sem selecionar todos os dados obrigatórios (como cliente ou forma de pagamento). O sistema exibe: "Erro: Preencha todas as informações obrigatórias". |
-| **TA07.05** | **Cancelar Venda:** O gerente inicia uma venda, mas decide cancelar antes de finalizar. O sistema limpa o carrinho e retorna à tela inicial de vendas sem salvar os dados. |
-
+| Testes de Aceitação (TA)  |                                     |
+| ----------- | --------- |
+| **Código**      | **Descrição** |
+| **TA07.01** | **Realizar Venda com sucesso:** O funcionário acessa o sistema com suas credenciais, seleciona a opção "Realizar Venda", adiciona produtos ao carrinho, confirma os dados do cliente e clica em "Concluir Venda". O sistema exibe: "Venda realizada com sucesso" e gera automaticamente o comprovante de venda. |
+| **TA07.02** | **Adicionar Produto ao Carrinho com erro:** O funcionário tenta adicionar um produto que não está disponível em estoque. O sistema exibe a mensagem: "Erro: Produto indisponível no estoque". |
+| **TA07.03** | **Editar Carrinho de Compras:** Durante a venda, o funcionário altera a quantidade de produtos ou remove itens do carrinho. O sistema atualiza os valores totais e exibe: "Carrinho atualizado com sucesso". |
+| **TA07.04** | **Finalizar Venda com erro:** O funcionário tenta finalizar uma venda sem selecionar todos os dados obrigatórios (como cliente ou forma de pagamento). O sistema exibe: "Erro: Preencha todas as informações obrigatórias". |
+| **TA07.05** | **Cancelar Venda:** O funcionário inicia uma venda, mas decide cancelar antes de finalizar. O sistema limpa o carrinho e retorna à tela inicial de vendas sem salvar os dados. |
+| **TA07.06** | **Consultar Histórico de Vendas:** O funcionário acessa o histórico de vendas, filtra por data ou produto, e o sistema exibe corretamente os resultados. |
 
 
 ### User Story US08 - Realizar Pagamento
@@ -262,26 +275,25 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | ------------- | :-------------------------------------------------------------- |
 | **Descrição** | O sistema deve permitir ao gerente e ao funcionário realizar o pagamento usando as informações de pagamento fornecidas pelo cliente. |
 
-| **Requisitos envolvidos** | RF08 |
-| ------------------------- | ---- |
-| **Prioridade**            | Importante |
-| **Estimativa**            | 8 h |
-| **Tempo Gasto (real):**   |       |
-| **Tamanho Funcional**     | 7 PF |
+| **Requisitos envolvidos** |                                                    |
+| ------------------------- | -------------------------------------------------- |
+| Não especificado no doc de visão                      | ?                                 |
 
-| Função        | Pessoa         |
-| ------------- | -------------- |
-| **Analista**  | Pessoa 1       |
-| **Desenvolvedor** | Pessoa 2   |
-| **Revisor**   | Pessoa 2       |
-| **Testador**  | Pessoa 3       |
+|                           |                                     |
+| ------------------------- | ----------------------------------- |
+| **Prioridade**            | Importante                          |
+| **Estimativa**            | 8 h                                 |
+| **Tempo Gasto (real):**   | -                                   |
+| **Tamanho Funcional**     | 7 PF                                |
+| **Analista**              | Pessoa 1                            |
+| **Desenvolvedor**         | Pessoa 2                            |
+| **Revisor**               | Pessoa 2                            |
+| **Testador**              | Pessoa 3                            |
 
-#### Testes de Aceitação (TA)
-
-| Código   | Descrição |
-|----------|-----------|
-| **TA08.01** | **Realizar Pagamento com sucesso:** O gerente, ao finalizar a venda, seleciona a forma de pagamento (como cartão, dinheiro ou Pix), insere os dados necessários e clica em "Confirmar Pagamento". O sistema exibe: "Pagamento concluído com sucesso". |
-| **TA08.02** | **Realizar Pagamento com erro:** O gerente tenta processar o pagamento, mas insere informações inválidas (como número de cartão incorreto). O sistema exibe: "Erro: Dados de pagamento inválidos. Verifique as informações". |
-| **TA08.03** | **Gerar Comprovante de Pagamento:** Após o pagamento ser concluído, o sistema gera automaticamente um comprovante (em formato digital ou impresso) e exibe: "Comprovante gerado com sucesso". |
-| **TA08.04** | **Pagamento Parcial:** O cliente solicita um pagamento parcial da compra. O gerente insere o valor pago, e o sistema calcula o saldo restante. O sistema exibe: "Pagamento parcial registrado. Saldo restante: {valor}". |
-| **TA08.05** | **Cancelar Pagamento:** O gerente inicia o processo de pagamento, mas decide cancelar antes de finalizar. O sistema retorna à tela de vendas sem salvar as informações do pagamento. |
+| Testes de Aceitação (TA)  |                                     |
+| ----------- | --------- |
+| **Código**      | **Descrição** |
+| **TA08.01** | **Realizar Pagamento com sucesso:** O gerente ou  funcionário, ao finalizar a venda, seleciona a forma de pagamento (como cartão, dinheiro ou Pix), insere os dados necessários e clica em "Confirmar Pagamento". O sistema exibe: "Pagamento concluído com sucesso". e gera automaticamente o comprovante de pagamento |
+| **TA08.02** | **Realizar Pagamento com erro:** O gerente ou  funcionário tenta processar o pagamento, mas insere informações inválidas (como número de cartão incorreto). O sistema exibe: "Erro: Dados de pagamento inválidos. Verifique as informações". |
+| **TA08.03** | **Pagamento Parcial:** O cliente solicita um pagamento parcial da compra. O gerente ou funcionário insere o valor pago, e o sistema calcula o saldo restante. O sistema exibe: "Pagamento parcial registrado. Saldo restante: {valor}". |
+| **TA08.04** | **Cancelar Pagamento:** O gerente ou funcionário inicia o processo de pagamento, mas decide cancelar antes de finalizar. O sistema retorna à tela de vendas sem salvar as informações do pagamento. |
