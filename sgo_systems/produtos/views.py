@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
-from .models import Produtos
+from django.shortcuts import render
 from .forms import ProdutoForm
+from .models import Produtos
 
 def cadastrar_produtos(request):
     if request.method == "POST":
@@ -16,24 +16,6 @@ def cadastrar_produtos(request):
     return render(request, "cadastrar_produto.html", {"form": form})
 
 
-# def cadastrar_produtos(request):
-    if request.method == 'POST':
-        nome = request.POST.get('nome')
-        preco = request.POST.get('preco')
-        quantidade = request.POST.get('quantidade')
-        cor = request.POST.get('cor')
-        tamanho = request.POST.get('tamanho')
-        marca = request.POST.get('marca')
-        descricao = request.POST.get('descricao')
-        
-        produto = Produtos(
-            nome=nome,
-            preco=preco,
-            quantidade=quantidade,
-            cor=cor,
-            tamanho=tamanho,
-            marca=marca,
-            descricao=descricao
-        )
-        produto.save()
-    return render(request, 'cadastrar_produto.html')  
+def listar_produtos(request):
+    produtos = Produtos.objects.all()
+    return render(request, "listar_produtos.html", {"produtos": produtos})

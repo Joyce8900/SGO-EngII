@@ -11,7 +11,7 @@ class Produtos(models.Model):
   tamanho = models.CharField(max_length=100)
   marca = models.CharField(max_length=100)  
   descricao = models.CharField(max_length=1000)
-  marca = models.CharField(max_length=100)
+  
   
   def __str__(self):
     return self.nome
