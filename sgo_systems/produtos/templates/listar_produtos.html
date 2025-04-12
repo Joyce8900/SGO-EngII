@@ -31,7 +31,7 @@
         <td>{{ produto.nome }}</td>
         <td class="text-end">R$ {{ produto.preco|floatformat:2 }}</td>
         <td class="text-center">
-          <span class="badge bg-{% if produto.quantidade > 10 %}success{% elif produto.quantidade > 0 %}warning{% else %}danger{% endif %}">
+          <span class="badge bg-{% if produto.quantidade > 5 %}success{% elif produto.quantidade > 0 %}warning{% else %}danger{% endif %}">
             {{ produto.quantidade }}
           </span>
         </td>
@@ -49,7 +49,7 @@
         </td>
         <td class="text-center">
           <div class="btn-group btn-group-sm" role="group">
-            <a href="" class="btn btn-outline-primary">
+            <a href="{% url 'editar_produto' produto.pk %}" class="btn btn-outline-primary">
               <i class="bi bi-pencil-square"></i>
             </a>
             <a href=''class="btn btn-outline-danger">
