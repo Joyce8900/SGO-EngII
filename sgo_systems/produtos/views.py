@@ -32,3 +32,7 @@ def editar_produto(request, pk):
     return render(request, "editar_produto.html", {"form": form})
 
 
+def excluir_produto(request,pk):
+    produto = Produtos.objects.get(pk=pk)
+    produto.delete()
+    return redirect("listar_produtos")
