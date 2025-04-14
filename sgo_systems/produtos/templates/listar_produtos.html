@@ -20,6 +20,7 @@
         <th scope="col">Cor</th>
         <th scope="col">Tamanho</th>
         <th scope="col">Marca</th>
+        <th scope="col">Categoria</th>
         <th scope="col">Descrição</th>
         <th scope="col" class="text-center">Ações</th>
       </tr>
@@ -42,6 +43,9 @@
         </td>
         <td>{{ produto.tamanho }}</td>
         <td>{{ produto.marca }}</td>
+        <td>
+          {{produto.categoria}}
+        </td>
         <td>
           <span class="d-inline-block text-truncate" style="max-width: 200px;">
             {{ produto.descricao }}
