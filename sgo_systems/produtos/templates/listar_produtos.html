@@ -9,7 +9,11 @@
 
 <body>
   <div class="container mt-5">
-    <h2 class="mb-4">Listar Produtos</h2>
+    <div class="d-flex justify-content-between">
+      <h2 class="mb-4">Listar Produtos</h2>
+      <a href="{% url 'cadastrar_produto' %}" class="btn btn-primary mb-4">Cadastrar Produto</a> <a>
+    </div>
+    
    <div class="table-responsive">
   <table class="table table-striped table-hover table-bordered">
     <thead class="table-dark">
