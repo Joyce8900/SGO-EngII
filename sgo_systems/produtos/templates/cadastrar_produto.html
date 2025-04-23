@@ -13,20 +13,24 @@
     
     <form method="post" class="col-md-6">
       {% csrf_token %}
-      
+        
       <div class="mb-3">
         {{ form.nome.label_tag }}
         {{ form.nome }}
-        <div class="form-text">{{ form.nome.help_text }}</div>
+        
       </div>
       
       <div class="mb-3">
         {{ form.preco.label_tag }}
         {{ form.preco }}
+        {{form.preco.errors}}    
+
       </div>
       <div class="mb-3">
         {{ form.quantidade.label_tag }}
         {{ form.quantidade }}
+        {{form.quantidade.errors}}
+        
       </div>
       <div class="mb-3">
         {{ form.cor.label_tag }}
@@ -50,6 +54,7 @@
       <div>
       
       <button type="submit" class="btn btn-success">Salvar</button>
+      <a href="{% url 'listar_produtos' %}" class="btn btn-primary">Voltar</a>
       
     </form>
   </div>

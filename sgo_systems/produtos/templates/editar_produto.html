@@ -9,7 +9,7 @@
 
 <body>
   <div class="container mt-5">
-    <h2 class="mb-4">Cadastrar Produto</h2>
+    <h2 class="mb-4">Editar Produto</h2>
     
     <form method="post" class="col-md-6">
       {% csrf_token %}
@@ -23,10 +23,12 @@
       <div class="mb-3">
         {{ form.preco.label_tag }}
         {{ form.preco }}
+        {{form.preco.errors}}
       </div>
       <div class="mb-3">
         {{ form.quantidade.label_tag }}
         {{ form.quantidade }}
+        {{form.quantidade.errors}}
       </div>
       <div class="mb-3">
         {{ form.cor.label_tag }}
@@ -50,6 +52,7 @@
       </div>
       
       <button type="submit" class="btn btn-success">Salvar</button>
+      <a href="{% url 'listar_produtos' %}" class="btn btn-outline-secondary">Cancelar</a>
       
     </form>
   </div>

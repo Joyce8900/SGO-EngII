@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import ProdutoForm
 from .models import Produtos
+from django.contrib import messages
 
 def cadastrar_produtos(request):
     if request.method == "POST":
@@ -8,6 +9,7 @@ def cadastrar_produtos(request):
         if form.is_valid():
             form.save()
             form = ProdutoForm()
+            messages.success(request, "✔ Produto cadastrado com sucesso!")
             return redirect("listar_produtos")
     else:
         form = ProdutoForm()
