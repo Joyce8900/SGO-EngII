@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from .forms import ProdutoForm
+from django.db.models import Q
 from .models import Produtos
+from .forms import PesquisaProdutoForm
+from .models import Categorias
 
 def cadastrar_produtos(request):
     if request.method == "POST":
@@ -16,8 +19,22 @@ def cadastrar_produtos(request):
 
 
 def listar_produtos(request):
-    produtos = Produtos.objects.all()
-    return render(request, "listar_produtos.html", {"produtos": produtos})
+    form = PesquisaProdutoForm(request.GET or None)
+    produtos = Produtos.objects.all().order_by('nome')
+    categoria = request.GET.get('categoria')
+    termo = request.GET.get('termo')
+    if termo:
+        produtos = produtos.filter(
+        Q(nome__icontains=termo) |
+        Q(marca__icontains=termo) |
+        Q(preco__icontains=termo)
+        )
+    if categoria:
+        produtos = produtos.filter(categoria=categoria)
+    return render(request, "listar_produtos.html", {
+        "produtos": produtos,
+        "form": form,
+    })  
 
 def editar_produto(request, pk):
     produto = Produtos.objects.get(pk=pk)
