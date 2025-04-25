@@ -1,6 +1,7 @@
 from django.db import models 
 from django.core.validators import MinValueValidator
 from categorias.models import Categorias
+from modelo.models import Modelo
   
 class Produtos(models.Model):
   categoria = models.ForeignKey(Categorias, on_delete=models.PROTECT)
@@ -13,10 +14,9 @@ class Produtos(models.Model):
                                     help_text="Insira a quantidade.",
                                     validators=[MinValueValidator(1)])
   cor = models.CharField(max_length=30)
-  tamanho = models.FloatField(max_length=100, validators=[MinValueValidator(0.01)])
+  tamanho = models.FloatField(null=False, validators=[MinValueValidator(0.01)])
+  modelo = models.ForeignKey('modelo.Modelo', on_delete=models.PROTECT)
   marca = models.CharField(max_length=100)  
   descricao = models.CharField(max_length=1000)
-  
-  
   def __str__(self):
-    return f'{self.nome} , {self.categoria.nome()}'
+    return f'{self.nome} , {self.categoria.nome}'

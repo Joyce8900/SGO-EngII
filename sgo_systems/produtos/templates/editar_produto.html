@@ -50,6 +50,10 @@
         {{ form.descricao.label_tag }}
         {{ form.descricao }}
       </div>
+      <div class="mb-3">
+        {{ form.modelo.label_tag }}
+        {{ form.modelo }}
+      </div>
       
       <button type="submit" class="btn btn-success">Salvar</button>
       <a href="{% url 'listar_produtos' %}" class="btn btn-outline-secondary">Cancelar</a>
