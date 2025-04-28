@@ -17,7 +17,7 @@ class ProdutoForm(forms.ModelForm):
         return quantidade   
     class Meta:
         model = Produtos
-        fields = ['nome', 'preco', 'quantidade', 'cor', 'tamanho', 'marca', 'descricao', 'categoria' ]
+        fields = ['nome', 'preco', 'quantidade', 'cor', 'tamanho', 'marca', 'descricao', 'categoria', 'modelo' ]
         labels = {
             'nome': 'Nome do Produto',
             'descricao': 'Descrição',
