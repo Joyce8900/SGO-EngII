@@ -27,6 +27,7 @@
                   <th>Nome</th>
                   <th>Cargo</th>
                   <th>Telefone</th>
+                  <th>Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -35,6 +36,10 @@
                     <td>{{ funcionario.nome }}</td>
                     <td>{{ funcionario.cargo }}</td>
                     <td>{{ funcionario.telefone }}</td>
+                    <td>
+                        <a href="{% url 'editar_funcionario' funcionario.id %}" class="btn btn-sm btn-primary">Editar</a>
+                        <a href="{% url 'deletar_funcionario' funcionario.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja apagar este funcionário?')">Excluir</a>
+                      </td>
                   </tr>
                 {% empty %}
                   <tr>
