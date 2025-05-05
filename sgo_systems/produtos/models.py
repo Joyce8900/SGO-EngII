@@ -15,7 +15,7 @@ class Produtos(models.Model):
                                     validators=[MinValueValidator(1)])
   cor = models.CharField(max_length=30)
   tamanho = models.FloatField(null=False, validators=[MinValueValidator(0.01)])
-  modelo = models.ForeignKey('modelo.Modelo', on_delete=models.PROTECT)
+  modelo = models.ForeignKey(Modelo, on_delete=models.PROTECT)
   marca = models.CharField(max_length=100)  
   descricao = models.CharField(max_length=1000)
   def __str__(self):
