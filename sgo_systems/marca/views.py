@@ -11,8 +11,11 @@ def cadastrar_marca(request):
       form.save()
       marca = Marca()
       messages.success(request, "✔ Marca cadastrada com sucesso!")
-      
+      return redirect("listar_marcas")
   else:
-        form = MarcaForm()
-
+    form = MarcaForm()
   return render(request, "cadastrar_marca.html", {"form": form})
+
+def listar_marcas(request):
+  marcas = Marca.objects.all()
+  return render(request, "listar_marcas.html", {"marcas": marcas})
