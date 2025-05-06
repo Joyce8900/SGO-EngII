@@ -52,9 +52,9 @@
             <td>{{ marca.nome }}</td>
             <td class="text-center">
               <div class="btn-group btn-group-sm" role="group">
-                {% comment %} <a href="{% url 'editar_modelo' modelo.pk %}" class="btn btn-outline-primary" title="Editar">
+                <a href="{% url 'editar_marca' marca.pk %}" class="btn btn-outline-primary" title="Editar">
                   <i class="bi bi-pencil-square"></i>
-                </a> {% endcomment %}
+                </a> 
                 <a href="{% url 'deletar_marca' marca.pk %}" class="btn btn-outline-danger" title="Excluir">
                   <i class="bi bi-trash"></i>
                 </a>
