@@ -13,7 +13,7 @@ def cadastrar_modelo(request):
     if form.is_valid():
       form.save()
       messages.success(request, "✔ Modelo cadastrado com sucesso!")
-      return redirect(reverse('cadastrar_produto'))
+      return redirect("listar_modelos")
   else:
     form = ModeloForm()
   return render(request, "cadastrar_modelo.html", {"form": form})
