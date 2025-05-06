@@ -21,9 +21,9 @@
       </div>    
       <div class="mb-3">
         {{ form.marca.label_tag }}
-        {{ form.marca }}
+        {{ form.marca}}
+        <a class="btn btn-primary" href="{% url 'cadastrar_marca' %}">Deseja cadastrar uma nova marca?</a> 
       </div>
-      
       <button type="submit" class="btn btn-success">Salvar</button>
       
       
