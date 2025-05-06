@@ -51,14 +51,14 @@
           <tr>
             <td>{{ marca.nome }}</td>
             <td class="text-center">
-              {% comment %} <div class="btn-group btn-group-sm" role="group">
-                <a href="{% url 'editar_modelo' modelo.pk %}" class="btn btn-outline-primary" title="Editar">
+              <div class="btn-group btn-group-sm" role="group">
+                {% comment %} <a href="{% url 'editar_modelo' modelo.pk %}" class="btn btn-outline-primary" title="Editar">
                   <i class="bi bi-pencil-square"></i>
-                </a>
-                <a href="{% url 'deletar_modelo' modelo.pk %}" class="btn btn-outline-danger" title="Excluir">
+                </a> {% endcomment %}
+                <a href="{% url 'deletar_marca' marca.pk %}" class="btn btn-outline-danger" title="Excluir">
                   <i class="bi bi-trash"></i>
                 </a>
-              </div> {% endcomment %}
+              </div> 
             </td>
           </tr>
           {% empty %}

@@ -19,3 +19,8 @@ def cadastrar_marca(request):
 def listar_marcas(request):
   marcas = Marca.objects.all()
   return render(request, "listar_marcas.html", {"marcas": marcas})
+
+def deletar_marca(request, pk):
+  marca = Marca.objects.get(pk=pk)
+  marca.delete()
+  return redirect("listar_marcas")
