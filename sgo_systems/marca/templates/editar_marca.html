@@ -4,28 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <title>Cadastrar Modelo</title>
+  <title>Editar Modelo</title>
 </head>
 
 <body>
   <div class="container mt-5">
-    <h2 class="mb-4">Cadastrar Modelo</h2>
+    <h2 class="mb-4">Editar Modelo</h2>
     
     <form method="post" class="col-md-6">
       {% csrf_token %}
-        
+      
       <div class="mb-3">
-        {{form.nome.errors}}
         {{ form.nome.label_tag }}
         {{ form.nome }}
-      </div>    
-      <div class="mb-3">
-        {{ form.marca.label_tag }}
-        {{ form.marca}}
-        <a class="btn btn-primary" href="{% url 'cadastrar_marca' %}">Deseja cadastrar uma nova marca?</a> 
+        <div class="form-text">{{ form.nome.help_text }}</div>
       </div>
       <button type="submit" class="btn btn-success">Salvar</button>
-      
+      <a href="{% url 'listar_marca' %}" class="btn btn-outline-secondary">Cancelar</a>
       
     </form>
   </div>
