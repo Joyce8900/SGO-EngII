@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'modelo',
     'fornecedores',
     'marca',
-    
+    'funcionarios',
 ]
 
 MIDDLEWARE = [
