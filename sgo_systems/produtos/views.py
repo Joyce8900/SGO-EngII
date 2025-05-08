@@ -27,7 +27,7 @@ def listar_produtos(request):
     if termo:
         produtos = produtos.filter(
             Q(nome__icontains=termo) |
-            Q(marca__icontains=termo) |
+            Q(marca__nome__icontains=termo) |
             Q(preco__icontains=termo)
         )
 
