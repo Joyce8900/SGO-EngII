@@ -92,7 +92,7 @@ class ListarProdutoViewTests(TestCase):
 
     def test_listar_produtos_sem_produtos(self):
       print("test_listar_produtos_sem_produtos")
-    ## Teste para o GET da view listar_produtos sem produtos
+      ## Teste para o GET da view listar_produtos sem produtos
       Produtos.objects.all().delete()
       response = self.client.get(reverse('listar_produtos'))
       self.assertEqual(response.status_code, 200)
