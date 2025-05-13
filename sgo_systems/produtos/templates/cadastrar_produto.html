@@ -59,6 +59,14 @@
       </div>
       
       <button type="submit" class="btn btn-success">Salvar</button>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
       <a href="{% url 'listar_produtos' %}" class="btn btn-primary">Voltar</a>
       
     </form>
