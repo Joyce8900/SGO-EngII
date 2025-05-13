@@ -55,8 +55,52 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | **TA01.10** | **Cancelar Edição de Funcionário:** O gerente edita informações de um funcionário, mas decide cancelar antes de salvar. O sistema retorna à tela anterior sem aplicar as alterações e sem exibir mensagens de erro. |
 
 
+### User Story US02 - Manter Cliente
 
-### User Story US02 - Manter Fornecedor
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
+| **Descrição** | O sistema deve permitir ao gerente e aos funcionários cadastrar, editar, visualizar e excluir informações sobre os clientes. Isso inclui dados como nome, CPF, telefone de contato e endereço. |
+
+#### Requisitos envolvidos
+
+| Código        | Descrição              |
+| ------------- | ---------------------- |
+| RF02.01       | Inserir Cliente        |
+| RF02.02       | Listar Clientes        |
+| RF02.03       | Atualizar Cliente      |
+| RF02.04       | Deletar Cliente        |
+
+#### Detalhes
+
+| Campo                     | Valor                               |
+| ------------------------ | ----------------------------------- |
+| **Prioridade**           | Essencial                           |
+| **Estimativa**           | 5 h                                 |
+| **Tempo Gasto (real)**   | -                                   |
+| **Tamanho Funcional**    | 8 PF                                |
+| **Analista**             | Pessoa 1                            |
+| **Desenvolvedor**        | Pessoa 2                            |
+| **Revisor**              | Pessoa 3                            |
+| **Testador**             | Pessoa 4                            |
+
+#### Testes de Aceitação (TA)
+
+| Código     | Descrição |
+| ---------- | --------- |
+| **TA02.01** | **Cadastrar Cliente com sucesso:** O gerente ou funcionário acessa o sistema, seleciona "Cadastrar Cliente", preenche corretamente todos os campos obrigatórios (nome, CPF, telefone, endereço) e clica em "Salvar". O sistema exibe: "Cliente cadastrado com sucesso". |
+| **TA02.02** | **Cadastrar Cliente com erro:** O gerente ou funcionário tenta cadastrar um cliente, mas deixa campos obrigatórios em branco ou insere dados inválidos (ex: CPF mal formatado). O sistema exibe: "Erro: Verifique os campos obrigatórios e tente novamente". |
+| **TA02.03** | **Editar Cliente com sucesso:** O gerente ou funcionário acessa a lista de clientes, edita as informações de um cliente e clica em "Salvar". O sistema atualiza os dados e exibe: "Alterações salvas com sucesso". |
+| **TA02.04** | **Editar Cliente com erro:** O gerente ou funcionário tenta editar um cliente com dados inválidos (ex: número de telefone incorreto). O sistema exibe: "Erro: Dados inválidos. Verifique as informações e tente novamente". |
+| **TA02.05** | **Excluir Cliente com sucesso:** O gerente ou funcionário seleciona um cliente da lista e confirma a exclusão. O sistema remove o cliente e exibe: "Cliente excluído com sucesso". |
+| **TA02.06** | **Excluir Cliente com erro:** O gerente ou funcionário tenta excluir um cliente que está vinculado a outros registros (ex: vendas). O sistema exibe: "Erro: Não foi possível excluir o cliente. Verifique as dependências". |
+| **TA02.07** | **Pesquisar Cliente com sucesso:** O gerente ou funcionário utiliza o campo de busca para localizar um cliente pelo nome ou CPF. O sistema exibe os resultados com a mensagem: "Cliente(s) encontrado(s): {lista de clientes}". |
+| **TA02.08** | **Pesquisar Cliente sem resultados:** O gerente ou funcionário realiza uma busca por um cliente que não está cadastrado. O sistema exibe: "Nenhum cliente encontrado". |
+| **TA02.09** | **Cancelar Cadastro de Cliente:** O gerente ou funcionário inicia o cadastro, mas decide cancelar antes de salvar. O sistema retorna à tela anterior sem salvar dados e sem mensagens de erro. |
+| **TA02.10** | **Cancelar Edição de Cliente:** O gerente ou funcionário edita um cliente, mas decide cancelar antes de salvar. O sistema retorna à tela anterior sem aplicar as alterações e sem mensagens de erro. |
+
+
+
+### User Story US03 - Manter Fornecedor
 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
@@ -97,7 +141,7 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 
 
-### User Story US03 - Manter Produto
+### User Story US04 - Manter Produto
 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
@@ -137,7 +181,7 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 
 
-### User Story US04 - Entrar Produto
+### User Story US05 - Entrar Produto
 
 |               |                                                                 |
 | ------------- | :-------------------------------------------------------------- |
@@ -171,7 +215,7 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 
 
-### User Story US05 - Visualizar Estoque
+### User Story US06 - Visualizar Estoque
 
 |               |                                                                 |
 | ------------- | :-------------------------------------------------------------- |
@@ -203,7 +247,7 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 
 
-### User Story US06 - Emitir Relatório de Estoque
+### User Story US07 - Emitir Relatório de Estoque
 
 |               |                                                                 |
 | ------------- | :-------------------------------------------------------------- |
@@ -235,7 +279,7 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 
 
-### User Story US07 - Realizar Venda
+### User Story US08 - Realizar Venda
 
 |               |                                                                 |
 | ------------- | :-------------------------------------------------------------- |
@@ -269,7 +313,7 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | **TA07.06** | **Consultar Histórico de Vendas:** O funcionário acessa o histórico de vendas, filtra por data ou produto, e o sistema exibe corretamente os resultados. |
 
 
-### User Story US08 - Realizar Pagamento
+### User Story US09 - Realizar Pagamento
 
 |               |                                                                 |
 | ------------- | :-------------------------------------------------------------- |
