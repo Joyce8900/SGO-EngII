@@ -45,6 +45,13 @@
           </tr>
         </thead>
         <tbody>
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-success" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+           {% endif %}
           {% for produto in produtos %}
           <tr>
             <td>{{ produto.nome }}</td>
