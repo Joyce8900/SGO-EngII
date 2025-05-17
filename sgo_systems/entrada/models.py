@@ -1,12 +1,16 @@
 from django.db import models
+from fornecedores.models import Fornecedor
+from funcionarios.models import Funcionario
+from produtos.models import Produtos
 
 # Create your models here.
 class Entrada(models.Model):
   data_entrada = models.DateField()
   quantidade = models.PositiveIntegerField()
   valor = models.FloatField()
-  fornecedor = models.ForeignKey('fornecedores.Fornecedores', on_delete=models.CASCADE)
-  funcionario = models.ForeignKey('funcionarios.Funcionarios', on_delete=models.CASCADE)
+  produto = models.ForeignKey(Produtos, on_delete=models.CASCADE)
+  fornecedor = models.ForeignKey(Fornecedor, on_delete=models.CASCADE)
+  funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
 
   class Meta:
     verbose_name = 'Entrada'
