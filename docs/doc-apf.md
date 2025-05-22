@@ -96,6 +96,7 @@ erDiagram
         string status
         int venda_id FK
     }
+```
 
 # Contagem de Pontos de Função
 
