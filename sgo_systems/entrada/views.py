@@ -1,7 +1,10 @@
 from django.shortcuts import redirect, render
 from .forms import EntradaForm
+from .models import Entrada
 from produtos.models import Produtos
+from django.views.decorators.http import require_http_methods
 
+@require_http_methods(["POST"])
 def cadastrar_entrada(request):
     if request.method == 'POST':
         form = EntradaForm(request.POST)
@@ -15,8 +18,16 @@ def cadastrar_entrada(request):
             print("Depois:", produto.quantidade)
             return redirect('cadastrar_entrada')
         else:
-            print("Erros do formulário:", form.errors)  # 👈 Veja o que está errado
+            print("Erros do formulário:", form.errors) 
     else:
         form = EntradaForm()
 
-    return render(request, "cadastrar_entrada.html", {"form": form})
+    return render(request, 'cadastrar_entrada.html', {'form': form})
+
+@require_http_methods(["GET"])
+def listar_entrada(request):
+    entrada = Entrada.objects.all().order_by('data_entrada')
+    return render(request, "listar_entrada.html", {"entrada": entrada})
+    
+
+    
