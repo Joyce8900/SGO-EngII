@@ -4,7 +4,7 @@ from .models import Entrada
 from produtos.models import Produtos
 from django.views.decorators.http import require_http_methods
 
-@require_http_methods(["POST"])
+@require_http_methods(['GET',"POST"])
 def cadastrar_entrada(request):
     if request.method == 'POST':
         form = EntradaForm(request.POST)
@@ -29,5 +29,8 @@ def listar_entrada(request):
     entrada = Entrada.objects.all().order_by('data_entrada')
     return render(request, "listar_entrada.html", {"entrada": entrada})
     
-
-    
+@require_http_methods(["GET"])
+def excluir_entrada(request, pk):
+    entrada = Entrada.objects.get(pk=pk)
+    entrada.delete()
+    return redirect("listar_entrada")

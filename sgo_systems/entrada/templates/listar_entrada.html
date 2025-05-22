@@ -14,34 +14,15 @@
       <a href="{% url 'cadastrar_entrada' %}" class="btn btn-primary mb-4">Cadastrar Entrada</a>
     </div>
 
-    {% comment %} <div class="table-responsive mb-4">
-      <form method="GET" class="form-inline">
-        <div class="input-group mb-3">
-          {{ form.termo }}
-          {{ form.categoria }}
-          <div class="input-group-append">
-            <button type="submit" class="btn btn-primary">
-              <i class="fas fa-search"></i> Pesquisar
-            </button>
-          </div>
-        </div>
-      </form>
-    </div> {% endcomment %}
-
     <div class="table-responsive">
       <table class="table table-striped table-hover table-bordered">
         <thead class="table-dark">
           <tr>
-            <th>Quantidade</th>
-            <th> Valor
-            </th>
             <th>Produto</th>
-            <th> Fornecedor
-            </th>
-            <th>
-              Funcionário
-            </th>
-            {% comment %} <th scope="col" class="text-center">Ações</th> {% endcomment %}
+            <th>Quantidade</th>
+            <th>Valor</th>
+            <th>Fornecedor</th>
+            <th>Funcionário</th>
           </tr>
         </thead>
         <tbody>
@@ -51,36 +32,20 @@
                 {{ message }}
               </div>
             {% endfor %}
-           {% endif %}
-          {% for produto in produtos %}
+          {% endif %}
+
+          {% for ent in entrada %}
           <tr>
-            <td>{{ entrada.quantidade }}</td>
-            <td class="text-center">
-              <span class="badge bg-{% if entrada.quantidade > 5 %}success{% elif entrada.quantidade > 0 %}warning{% else %}danger{% endif %}">
-                {{ entrada.quantidade }}
-              </span>
-            </td>
-            <td class="text-end">R$ {{ entrada.valor|floatformat:2 }}</td>
+            <td>{{ ent.produto.nome }}</td>
+            <td class="text-end">{{ ent.quantidade }}</td>
+            <td class="text-end">R$ {{ ent.valor|floatformat:2 }}</td>
             
-            <td><span class="text-capitalize">{{ produto.cor }}</span></td>
-            <td>{{ entrada.produto.nome }}</td>
-            <td>{{ entrada.fornecedor.nome }}</td>
-            <td>{{ entrada.funcionario.nome }}</td>
-            
-            {% comment %} <td class="text-center">
-              <div class="btn-group btn-group-sm" role="group">
-                <a href="{% url 'editar_produto' produto.pk %}" class="btn btn-outline-primary">
-                  <i class="bi bi-pencil-square"></i>
-                </a>
-                <a href="{% url 'excluir_produto' produto.pk %}" class="btn btn-outline-danger">
-                  <i class="bi bi-trash"></i>
-                </a>
-              </div>
-            </td> {% endcomment %}
+            <td>{{ ent.fornecedor.nome }}</td>
+            <td>{{ ent.funcionario.nome }}</td>
           </tr>
           {% empty %}
           <tr>
-            <td colspan="9" class="text-center text-muted">Nenhum produto cadastrado</td>
+            <td colspan="6" class="text-center text-muted">Nenhuma entrada cadastrada</td>
           </tr>
           {% endfor %}
         </tbody>
