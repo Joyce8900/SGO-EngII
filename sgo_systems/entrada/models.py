@@ -5,7 +5,7 @@ from produtos.models import Produtos
 
 # Create your models here.
 class Entrada(models.Model):
-  data_entrada = models.DateField()
+  data_entrada = models.DateTimeField(auto_now_add=True)
   quantidade = models.PositiveIntegerField()
   valor = models.FloatField()
   produto = models.ForeignKey(Produtos, on_delete=models.CASCADE)
