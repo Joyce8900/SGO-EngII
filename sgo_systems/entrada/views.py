@@ -16,21 +16,35 @@ def cadastrar_entrada(request):
             produto.save()
             entrada.save()
             print("Depois:", produto.quantidade)
-            return redirect('cadastrar_entrada')
+            return redirect('listar_entrada')
         else:
             print("Erros do formulário:", form.errors) 
     else:
         form = EntradaForm()
+        return render(request, 'cadastrar_entrada.html', {'form': form})
 
-    return render(request, 'cadastrar_entrada.html', {'form': form})
+    return render(request, 'listar_entrada.html', {'form': form})
 
 @require_http_methods(["GET"])
 def listar_entrada(request):
     entrada = Entrada.objects.all().order_by('data_entrada')
     return render(request, "listar_entrada.html", {"entrada": entrada})
     
-@require_http_methods(["GET"])
+@require_http_methods(["GET", "POST"])
 def excluir_entrada(request, pk):
     entrada = Entrada.objects.get(pk=pk)
     entrada.delete()
     return redirect("listar_entrada")
+
+
+@require_http_methods(["GET", "POST"])
+def editar_entrada(request, pk):
+    entrada = Entrada.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = EntradaForm(request.POST, instance=entrada)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_entrada')
+    else:
+        form = EntradaForm(instance=entrada)
+    return render(request, 'editar_entrada.html', {'form': form})

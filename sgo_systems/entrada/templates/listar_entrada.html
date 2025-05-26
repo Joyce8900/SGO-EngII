@@ -1,9 +1,11 @@
+
 <!doctype html>
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <title>Listar Produtos</title>
 </head>
 
@@ -23,6 +25,7 @@
             <th>Valor</th>
             <th>Fornecedor</th>
             <th>Funcionário</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -39,10 +42,20 @@
             <td>{{ ent.produto.nome }}</td>
             <td class="text-end">{{ ent.quantidade }}</td>
             <td class="text-end">R$ {{ ent.valor|floatformat:2 }}</td>
-            
             <td>{{ ent.fornecedor.nome }}</td>
             <td>{{ ent.funcionario.nome }}</td>
-          </tr>
+            <td class="text-center"> 
+              <div class="btn-group btn-group-sm" role="group">
+                {% comment %} <a href="{% url 'editar_produto' produto.pk %}" class="btn btn-outline-primary">
+                  <i class="bi bi-pencil-square"></i>
+                </a> {% endcomment %}
+                <a href="{% url 'excluir_entrada' ent.pk %}" class="btn btn-outline-danger">
+                  <i class="bi bi-trash"></i>
+                </a>
+              </div>
+            </td>
+          </tr> 
+
           {% empty %}
           <tr>
             <td colspan="6" class="text-center text-muted">Nenhuma entrada cadastrada</td>
