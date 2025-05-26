@@ -46,9 +46,9 @@
             <td>{{ ent.funcionario.nome }}</td>
             <td class="text-center"> 
               <div class="btn-group btn-group-sm" role="group">
-                {% comment %} <a href="{% url 'editar_produto' produto.pk %}" class="btn btn-outline-primary">
+                 <a href="{% url 'editar_entrada' ent.pk %}" class="btn btn-outline-primary">
                   <i class="bi bi-pencil-square"></i>
-                </a> {% endcomment %}
+                  </a>
                 <a href="{% url 'excluir_entrada' ent.pk %}" class="btn btn-outline-danger">
                   <i class="bi bi-trash"></i>
                 </a>
