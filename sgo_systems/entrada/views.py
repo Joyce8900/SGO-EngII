@@ -3,6 +3,10 @@ from .forms import EntradaForm
 from .models import Entrada
 from produtos.models import Produtos
 from django.views.decorators.http import require_http_methods
+from django.db.models import Q
+from .models import Entrada
+from funcionarios.models import Funcionario
+from .forms import PesquisaEntradaForm
 
 @require_http_methods(['GET',"POST"])
 def cadastrar_entrada(request):
@@ -27,9 +31,26 @@ def cadastrar_entrada(request):
 
 @require_http_methods(["GET"])
 def listar_entrada(request):
-    entrada = Entrada.objects.all().order_by('data_entrada')
-    return render(request, "listar_entrada.html", {"entrada": entrada})
-    
+    form = PesquisaEntradaForm(request.GET)
+    entradas = Entrada.objects.all().order_by('data_entrada')
+
+    if form.is_valid():
+        termo = form.cleaned_data.get('termo')
+        funcionario = form.cleaned_data.get('funcionario')
+        if termo:
+            entradas = entradas.filter(
+                Q(produto__nome__icontains=termo) | 
+                Q(fornecedor__nome__icontains=termo) |
+                Q(funcionario__nome__icontains=termo) 
+            )
+        if funcionario:
+            entradas = entradas.filter(funcionario=funcionario)
+    return render(request, "listar_entrada.html", {
+        "entrada": entradas, 
+        "form": form,
+    })
+
+
 @require_http_methods(["GET", "POST"])
 def excluir_entrada(request, pk):
     entrada = Entrada.objects.get(pk=pk)
