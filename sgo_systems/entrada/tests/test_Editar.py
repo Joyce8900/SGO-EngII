@@ -74,3 +74,22 @@ class EditarEntradaViewTests(TestCase):
       response = self.client.get(reverse("editar_entrada",args=[self.entrada_para_editar.id]))
       self.assertEqual(response.status_code, 200)
       self.assertTemplateUsed(response, "editar_entrada.html")
+    
+
+    def test_editar_entrada_view_post_invalido(self):
+      print("test_editar_entrada_view_post_invalido")
+     # Dados inválidos: faltando campos obrigatórios
+      data = {
+           "produto": self.produto_para_editar.id,
+           
+           "funcionario": self.funcionario_edit.id,
+           "preco": -10,  
+           "quantidade": 0,  
+          }
+      response = self.client.post(reverse("editar_entrada", args=[self.entrada_para_editar.id]), data)
+      self.assertEqual(response.status_code, 200)
+      form = response.context["form"]
+      self.assertFalse(form.is_valid())
+      # self.assertIn("fornecedor", form.errors)
+      # self.assertIn("Este campo é obrigatório.", form.errors["nome"])
+      self.assertEqual(Entrada.objects.count(), 1)
