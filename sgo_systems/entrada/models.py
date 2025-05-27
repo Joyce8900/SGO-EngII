@@ -6,10 +6,10 @@ from produtos.models import Produtos
 # Create your models here.
 class Entrada(models.Model):
   data_entrada = models.DateTimeField(auto_now_add=True)
-  quantidade = models.PositiveIntegerField()
-  valor = models.FloatField()
+  quantidade = models.PositiveIntegerField(null=False, blank=False)
+  valor = models.FloatField(null=False, blank=False)
   produto = models.ForeignKey(Produtos, on_delete=models.CASCADE)
-  fornecedor = models.ForeignKey(Fornecedor, on_delete=models.CASCADE)
+  fornecedor = models.ForeignKey(Fornecedor, on_delete=models.CASCADE, blank=True, null=True)
   funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
 
   class Meta:

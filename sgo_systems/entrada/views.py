@@ -1,11 +1,9 @@
 from django.shortcuts import redirect, render
 from .forms import EntradaForm
 from .models import Entrada
-from produtos.models import Produtos
 from django.views.decorators.http import require_http_methods
 from django.db.models import Q
 from .models import Entrada
-from funcionarios.models import Funcionario
 from .forms import PesquisaEntradaForm
 
 @require_http_methods(['GET',"POST"])
@@ -23,11 +21,12 @@ def cadastrar_entrada(request):
             return redirect('listar_entrada')
         else:
             print("Erros do formulário:", form.errors) 
+            return render(request, 'cadastrar_entrada.html', {'form': form})
     else:
         form = EntradaForm()
         return render(request, 'cadastrar_entrada.html', {'form': form})
 
-    return render(request, 'listar_entrada.html', {'form': form})
+   
 
 @require_http_methods(["GET"])
 def listar_entrada(request):
