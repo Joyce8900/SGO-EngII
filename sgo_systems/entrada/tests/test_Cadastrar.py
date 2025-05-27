@@ -1,5 +1,3 @@
-# entrada/tests/test_Cadastrar.py
-
 from django.test import TestCase, Client
 from django.urls import reverse
 from produtos.models import Produtos
