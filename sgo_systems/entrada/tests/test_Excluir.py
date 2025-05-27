@@ -7,7 +7,7 @@ from marca.models import Marca
 from funcionarios.models import Funcionario
 from fornecedores.models import Fornecedor
 from entrada.models import Entrada
-
+from django.shortcuts import get_object_or_404
 class ExcluirEntradaViewTests(TestCase):
   def test_excluir_entrada(self):
     #Teste para excluir uma entrada existente
@@ -46,3 +46,10 @@ class ExcluirEntradaViewTests(TestCase):
     response = self.client.get(url)
     self.assertEqual(response.status_code, 302)
     self.assertFalse(Entrada.objects.filter(id=self.entrada.id).exists())
+  
+  def test_excluir_entrada_inexistente(self):
+    # Teste para excluir uma entrada inexistente
+    print("test_excluir_entrada_inexistente")
+    
+    response = self.client.post(reverse('excluir_entrada', args=[999]))
+    self.assertEqual(response.status_code, 404)
