@@ -5,6 +5,7 @@ from django.views.decorators.http import require_http_methods
 from django.db.models import Q
 from .models import Entrada
 from .forms import PesquisaEntradaForm
+from produtos.models import Produtos
 
 @require_http_methods(['GET',"POST"])
 def cadastrar_entrada(request):
@@ -63,7 +64,10 @@ def editar_entrada(request, pk):
     if request.method == 'POST':
         form = EntradaForm(request.POST, instance=entrada)
         if form.is_valid():
-            form.save()
+            produto = Produtos.objects.get(id=entrada.produto.id)
+            produto.quantidade = form.cleaned_data['quantidade']
+            produto.preco = form.cleaned_data['valor']
+            produto.save()
             return redirect('listar_entrada')
     else:
         form = EntradaForm(instance=entrada)
