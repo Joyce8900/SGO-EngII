@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Cliente
 from .forms import ClienteForm, ClienteFilterForm
 
+CLIENTE_LIST_REDIRECT = 'clientes:cliente_list'
+
 def cliente_list(request):
     form_filter = ClienteFilterForm(request.GET or None)
     clientes = Cliente.objects.all()
@@ -21,7 +23,7 @@ def cliente_create(request):
         form = ClienteForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('clientes:cliente_list')
+            return redirect(CLIENTE_LIST_REDIRECT)
     else:
         form = ClienteForm()
     
@@ -34,7 +36,7 @@ def cliente_update(request, pk):
         form = ClienteForm(request.POST, instance=cliente)
         if form.is_valid():
             form.save()
-            return redirect('clientes:cliente_list')
+            return redirect(CLIENTE_LIST_REDIRECT)
     else:
         form = ClienteForm(instance=cliente)
     
@@ -45,6 +47,6 @@ def cliente_delete(request, pk):
     
     if request.method == 'POST':
         cliente.delete()
-        return redirect('clientes:cliente_list')
+        return redirect(CLIENTE_LIST_REDIRECT)
     
     return render(request, 'cliente_delete.html', {'cliente': cliente})
