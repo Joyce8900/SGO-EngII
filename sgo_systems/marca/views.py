@@ -9,7 +9,6 @@ def cadastrar_marca(request):
     form = MarcaForm(request.POST)
     if form.is_valid():
       form.save()
-      marca = Marca()
       messages.success(request, "✔ Marca cadastrada com sucesso!")
       return redirect("listar_marcas")
   else:
