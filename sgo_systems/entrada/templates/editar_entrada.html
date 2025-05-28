@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Editar Entrada de Pedidos</title>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4">Entrada de Pedidos</h2>
+    
+    <form method="post" class="col-md-6">
+      {% csrf_token %}
+        
+      <div class="mb-3">
+        
+        
+      </div>
+      
+      <div class="mb-3">
+        {{ form.quantidade.label_tag }}
+        {{ form.quantidade }}
+        {{form.quantidade.errors}}
+      </div>
+      <div class="mb-3">
+        {{ form.valor.label_tag }}
+        {{ form.valor }}
+        {{form.valor.errors}}
+      </div>
+      <div class="mb-3">
+        {{form.produto.label_tag}}
+        {{form.produto}}
+      </div>
+      <div class="mb-3">
+        {{form.fornecedor.label_tag}}
+        {{form.fornecedor}}
+      </div>
+      <div class="mb-3">
+        {{form.funcionario.label_tag}}
+        {{form.funcionario}}
+      </div>
+      
+      
+      <button type="submit" class="btn btn-success">Salvar</button>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <a href="{% url 'listar_entrada' %}" class="btn btn-primary">Voltar</a>
+      
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
