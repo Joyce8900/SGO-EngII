@@ -38,7 +38,6 @@ def editar_modelo(request, pk):
 
 def deletar_modelo(request, pk):
     modelo = get_object_or_404(Modelo, pk=pk)
-    
     if modelo.produtos_set.exists():  
         messages.error(request, "Este modelo está vinculado a produtos e não pode ser excluído.")
         return redirect("listar_modelos")
