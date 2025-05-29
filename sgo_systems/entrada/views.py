@@ -8,7 +8,7 @@ from .forms import PesquisaEntradaForm
 from produtos.models import Produtos
 from django.shortcuts import get_object_or_404
 
-@require_http_methods(['GET',"POST"])
+
 def cadastrar_entrada(request):
     if request.method == 'POST':
         form = EntradaForm(request.POST)
@@ -30,7 +30,7 @@ def cadastrar_entrada(request):
 
    
 
-@require_http_methods(["GET"])
+
 def listar_entrada(request):
     form = PesquisaEntradaForm(request.GET)
     entradas = Entrada.objects.all().order_by('data_entrada')
@@ -52,14 +52,14 @@ def listar_entrada(request):
     })
 
 
-@require_http_methods(["GET", "POST"])
+
 def excluir_entrada(request, pk):
     entrada = get_object_or_404(Entrada, pk=pk)
     entrada.delete()
     return redirect("listar_entrada")
 
 
-@require_http_methods(["GET", "POST"])
+
 def editar_entrada(request, pk):
     entrada = Entrada.objects.get(pk=pk)
     if request.method == 'POST':
