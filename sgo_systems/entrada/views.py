@@ -26,26 +26,20 @@ class CadastrarEntradaView(View):
 
 
 class EditarEntradaView(View):
-    template_name = 'editar_entrada.html'
-
-    def get(self, request, pk):
-        entrada = get_object_or_404(Entrada, pk=pk)
-        form = EntradaForm(instance=entrada)
-        return render(request, self.template_name, {'form': form})
-
     def post(self, request, pk):
         entrada = get_object_or_404(Entrada, pk=pk)
-        quantidade_antiga = entrada.quantidade  
+        produto = entrada.produto
+        quantidade_antiga = entrada.quantidade
         form = EntradaForm(request.POST, instance=entrada)
         if form.is_valid():
             nova_entrada = form.save(commit=False)
-            diferenca = nova_entrada.quantidade + quantidade_antiga
-            produto = nova_entrada.produto
+            diferenca = nova_entrada.quantidade - quantidade_antiga
             produto.quantidade += diferenca
+            produto.preco = nova_entrada.valor
             produto.save()
             nova_entrada.save()
-            return redirect('listar_entrada')
-        return render(request, self.template_name, {'form': form})
+            return redirect("listar_entrada")
+        return render(request, "editar_entrada.html", {"form": form})
 
 
 class ExcluirEntradaView(View):
@@ -57,7 +51,6 @@ class ExcluirEntradaView(View):
         entrada.delete()
         return redirect("listar_entrada")
 
-    
 
 class ListarEntradaView(View):
     template_name = 'listar_entrada.html'

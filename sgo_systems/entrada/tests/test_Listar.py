@@ -7,7 +7,6 @@ from marca.models import Marca
 from funcionarios.models import Funcionario
 from fornecedores.models import Fornecedor
 from entrada.models import Entrada
-from django.shortcuts import get_object_or_404
 
 
 class ListarEntradaViewTests(TestCase):
