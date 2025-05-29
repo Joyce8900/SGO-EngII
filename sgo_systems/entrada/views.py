@@ -1,12 +1,8 @@
-from django.shortcuts import redirect, render
-from .forms import EntradaForm
+from django.shortcuts import redirect, render, get_object_or_404
+from .forms import EntradaForm, PesquisaEntradaForm
 from .models import Entrada
-from django.views.decorators.http import require_http_methods
-from django.db.models import Q
-from .models import Entrada
-from .forms import PesquisaEntradaForm
 from produtos.models import Produtos
-from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 
 def cadastrar_entrada(request):
@@ -27,8 +23,6 @@ def cadastrar_entrada(request):
     else:
         form = EntradaForm()
         return render(request, 'cadastrar_entrada.html', {'form': form})
-
-   
 
 
 def listar_entrada(request):
@@ -52,23 +46,26 @@ def listar_entrada(request):
     })
 
 
-
 def excluir_entrada(request, pk):
     entrada = get_object_or_404(Entrada, pk=pk)
+    produto = entrada.produto
+    produto.quantidade -= entrada.quantidade
+    produto.save()
     entrada.delete()
     return redirect("listar_entrada")
 
 
-
 def editar_entrada(request, pk):
-    entrada = Entrada.objects.get(pk=pk)
+    entrada = get_object_or_404(Entrada, pk=pk)
     if request.method == 'POST':
         form = EntradaForm(request.POST, instance=entrada)
         if form.is_valid():
-            produto = Produtos.objects.get(id=entrada.produto.id)
-            produto.quantidade = form.cleaned_data['quantidade']
-            produto.preco = form.cleaned_data['valor']
+            nova_entrada = form.save(commit=False)
+            diferenca = nova_entrada.quantidade - entrada.quantidade
+            produto = nova_entrada.produto
+            produto.quantidade += diferenca
             produto.save()
+            nova_entrada.save()
             return redirect('listar_entrada')
     else:
         form = EntradaForm(instance=entrada)
