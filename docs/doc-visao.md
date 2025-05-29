@@ -85,6 +85,19 @@ Uma venda consiste na compra de produtos e pagamento pelo cliente.
 
 ---
 
+## Entidade Cliente - US05 - Manter Cliente
+
+Um cliente possui nome, CPF e informações de contato.
+
+| Requisito                   | Descrição                                                                   | Ator    |
+| --------------------------- | --------------------------------------------------------------------------- | ------- |
+| RF03.01 - Inserir Cliente   | Insere novo cliente informando: nome, CPF e contato.                        | Funcionário |
+| RF03.02 - Listar Clientes   | Listagem de clientes utilizando filtros nos atributos: nome, CPF e contato. | Funcionário |
+| RF03.03 - Atualizar Cliente | Atualiza um cliente informando: nome, CPF e contato.                        | Funcionário |
+| RF03.04 - Deletar Cliente   | Deleta um cliente informando o identificador único (ex: CPF ou ID).         | Funcionário |
+
+---
+
 ## Requisitos Não Funcionais
 
 | Código  | Requisito       | Descrição                                                                                 | Prioridade   |

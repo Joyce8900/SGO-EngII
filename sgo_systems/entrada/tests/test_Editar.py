@@ -8,6 +8,7 @@ from funcionarios.models import Funcionario
 from fornecedores.models import Fornecedor
 from entrada.models import Entrada
 
+
 class EditarEntradaViewTests(TestCase):
     def setUp(self):
         self.client = Client()
@@ -18,7 +19,7 @@ class EditarEntradaViewTests(TestCase):
         self.produto_para_editar = Produtos.objects.create(
             nome="Produto Teste para Editar Entrada",
             preco=150.00,
-            quantidade=100, # Quantidade inicial do produto
+            quantidade=100,  # Quantidade inicial do produto
             cor="Preto",
             tamanho=8.0,
             modelo=self.modelo,
@@ -40,15 +41,14 @@ class EditarEntradaViewTests(TestCase):
 
         # Cria uma entrada inicial que será editada nos testes
         self.entrada_para_editar = Entrada.objects.create(
-            quantidade=20, 
-            valor=3000.00, 
+            quantidade=20,
+            valor=3000.00,
             produto=self.produto_para_editar,
             fornecedor=self.fornecedor_edit,
             funcionario=self.funcionario_edit
         )
-        
-        self.produto_para_editar.refresh_from_db()
 
+        self.produto_para_editar.refresh_from_db()
 
     def test_editar_entrada_view_post(self):
         print("test_editar_entrada_view_post")
@@ -59,7 +59,7 @@ class EditarEntradaViewTests(TestCase):
         self.entrada_para_editar.save()
 
         data_atualizada = {
-            "quantidade": 10,  
+            "quantidade": 10,
             "valor": 3000.00,
             "produto": self.produto_para_editar.id,
             "fornecedor": self.fornecedor_edit.id,
@@ -73,20 +73,20 @@ class EditarEntradaViewTests(TestCase):
         self.produto_para_editar.refresh_from_db()
         self.assertEqual(self.produto_para_editar.quantidade, 90)
 
-        
-
     def test_editar_entrada_view_post_invalido(self):
-      print("test_editar_entrada_view_post_invalido")
-     # Dados inválidos: faltando campos obrigatórios
-      data = {
-           "produto": self.produto_para_editar.id,
-           
-           "funcionario": self.funcionario_edit.id,
-           "preco": -10,  
-           "quantidade": 0,  
-          }
-      response = self.client.post(reverse("editar_entrada", args=[self.entrada_para_editar.id]), data)
-      self.assertEqual(response.status_code, 200)
-      form = response.context["form"]
-      self.assertFalse(form.is_valid())
-      self.assertEqual(Entrada.objects.count(), 1)
+        print("test_editar_entrada_view_post_invalido")
+        # Dados inválidos: faltando campos obrigatórios
+        data = {
+            "produto": self.produto_para_editar.id,
+            "funcionario": self.funcionario_edit.id,
+            "preco": -10,
+            "quantidade": 0,
+        }
+        response = self.client.post(
+            reverse("editar_entrada", args=[self.entrada_para_editar.id]),
+            data
+        )
+        self.assertEqual(response.status_code, 200)
+        form = response.context["form"]
+        self.assertFalse(form.is_valid())
+        self.assertEqual(Entrada.objects.count(), 1)

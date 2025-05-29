@@ -37,7 +37,6 @@ class EditarEntradaView(View):
             produto.quantidade += diferenca
             produto.preco = nova_entrada.valor
             produto.save()
-
             nova_entrada.save()
             return redirect("listar_entrada")
         return render(request, "editar_entrada.html", {"form": form})
@@ -52,7 +51,6 @@ class ExcluirEntradaView(View):
         entrada.delete()
         return redirect("listar_entrada")
 
-    
 
 class ListarEntradaView(View):
     template_name = 'listar_entrada.html'
