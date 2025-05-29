@@ -1,11 +1,9 @@
-from django.contrib import admin
-from django.urls import path, include
-from . import views
+from django.urls import path
+from .views import CadastrarEntradaView, EditarEntradaView, ExcluirEntradaView, ListarEntradaView
 
 urlpatterns = [
-  path('cadastrar_entrada/', views.cadastrar_entrada, name='cadastrar_entrada'), 
-  path('listar_entrada/', views.listar_entrada, name='listar_entrada'),
-  path('excluir_entrada/<int:pk>/', views.excluir_entrada, name='excluir_entrada'),
-  path('editar_entrada/<int:pk>/', views.editar_entrada, name='editar_entrada'),
-
+    path('cadastrar/', CadastrarEntradaView.as_view(), name='cadastrar_entrada'),
+    path('editar/<int:pk>/', EditarEntradaView.as_view(), name='editar_entrada'),
+    path('excluir/<int:pk>/', ExcluirEntradaView.as_view(), name='excluir_entrada'),
+    path('listar/', ListarEntradaView.as_view(), name='listar_entrada'),
 ]
