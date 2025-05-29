@@ -9,12 +9,9 @@ def cadastrar_produtos(request):
         form = ProdutoForm(request.POST)
         if form.is_valid():
             form.save()
-            form = ProdutoForm()
             messages.success(request, "✔ Produto cadastrado com sucesso!")
             return redirect("listar_produtos")
-    else:
-        form = ProdutoForm()
-
+    form = ProdutoForm()
     return render(request, "cadastrar_produto.html", {"form": form})
 
 
