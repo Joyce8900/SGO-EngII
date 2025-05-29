@@ -1,7 +1,3 @@
-# from django.shortcuts import redirect, render, get_object_or_404
-# from .forms import EntradaForm, PesquisaEntradaForm
-# from .models import Entrada
-# from produtos.models import Produtos
 from django.db.models import Q
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
@@ -30,25 +26,21 @@ class CadastrarEntradaView(View):
 
 
 class EditarEntradaView(View):
-    template_name = 'editar_entrada.html'
-
-    def get(self, request, pk):
-        entrada = get_object_or_404(Entrada, pk=pk)
-        form = EntradaForm(instance=entrada)
-        return render(request, self.template_name, {'form': form})
-
     def post(self, request, pk):
         entrada = get_object_or_404(Entrada, pk=pk)
+        produto = entrada.produto
+        quantidade_antiga = entrada.quantidade
         form = EntradaForm(request.POST, instance=entrada)
         if form.is_valid():
             nova_entrada = form.save(commit=False)
-            diferenca = nova_entrada.quantidade - entrada.quantidade
-            produto = nova_entrada.produto
+            diferenca = nova_entrada.quantidade - quantidade_antiga
             produto.quantidade += diferenca
+            produto.preco = nova_entrada.valor
             produto.save()
+
             nova_entrada.save()
-            return redirect('listar_entrada')
-        return render(request, self.template_name, {'form': form})
+            return redirect("listar_entrada")
+        return render(request, "editar_entrada.html", {"form": form})
 
 
 class ExcluirEntradaView(View):

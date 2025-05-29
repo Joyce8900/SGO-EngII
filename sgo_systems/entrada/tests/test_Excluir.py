@@ -19,13 +19,14 @@ class ExcluirEntradaViewTests(TestCase):
     self.produto = Produtos.objects.create(
         nome='Produto Teste',
         preco=10.0,
-        quantidade=5,  
+        quantidade=15,  
         categoria=self.categoria,
         marca=self.marca,
         descricao='Descrição Teste',
         tamanho=0.5,
         modelo=self.modelo,
     )
+
     self.fornecedor = Fornecedor.objects.create(
         nome="Fornecedor Teste",
         contato="Contato Teste",
@@ -44,7 +45,7 @@ class ExcluirEntradaViewTests(TestCase):
         valor=10.0
     )
     url = reverse('excluir_entrada', args=[self.entrada.id])
-    response = self.client.get(url)
+    response = self.client.post(url)
     self.assertEqual(response.status_code, 302)
     self.assertFalse(Entrada.objects.filter(id=self.entrada.id).exists())
   

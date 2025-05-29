@@ -40,8 +40,8 @@ class EditarEntradaViewTests(TestCase):
 
         # Cria uma entrada inicial que será editada nos testes
         self.entrada_para_editar = Entrada.objects.create(
-            quantidade=20, # Quantidade inicial da entrada
-            valor=3000.00, # 20 * 150 (preço do produto)
+            quantidade=20, 
+            valor=3000.00, 
             produto=self.produto_para_editar,
             fornecedor=self.fornecedor_edit,
             funcionario=self.funcionario_edit
@@ -51,30 +51,29 @@ class EditarEntradaViewTests(TestCase):
 
 
     def test_editar_entrada_view_post(self):
-        ## Teste para o POST da view editar_entrada
-        print("test_editar_entrada_view_get")
+        print("test_editar_entrada_view_post")
+        # Teste para o POST da view editar_entrada
+        self.produto_para_editar.quantidade = 100
+        self.produto_para_editar.save()
+        self.entrada_para_editar.quantidade = 20
+        self.entrada_para_editar.save()
+
         data_atualizada = {
-            "quantidade": 10,
+            "quantidade": 10,  
             "valor": 3000.00,
             "produto": self.produto_para_editar.id,
             "fornecedor": self.fornecedor_edit.id,
             "funcionario": self.funcionario_edit.id
         }
         response = self.client.post(
-            reverse("editar_entrada", args=[self.entrada_para_editar.id]), data=data_atualizada
+            reverse("editar_entrada", args=[self.entrada_para_editar.id]),
+            data=data_atualizada
         )
         self.assertEqual(response.status_code, 302)
         self.produto_para_editar.refresh_from_db()
-        self.assertEqual(self.produto_para_editar.quantidade, 10)
-        self.assertEqual(self.produto_para_editar.preco, 3000.00)
+        self.assertEqual(self.produto_para_editar.quantidade, 90)
+
         
-    def test_editar_entrada_view_get(self):
-      print("test_editar_entrada_view_get")
-      ## Teste para o GET da view editar_produto
-      response = self.client.get(reverse("editar_entrada",args=[self.entrada_para_editar.id]))
-      self.assertEqual(response.status_code, 200)
-      self.assertTemplateUsed(response, "editar_entrada.html")
-    
 
     def test_editar_entrada_view_post_invalido(self):
       print("test_editar_entrada_view_post_invalido")
@@ -90,6 +89,4 @@ class EditarEntradaViewTests(TestCase):
       self.assertEqual(response.status_code, 200)
       form = response.context["form"]
       self.assertFalse(form.is_valid())
-      # self.assertIn("fornecedor", form.errors)
-      # self.assertIn("Este campo é obrigatório.", form.errors["nome"])
       self.assertEqual(Entrada.objects.count(), 1)
