@@ -1,7 +1,3 @@
-# from django.shortcuts import redirect, render, get_object_or_404
-# from .forms import EntradaForm, PesquisaEntradaForm
-# from .models import Entrada
-# from produtos.models import Produtos
 from django.db.models import Q
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
@@ -39,10 +35,11 @@ class EditarEntradaView(View):
 
     def post(self, request, pk):
         entrada = get_object_or_404(Entrada, pk=pk)
+        quantidade_antiga = entrada.quantidade  
         form = EntradaForm(request.POST, instance=entrada)
         if form.is_valid():
             nova_entrada = form.save(commit=False)
-            diferenca = nova_entrada.quantidade - entrada.quantidade
+            diferenca = nova_entrada.quantidade + quantidade_antiga
             produto = nova_entrada.produto
             produto.quantidade += diferenca
             produto.save()
