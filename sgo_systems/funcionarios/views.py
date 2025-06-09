@@ -1,5 +1,9 @@
+from pyexpat.errors import messages
 from django.shortcuts import render, redirect
 from .models import Funcionario
+from django.shortcuts import get_object_or_404
+
+
 
 def cadastrar_funcionario(request):
     if request.method == 'GET':
@@ -37,6 +41,7 @@ def editar_funcionario(request, id):
 
 
 def excluir_funcionario(request, id):
-    funcionario = Funcionario.objects.get(id=id)
+    funcionario = get_object_or_404(Funcionario, id=id)
     funcionario.delete()
+    messages.success(request, "Produto deletado com sucesso!")
     return redirect('listar_funcionario')

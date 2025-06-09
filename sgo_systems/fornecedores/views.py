@@ -25,7 +25,6 @@ def fornecedor_create(request):
         form = FornecedorForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('fornecedores:fornecedor_list')  # Corrigido com namespace
     else:
         form = FornecedorForm()
     
