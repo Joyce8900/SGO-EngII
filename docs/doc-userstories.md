@@ -248,35 +248,6 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | **TA09.05** | **Tentativa de venda sem estoque:** Ao tentar vender produto com estoque insuficiente, o sistema impede a venda e exibe "Quantidade indisponível em estoque". |
 | **TA09.06** | **Consistência de dados:** O sistema garante que operações concorrentes não causem inconsistência nos valores de estoque. |
 
-### Impacto nas User Stories Existentes
-
-#### US04 - Manter Produto
-- Adicionar campo "quantidade_estoque" no formulário de produto
-- Atualizar TA03.01 e TA03.03 para incluir validação do campo quantidade
-- Adicionar visualização da quantidade em estoque na listagem de produtos
-
-#### US05 - Entrar Produto
-- Modificar para chamar automaticamente a atualização de estoque (RF09.01)
-- Atualizar TA04.01 para verificar se o estoque foi atualizado
-
-#### US06 - Visualizar Estoque
-- Atualizar descrição para refletir a nova estrutura de estoque
-- Adicionar verificação de consistência nos dados exibidos
-
-#### US08 - Realizar Venda
-- Modificar para chamar automaticamente a atualização de estoque (RF09.02)
-- Atualizar TA07.01 e TA07.02 para verificar atualização do estoque
-- Adicionar caso de teste para cancelamento de venda (RF09.03)
-
-#### US09 - Realizar Pagamento (renumerar para US10)
-- Adicionar verificação de consistência entre itens vendidos e estoque
-
-### Observações para Implementação Futura
-
-1. Após implementação, modificar a relação estoque-produto para tabela separada
-2. Implementar histórico de movimentação de estoque
-3. Adicionar alertas para estoque baixo
-4. Implementar conciliação periódica de estoque
 
 ### User Story US07 - Visualizar Estoque
 
