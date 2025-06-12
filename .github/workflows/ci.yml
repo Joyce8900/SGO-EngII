@@ -33,6 +33,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0   # clone completo para evitar shallow clone
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
@@ -64,23 +66,15 @@ jobs:
       - name: Run tests with coverage
         working-directory: sgo_systems
         run: |
-          # Limpa qualquer coverage.xml existente
           rm -f coverage.xml || true
-          
-          # Executa testes com cobertura
           coverage run --source='.' manage.py test --keepdb -v 2
-          
-          # Gera relatório XML
           coverage xml -o coverage.xml
-          
-          # Verifica se o arquivo foi criado
           if [ ! -f "coverage.xml" ]; then
             echo " coverage.xml não foi gerado!"
             exit 1
           else
             echo " coverage.xml gerado com sucesso!"
             ls -la coverage.xml
-            # Mostra resumo da cobertura
             coverage report
           fi
 
@@ -89,10 +83,11 @@ jobs:
           curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
           unzip sonar-scanner.zip -d $HOME
           echo "$HOME/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
+
       - name: Verificar se coverage.xml existe
         run: |
           ls -la sgo_systems/coverage.xml
-          cat sgo_systems/coverage.xml | head -20
+          head -20 sgo_systems/coverage.xml
 
       - name: Run SonarScanner
         env:
@@ -109,7 +104,7 @@ jobs:
             -Dsonar.python.coverage.reportPaths=sgo_systems/coverage.xml \
             -Dsonar.exclusions=**/tests/**,docs/**,**/static/**,**/templates/**,**/migrations/**,**/__pycache__/**,**/admin.py,**/__init__.py,manage.py \
             -Dsonar.python.version=3.11 \
-            -Dsonar.login=$SONAR_TOKEN \
+            -Dsonar.token=$SONAR_TOKEN \
             -Dsonar.host.url=$SONAR_HOST_URL
 
       - name: Verify files
