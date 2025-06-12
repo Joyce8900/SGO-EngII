@@ -89,6 +89,10 @@ jobs:
           curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
           unzip sonar-scanner.zip -d $HOME
           echo "$HOME/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
+      - name: Verificar se coverage.xml existe
+        run: |
+          ls -la sgo_systems/coverage.xml
+          cat sgo_systems/coverage.xml | head -20
 
       - name: Run SonarScanner
         env:
