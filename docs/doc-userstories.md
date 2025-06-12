@@ -13,6 +13,7 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | 04/04/2025 | 0.0.2   | Adicionando US.01 US.02 US.03 US.04 US.05 US.06 US.07 US.08                 | Gabriel |
 | 05/04/2025 | 0.0.3   | Correções de inconsistências nas descrições, requisitos envolvidos e testes de aceitação | Gabriel |
 | 11/06/2025 | 0.0.4   | Adição da US06 - Manter Quantidade em Estoque e reordenação | Cayo |
+| 11/06/2025 | 0.0.5   | Adição da US11 Dashboard e ajustes na contagem de PF | Cayo |
 
 
 ### User Story US01 - Manter Funcionário
@@ -399,3 +400,37 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | **TA08.02** | **Realizar Pagamento com erro:** O gerente ou  funcionário tenta processar o pagamento, mas insere informações inválidas (como número de cartão incorreto). O sistema exibe: "Erro: Dados de pagamento inválidos. Verifique as informações". |
 | **TA08.03** | **Pagamento Parcial:** O cliente solicita um pagamento parcial da compra. O gerente ou funcionário insere o valor pago, e o sistema calcula o saldo restante. O sistema exibe: "Pagamento parcial registrado. Saldo restante: {valor}". |
 | **TA08.04** | **Cancelar Pagamento:** O gerente ou funcionário inicia o processo de pagamento, mas decide cancelar antes de finalizar. O sistema retorna à tela de vendas sem salvar as informações do pagamento. |
+
+
+### User Story US11 - Tela Home (Dashboard)
+
+|               |                                                                 |
+| ------------- | :-------------------------------------------------------------- |
+| **Descrição** | Como usuário do sistema, quero acessar uma tela inicial que mostre de forma organizada e intuitiva todas as rotas/funcionalidades disponíveis, para poder navegar eficientemente pelo sistema. |
+
+| **Requisitos envolvidos** |                                                    |
+| ------------------------- | -------------------------------------------------- |
+| RF11.01                   | Exibir menu de navegação principal                 |
+| RF11.02                   | Agrupar funcionalidades por módulos                |
+| RF11.03                   | Permitir acesso rápido às funções mais utilizadas  |
+| RF11.04                   | Exibir informações resumidas do sistema            |
+
+|                           |                                     |
+| ------------------------- | ----------------------------------- |
+| **Prioridade**            | Essencial                           |
+| **Estimativa**            | 3 h                                 |
+| **Tempo Gasto (real):**   | -                                   |
+| **Tamanho Funcional**     | 5 PF                                |
+| **Analista**              | Pessoa 1                            |
+| **Desenvolvedor**         | Pessoa 2                            |
+| **Revisor**               | Pessoa 3                            |
+| **Testador**              | Pessoa 4                            |
+
+| Testes de Aceitação (TA)  |                                     |
+| ----------- | --------- |
+| **TA11.01** | **Acesso às rotas principais:** A tela deve exibir claramente os módulos: Cadastros, Estoque, Vendas e Relatórios, com ícones intuitivos. |
+| **TA11.02** | **Navegação eficiente:** Cada item do menu deve redirecionar corretamente para a tela correspondente em até 2 cliques. |
+| **TA11.03** | **Layout responsivo:** A tela deve se adaptar corretamente em desktop (1440px) e mobile (360px). |
+| **TA11.04** | **Atalhos visíveis:** Deve exibir os 5 processos mais utilizados (ex: Nova Venda, Consultar Estoque) com destaque. |
+| **TA11.05** | **Informações contextuais:** Deve mostrar resumo do dia (total de vendas, alertas de estoque baixo) quando aplicável. |
+| **TA11.06** | **Personalização:** O gerente pode reorganizar os atalhos principais conforme necessidade. |
