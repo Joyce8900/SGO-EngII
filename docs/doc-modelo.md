@@ -14,7 +14,7 @@ erDiagram
     VENDA ||--o{ ITEM_VENDA : "contém"
     ITEM_VENDA }o--|| PRODUTO : "referencia"
     VENDA ||--|| PAGAMENTO : "processa"
-    ESTOQUE ||--o{ PRODUTO : "controla"
+    PRODUTO ||--|| ESTOQUE : "possui"
 
     USUARIO {
         int id PK
@@ -40,12 +40,11 @@ erDiagram
         int id PK
         string nome
         decimal preco
-        int quantidade
         int fornecedor_id FK
     }
 
     ESTOQUE {
-        int produto_id FK
+        int produto_id PK
         int quantidade_atual
     }
 
@@ -109,7 +108,7 @@ erDiagram
 | GERENTE        | -     | -                                  | usuario_id      |
 | FUNCIONARIO    | -     | -                                  | usuario_id      |
 | FORNECEDOR     | id    | nome, contato                      | -               |
-| PRODUTO        | id    | nome, preço, quantidade            | fornecedor_id   |
+| PRODUTO        | id    | nome, preço                        | fornecedor_id   |
 | ESTOQUE        | -     | quantidade_atual                   | produto_id      |
 | VENDA          | id    | data, total                        | funcionario_id  |
 | ITEM_VENDA     | -     | quantidade, subtotal               | venda_id, produto_id |
@@ -159,12 +158,11 @@ erDiagram
         int id PK "Código único do produto"
         string nome "Descrição/nome do produto"
         decimal preco "Valor unitário"
-        int quantidade "Quantidade disponível"
         int fornecedor_id FK "Fornecedor associado"
     }
 
     ESTOQUE {
-        int produto_id FK "Produto controlado"
+        int produto_id PK "Produto controlado (1:1 com PRODUTO)"
         int quantidade_atual "Nível atual em estoque"
     }
 
@@ -199,14 +197,14 @@ erDiagram
     VENDA ||--|{ ITEM_VENDA : "contém (1:N)"
     ITEM_VENDA }o--|| PRODUTO : "referencia (N:1)"
     VENDA ||--|| PAGAMENTO : "processa (1:1)"
-    ESTOQUE }o--|| PRODUTO : "controla (1:1)"
+    PRODUTO ||--|| ESTOQUE : "possui (1:1)"
 ```
 
 # Principais Características do Modelo Entidade-Relacionamento (MER)
 
 ## Estrutura Básica
 - **Entidades Principais**: USUARIO, GERENTE, FUNCIONARIO, FORNECEDOR, PRODUTO, VENDA, ITEM_VENDA, PAGAMENTO, ESTOQUE  
-- **Relacionamentos**: Especialização (herança), associações 1:N e N:1, composição (Venda-Itens)  
+- **Relacionamentos**: Especialização (herança), associações 1:N e N:1, composição (Venda-Itens), controle 1:1 entre PRODUTO e ESTOQUE  
 - **Cardinalidades**: Claramente definidas (ex: 1:1, 1:N, N:1)  
 
 ---
@@ -231,8 +229,9 @@ erDiagram
    - Realizada por `FUNCIONARIO`.  
    - Contém múltiplos `ITEM_VENDA` (com quantidade e subtotal).  
 2. **PRODUTO**:  
-   - Vinculado a `FORNECEDOR` e `ESTOQUE`.  
+   - Vinculado a `FORNECEDOR`.  
    - Referenciado em `ITEM_VENDA`.  
+   - Associado a `ESTOQUE` (controle separado da quantidade).  
 3. **PAGAMENTO**:  
    - Relação 1:1 com `VENDA` (valor, método, status).  
 
@@ -240,7 +239,10 @@ erDiagram
 
 ## Gestão de Estoque e Fornecedores
 - **FORNECEDOR**: Cadastrado por `GERENTE`, fornece `PRODUTO`.  
-- **ESTOQUE**: Monitora `quantidade_atual` por produto (relação 1:1 com `PRODUTO`).  
+- **ESTOQUE**:  
+  - Monitora a `quantidade_atual` de cada `PRODUTO`.  
+  - Relação 1:1 com `PRODUTO`.  
+  - A entidade `PRODUTO` **não possui mais o atributo `quantidade`**, que agora é controlado exclusivamente pela entidade `ESTOQUE`.  
 
 ---
 
@@ -248,8 +250,10 @@ erDiagram
 - **Dependências**:  
   - Exclusão de `USUARIO` deve afetar `GERENTE`/`FUNCIONARIO`.  
   - `ITEM_VENDA` depende de `VENDA` e `PRODUTO`.  
+  - `ESTOQUE` depende de `PRODUTO`.  
 - **Atributos Obrigatórios**:  
   - Todos os IDs (PK/FK) são `NOT NULL`.  
+  - `quantidade_atual` em `ESTOQUE` deve ser maior ou igual a zero.  
 
 ---
 
@@ -258,8 +262,11 @@ erDiagram
 - **Textos**: Nomes (`string`), método de pagamento (`string`).  
 - **Datas**: `VENDA.data` como `date`.  
 
-### Destaques:
-- **Performance**: Relações otimizadas (ex: estoque 1:1 com produto).  
+---
+
+## Destaques:
+- **Performance**: Separação de responsabilidades entre `PRODUTO` e `ESTOQUE` melhora a organização e eficiência nas operações.  
 - **Segurança**: Herança garante controle de acesso (gerente vs funcionário).  
-- **Escalabilidade**: Modelo suporta crescimento (ex: múltiplos itens por venda).  
+- **Escalabilidade**: Modelo preparado para novas operações no estoque, como entrada, venda, cancelamento e correções.  
+
   
