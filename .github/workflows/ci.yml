@@ -70,8 +70,17 @@ jobs:
           coverage run manage.py test --keepdb
           coverage xml
 
+
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v2.0.2
+        with:
+         projectBaseDir: sgo_systems  # Indica o diretório raiz do projeto
+         args: >
+          -Dsonar.projectKey=sgo-engii
+          -Dsonar.projectName=SGO-ENGII
+          -Dsonar.projectVersion=1.0
+          -Dsonar.sources=.
+          -Dsonar.python.coverage.reportPaths=coverage.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
