@@ -12,6 +12,8 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | 03/04/2025 | 0.0.1   | Template e descrição do documento  | Gustavo |
 | 04/04/2025 | 0.0.2   | Adicionando US.01 US.02 US.03 US.04 US.05 US.06 US.07 US.08                 | Gabriel |
 | 05/04/2025 | 0.0.3   | Correções de inconsistências nas descrições, requisitos envolvidos e testes de aceitação | Gabriel |
+| 11/06/2025 | 0.0.4   | Adição da US06 - Manter Quantidade em Estoque e reordenação | Cayo |
+| 11/06/2025 | 0.0.5   | Adição da US11 Dashboard e ajustes na contagem de PF | Cayo |
 
 
 ### User Story US01 - Manter Funcionário
@@ -213,41 +215,74 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | **TA04.05** | **Filtrar Histórico de Entradas:** O gerente utiliza um filtro para buscar entradas de um produto específico ou por um intervalo de datas. O sistema exibe os resultados filtrados corretamente. |
 | **TA04.06** | **Nenhum Resultado no Histórico:** O gerente realiza uma busca no histórico que não retorna resultados. O sistema exibe: "Nenhuma entrada encontrada para os critérios especificados". |
 
-
-
-### User Story US06 - Visualizar Estoque
+### User Story US06 - Manter Quantidade em Estoque
 
 |               |                                                                 |
 | ------------- | :-------------------------------------------------------------- |
-| **Descrição** | O sistema deve permitir ao gerente ou ao funcionário da ótica visualizar o estoque atual no sistema. |
+| **Descrição** | O sistema deve atualizar automaticamente a quantidade em estoque quando ocorrerem: entradas de produtos, vendas realizadas, cancelamentos de venda/entrada e correções manuais pelo gerente. Deve garantir a integridade e consistência dos dados do estoque. |
 
 | **Requisitos envolvidos** |                                                    |
 | ------------------------- | -------------------------------------------------- |
-| Não especificado no doc de visão                      | ?                                 |
+| RF09.01                   | Atualizar estoque na entrada de produtos          |
+| RF09.02                   | Atualizar estoque na venda                        |
+| RF09.03                   | Atualizar estoque no cancelamento                 |
+| RF09.04                   | Ajuste manual de estoque                          |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- |
 | **Prioridade**            | Essencial                           |
-| **Estimativa**            | 5 h                                 |
+| **Estimativa**            | 8 h                                 |
+| **Tempo Gasto (real):**   | -                                   |
+| **Tamanho Funcional**     | 10 PF                               |
+| **Analista**              | Pessoa 1                            |
+| **Desenvolvedor**         | Pessoa 2                            |
+| **Revisor**               | Pessoa 3                            |
+| **Testador**              | Pessoa 4                            |
+
+| Testes de Aceitação (TA)  |                                     |
+| ----------- | --------- |
+| **TA09.01** | **Atualização automática na entrada:** Ao registrar uma entrada de produto, o sistema incrementa automaticamente a quantidade em estoque e exibe "Estoque atualizado com sucesso". |
+| **TA09.02** | **Atualização automática na venda:** Ao confirmar uma venda, o sistema decrementa automaticamente a quantidade vendida de cada produto e exibe "Estoque atualizado com sucesso". |
+| **TA09.03** | **Cancelamento de venda:** Ao cancelar uma venda, o sistema restaura automaticamente as quantidades dos produtos ao estoque e exibe "Estoque reestabelecido". |
+| **TA09.04** | **Ajuste manual pelo gerente:** O gerente pode fazer ajustes manuais no estoque (incluindo zerar) e o sistema registra a alteração com log de quem fez a modificação. |
+| **TA09.05** | **Tentativa de venda sem estoque:** Ao tentar vender produto com estoque insuficiente, o sistema impede a venda e exibe "Quantidade indisponível em estoque". |
+| **TA09.06** | **Consistência de dados:** O sistema garante que operações concorrentes não causem inconsistência nos valores de estoque. |
+
+
+### User Story US07 - Visualizar Estoque
+
+|               |                                                                 |
+| ------------- | :-------------------------------------------------------------- |
+| **Descrição** | O sistema deve permitir a visualização consultiva do estoque atual, com dados em tempo real sincronizados com o módulo de controle de estoque (US06). |
+
+| **Requisitos envolvidos** |                                                    |
+|--------------------------|---------------------------------------------------|
+| RF07.01                  | Consultar estoque atual (integrado com US06)      |
+| RF07.02                  | Filtrar por categoria/produto                     |
+| RF07.03                  | Visualizar histórico de movimentações             |
+
+|                           |                                     |
+| ------------------------- | ----------------------------------- |
+| **Prioridade**            | Essencial                           |
+| **Estimativa**            | 6 h (+1h para integração com US06)  |
 | **Tempo Gasto (real):**   | -                                   |
 | **Tamanho Funcional**     | 8 PF                                |
 | **Analista**              | Pessoa 1                            |
 | **Desenvolvedor**         | Pessoa 2                            |
-| **Revisor**               | Pessoa 3                            |
-| **Testador**              | Pessoa 1                            |
+| **Revisor**               | Pessoa 2                            |
+| **Testador**              | Pessoa 3                            |
+
 
 | Testes de Aceitação (TA)  |                                     |
 | ----------- | --------- |
-| **Código**      | **Descrição** |
-| **TA05.01** | **Visualizar Estoque com sucesso:** O gerente ou funcionário acessa o sistema com suas credenciais, seleciona a opção "Visualizar Estoque" e o sistema apresenta as informações atuais dos produtos em estoque. |
-| **TA05.02** | **Filtrar Estoque com sucesso:** O gerente ou funcionário utiliza um filtro para buscar por categoria ou tipo de produto, e o sistema retorna apenas os itens correspondentes ao filtro aplicado. |
-| **TA05.03** | **Estoque vazio ou sem resultados:** O gerente ou funcionário realiza uma busca ou aplica um filtro que não retorna resultados. O sistema exibe a mensagem: "Nenhum produto encontrado". |
-| **TA05.04** | **Exibição em tempo real:** O gerente ou funcionário acessa o estoque, e o sistema garante que as informações apresentadas estejam atualizadas em tempo real. |
-| **TA05.05** | **Cancelar Visualização de Estoque:** O gerente ou funcionário inicia o processo para visualizar o estoque, mas decide cancelar antes de confirmar ou aplicar filtros. O sistema retorna à tela anterior. |
+| **TA07.01** | **Visualização integrada:** Verificar se os dados exibidos refletem exatamente o estoque gerenciado pela US06 |
+| **TA07.02** | **Atualização em tempo real:** Alterações feitas via US06 devem aparecer imediatamente na visualização |
+| **TA07.03** | **Filtros avançados:** Deve permitir filtrar por: produtos com estoque crítico, produtos ausentes, etc. |
+| **TA07.04** | **Dados consistentes:** A soma de entradas-saídas deve bater com o saldo atual |
 
 
 
-### User Story US07 - Emitir Relatório de Estoque
+### User Story US08 - Emitir Relatório de Estoque
 
 |               |                                                                 |
 | ------------- | :-------------------------------------------------------------- |
@@ -279,41 +314,36 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 
 
-### User Story US08 - Realizar Venda
+### User Story US09 - Realizar Venda
 
 |               |                                                                 |
 | ------------- | :-------------------------------------------------------------- |
-| **Descrição** | O sistema deve permitir ao funcionário realizar a venda de produtos, com atualização automática do estoque, emissão de comprovante e acesso ao histórico de vendas. |
+| **Descrição** | O sistema deve permitir realizar vendas com integração total com o módulo de estoque (US06), garantindo atualização automática e consistência dos dados. |
 
 | **Requisitos envolvidos** |                                                    |
 | ------------------------- | -------------------------------------------------- |
-| RF04.01                      | Registrar Venda                                 |
-| RF04.02                      | Emitir Comprovante                              |
-| RF04.03                      | Consultar Histórico de Vendas                                 |
-
-|                           |                                     |
+| RF09.01                   | Registrar Venda (com validação de estoque)        |
+| RF09.02                   | Emitir Comprovante                                |
+| RF09.03                   | Consultar Histórico                               |
+| RF09.04                   | Cancelar Venda (com reversão de estoque - US06)   |
 | ------------------------- | ----------------------------------- |
-| **Prioridade**            | Essencial                           |
-| **Estimativa**            | 5 h                                 |
+| **Prioridade**            | Importante                          |
+| **Estimativa**            | 8 h                                 |
 | **Tempo Gasto (real):**   | -                                   |
-| **Tamanho Funcional**     | 8 PF                                |
+| **Tamanho Funcional**     | 7 PF                                |
 | **Analista**              | Pessoa 1                            |
 | **Desenvolvedor**         | Pessoa 2                            |
-| **Revisor**               | Pessoa 3                            |
+| **Revisor**               | Pessoa 2                            |
 | **Testador**              | Pessoa 3                            |
 
 | Testes de Aceitação (TA)  |                                     |
 | ----------- | --------- |
-| **Código**      | **Descrição** |
-| **TA07.01** | **Realizar Venda com sucesso:** O funcionário acessa o sistema com suas credenciais, seleciona a opção "Realizar Venda", adiciona produtos ao carrinho, confirma os dados do cliente e clica em "Concluir Venda". O sistema exibe: "Venda realizada com sucesso" e gera automaticamente o comprovante de venda. |
-| **TA07.02** | **Adicionar Produto ao Carrinho com erro:** O funcionário tenta adicionar um produto que não está disponível em estoque. O sistema exibe a mensagem: "Erro: Produto indisponível no estoque". |
-| **TA07.03** | **Editar Carrinho de Compras:** Durante a venda, o funcionário altera a quantidade de produtos ou remove itens do carrinho. O sistema atualiza os valores totais e exibe: "Carrinho atualizado com sucesso". |
-| **TA07.04** | **Finalizar Venda com erro:** O funcionário tenta finalizar uma venda sem selecionar todos os dados obrigatórios (como cliente ou forma de pagamento). O sistema exibe: "Erro: Preencha todas as informações obrigatórias". |
-| **TA07.05** | **Cancelar Venda:** O funcionário inicia uma venda, mas decide cancelar antes de finalizar. O sistema limpa o carrinho e retorna à tela inicial de vendas sem salvar os dados. |
-| **TA07.06** | **Consultar Histórico de Vendas:** O funcionário acessa o histórico de vendas, filtra por data ou produto, e o sistema exibe corretamente os resultados. |
+| **TA09.01** | **Validação de estoque:** Impedir venda se quantidade > estoque disponível |
+| **TA09.02** | **Atualização automática:** Verificar redução no estoque após venda |
+| **TA09.03** | **Reversão no cancelamento:** Estoque deve ser restaurado se venda cancelada |
+| **TA09.04** | **Log de movimentação:** Registrar relação venda-estoque |
 
-
-### User Story US09 - Realizar Pagamento
+### User Story US10 - Realizar Pagamento
 
 |               |                                                                 |
 | ------------- | :-------------------------------------------------------------- |
@@ -341,3 +371,37 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | **TA08.02** | **Realizar Pagamento com erro:** O gerente ou  funcionário tenta processar o pagamento, mas insere informações inválidas (como número de cartão incorreto). O sistema exibe: "Erro: Dados de pagamento inválidos. Verifique as informações". |
 | **TA08.03** | **Pagamento Parcial:** O cliente solicita um pagamento parcial da compra. O gerente ou funcionário insere o valor pago, e o sistema calcula o saldo restante. O sistema exibe: "Pagamento parcial registrado. Saldo restante: {valor}". |
 | **TA08.04** | **Cancelar Pagamento:** O gerente ou funcionário inicia o processo de pagamento, mas decide cancelar antes de finalizar. O sistema retorna à tela de vendas sem salvar as informações do pagamento. |
+
+
+### User Story US11 - Tela Home (Dashboard)
+
+|               |                                                                 |
+| ------------- | :-------------------------------------------------------------- |
+| **Descrição** | Como usuário do sistema, quero acessar uma tela inicial que mostre de forma organizada e intuitiva todas as rotas/funcionalidades disponíveis, para poder navegar eficientemente pelo sistema. |
+
+| **Requisitos envolvidos** |                                                    |
+| ------------------------- | -------------------------------------------------- |
+| RF11.01                   | Exibir menu de navegação principal                 |
+| RF11.02                   | Agrupar funcionalidades por módulos                |
+| RF11.03                   | Permitir acesso rápido às funções mais utilizadas  |
+| RF11.04                   | Exibir informações resumidas do sistema            |
+
+|                           |                                     |
+| ------------------------- | ----------------------------------- |
+| **Prioridade**            | Essencial                           |
+| **Estimativa**            | 3 h                                 |
+| **Tempo Gasto (real):**   | -                                   |
+| **Tamanho Funcional**     | 5 PF                                |
+| **Analista**              | Pessoa 1                            |
+| **Desenvolvedor**         | Pessoa 2                            |
+| **Revisor**               | Pessoa 3                            |
+| **Testador**              | Pessoa 4                            |
+
+| Testes de Aceitação (TA)  |                                     |
+| ----------- | --------- |
+| **TA11.01** | **Acesso às rotas principais:** A tela deve exibir claramente os módulos: Cadastros, Estoque, Vendas e Relatórios, com ícones intuitivos. |
+| **TA11.02** | **Navegação eficiente:** Cada item do menu deve redirecionar corretamente para a tela correspondente em até 2 cliques. |
+| **TA11.03** | **Layout responsivo:** A tela deve se adaptar corretamente em desktop (1440px) e mobile (360px). |
+| **TA11.04** | **Atalhos visíveis:** Deve exibir os 5 processos mais utilizados (ex: Nova Venda, Consultar Estoque) com destaque. |
+| **TA11.05** | **Informações contextuais:** Deve mostrar resumo do dia (total de vendas, alertas de estoque baixo) quando aplicável. |
+| **TA11.06** | **Personalização:** O gerente pode reorganizar os atalhos principais conforme necessidade. |
