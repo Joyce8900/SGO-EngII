@@ -1,8 +1,7 @@
-from pyexpat.errors import messages
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from .models import Funcionario
 from django.shortcuts import get_object_or_404
-
 
 
 def cadastrar_funcionario(request):

@@ -5,13 +5,16 @@ from .models import Produtos, Categorias
 from django.contrib import messages
 
 def cadastrar_produtos(request):
+    form = ProdutoForm()
     if request.method == "POST":
         form = ProdutoForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, "✔ Produto cadastrado com sucesso!")
             return redirect("listar_produtos")
-    form = ProdutoForm()
+        
+    
+
     return render(request, "cadastrar_produto.html", {"form": form})
 
 

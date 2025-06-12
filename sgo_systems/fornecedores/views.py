@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Fornecedor
 from .forms import FornecedorForm, FornecedorFilterForm
 
+url_fornecedores = 'fornecedores:fornecedor_list'
+
+
 def fornecedor_list(request):
     form_filter = FornecedorFilterForm(request.GET or None)
     fornecedores = Fornecedor.objects.all()
@@ -25,6 +28,7 @@ def fornecedor_create(request):
         form = FornecedorForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect(url_fornecedores)
     else:
         form = FornecedorForm()
     
@@ -37,7 +41,7 @@ def fornecedor_update(request, pk):
         form = FornecedorForm(request.POST, instance=fornecedor)
         if form.is_valid():
             form.save()
-            return redirect('fornecedores:fornecedor_list')  # Corrigido com namespace
+            return redirect(url_fornecedores)  
     else:
         form = FornecedorForm(instance=fornecedor)
     
@@ -48,6 +52,6 @@ def fornecedor_delete(request, pk):
     
     if request.method == 'POST':
         fornecedor.delete()
-        return redirect('fornecedores:fornecedor_list')  # Corrigido com namespace
+        return redirect(url_fornecedores)  
     
     return render(request, 'fornecedores/fornecedor_delete.html', {'fornecedor': fornecedor})
