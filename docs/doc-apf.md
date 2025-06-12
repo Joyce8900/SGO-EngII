@@ -92,8 +92,9 @@ erDiagram
 | ALI Cliente     | Cliente, Endereço           | 35 PF         |
 | ALI Fornecedor  | Fornecedor                  | 35 PF         |
 | ALI Venda       | Venda, Item_Venda           | 35 PF         |
+| ALI Dashboard   | Configurações de Interface  | 7 PF          |
 
-**Total: 175 PF**
+**Total: 182 PF**
 
 ---
 
@@ -121,6 +122,9 @@ A contagem detalhada considera as Funções de Dados e as Funções de Transaç�
 
 | Descrição                   | Tipo | ALR | DER | Complexidade | Tamanho em PF |
 |----------------------------|------|-----|-----|--------------|---------------|
+| ALI Dashboard              | ALI  | 1   | 3   | Baixa        | 7 PF          |
+| Carregar Dashboard         | CE   | 3   | 5   | Média        | 4 PF          |
+| Personalizar Layout        | EE   | 2   | 4   | Média        | 4 PF          |
 | ALI Produto                | ALI  | 2   | 5   | Média        | 10 PF         |
 | ALI Usuário                | ALI  | 2   | 4   | Baixa        | 7 PF          |
 | ALI Cliente                | ALI  | 2   | 5   | Média        | 10 PF         |
@@ -145,5 +149,5 @@ A contagem detalhada considera as Funções de Dados e as Funções de Transaç�
 | Relatório de Vendas        | SE   | 2   | 5   | Média        | 5 PF          |
 | Relatório de Estoque       | SE   | 1   | 3   | Baixa        | 4 PF          |
 
-**Total: 108 PF**
+**Total: 119 PF**
 
