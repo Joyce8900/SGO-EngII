@@ -10,7 +10,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -49,19 +48,18 @@ jobs:
       - name: Lint with flake8
         run: |
           pip install flake8
-          # Stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # Exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Copying configurations
         run: cp .env_exemple .env
 
       - name: Test with manage.py test
-        run: |
-          python manage.py test --keepdb
+        working-directory: SGO-EngII/sgo_systems
+        run: python manage.py test --keepdb
 
       - name: Run Coverage
+        working-directory: SGO-EngII/sgo_systems
         run: |
           coverage run manage.py test --keepdb
           coverage xml
@@ -74,6 +72,6 @@ jobs:
 
       - name: SonarQube Quality Gate check
         uses: sonarsource/sonarqube-quality-gate-action@master
-        timeout-minutes: 5  # Force to fail step after specific time
+        timeout-minutes: 5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
