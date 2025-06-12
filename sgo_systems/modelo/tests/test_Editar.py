@@ -32,25 +32,25 @@ class EditarModeloViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "editar_modelo.html")
 
-  # def test_editar_modelo_view_get(self):
-  #    print("test_editar_modelo_view_get")
-  #    ## Teste para o GET da view editar_modelo
-  #    response = self.client.get(reverse("editar_modelo", args=[self.modelo.id]))
-  #    print(f"minha response: {response}")
-  #    self.assertEqual(response.status_code, 200)
-  #    self.assertTemplateUsed(response, "editar_modelo.html")
+  def test_editar_modelo_view_get(self):
+      print("test_editar_modelo_view_get")
+      ## Teste para o GET da view editar_modelo
+      response = self.client.get(reverse("editar_modelo", args=[self.modelo.id]))
+      print(f"minha response: {response}")
+      self.assertEqual(response.status_code, 200)
+      self.assertTemplateUsed(response, "editar_modelo.html")
 
-  # def test_editar_modelo_view_post_invalido(self):
-  #   print("test_editar_modelo_view_post_invalido")
-  #   ## Teste para o POST da view editar_modelo com dados inválidos
-  #   data = {
-  #       "nome": "",
-  #       "marca": self.marca.id,
-  #   }
-  #   response = self.client.post(reverse("editar_modelo", args=[self.modelo.id]), data)
-  #   self.assertEqual(response.status_code, 200)
-  #   form = response.context["form"]
-  #   self.assertFalse(form.is_valid())
-  #   self.assertIn("nome", form.errors)
-  #   self.assertIn("Este campo é obrigatório.", form.errors["nome"])
-  #   self.assertEqual(Modelo.objects.count(), 1)
+  def test_editar_modelo_view_post_invalido(self):
+     print("test_editar_modelo_view_post_invalido")
+       #Teste para o POST da view editar_modelo com dados inválidos
+     data = {
+         "nome": "",
+         "marca": self.marca.id,
+     }
+     response = self.client.post(reverse("editar_modelo", args=[self.modelo.id]), data)
+     self.assertEqual(response.status_code, 200)
+     form = response.context["form"]
+     self.assertFalse(form.is_valid())
+     self.assertIn("nome", form.errors)
+     self.assertIn("Este campo é obrigatório.", form.errors["nome"])
+     self.assertEqual(Modelo.objects.count(), 1)
