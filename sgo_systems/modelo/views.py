@@ -30,6 +30,7 @@ def editar_modelo(request, pk):
         if form.is_valid():
             form.save()
             return redirect("listar_modelos")
+    
     else:
         form = ModeloForm(instance=modelo)
 

@@ -2,11 +2,9 @@ from django.db import models
 from django.core.validators import RegexValidator
 
 # Create your models here.
-
-
 class Funcionario(models.Model):
     nome = models.CharField(
-        max_length=255, verbose_name="Nome do Funcionário", help_text="Campo obrigatório")
+        max_length=255, verbose_name="Nome do Funcionário", help_text="Campo obrigatório", unique=True, blank=False, null=False)
     cargo = models.CharField(
         max_length=255, verbose_name="Cargo", help_text="Campo obrigatório")
     telefone = models.CharField(
@@ -14,7 +12,7 @@ class Funcionario(models.Model):
         validators=[RegexValidator(
             r'^\d{11}$', 'O número de telefone deve ter 11 dígitos númericos')],
         verbose_name="Telefone",
-        help_text="Campo obrigatório")
+        help_text="Campo obrigatório", unique=True, blank=False, null=False)
 
     def __str__(self):
         return self.nome

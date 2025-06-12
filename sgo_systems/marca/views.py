@@ -28,13 +28,13 @@ def deletar_marca(request, pk):
     return redirect("listar_marcas")
 
 def editar_marca(request, pk):
-    marca_obj = get_object_or_404(Marca, pk=pk)
+    marca = get_object_or_404(Marca, pk=pk)
     if request.method == "POST":
-        form = MarcaForm(request.POST, instance=marca_obj)
+        form = MarcaForm(request.POST, instance=marca)
         if form.is_valid():
             form.save()
             messages.success(request, "✔ Marca editada com sucesso!")
             return redirect("listar_marcas")
     else:
-        form = MarcaForm(instance=marca_obj)
+        form = MarcaForm(instance=marca)
     return render(request, "editar_marca.html", {"form": form})
