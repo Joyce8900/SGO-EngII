@@ -1,4 +1,4 @@
-name: SGO-ENGII
+name: SGO-ENGII CI Pipeline
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -31,7 +31,7 @@ jobs:
           --health-retries 5
 
     steps:
-      - name: Check out repository code
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Python ${{ matrix.python-version }}
@@ -43,14 +43,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install coverage flake8
 
       - name: Lint with flake8
         run: |
-          pip install flake8
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-      - name: Create .env from secrets
+      - name: Setup environment variables
         run: |
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
           echo "DEBUG=True" >> .env
@@ -60,32 +60,36 @@ jobs:
           echo "DB_HOST=postgres" >> .env
           echo "DB_PORT=5432" >> .env
 
-      - name: Test with manage.py test
+      - name: Run tests
         working-directory: sgo_systems
-        run: python manage.py test --keepdb
+        run: |
+          python manage.py test --keepdb
 
-      - name: Run Coverage
+      - name: Generate coverage report
         working-directory: sgo_systems
         run: |
           coverage run manage.py test --keepdb
-          coverage xml
-
+          coverage xml -o coverage.xml
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v2.0.2
         with:
-         projectBaseDir: sgo_systems  # Indica o diretório raiz do projeto
-         args: >
-          -Dsonar.projectKey=sgo-engii
-          -Dsonar.projectName=SGO-ENGII
-          -Dsonar.projectVersion=1.0
-          -Dsonar.sources=.
-          -Dsonar.python.coverage.reportPaths=coverage.xml
+          projectBaseDir: .
+          args: >
+            -Dsonar.projectKey=sgo-engii
+            -Dsonar.projectName=SGO-ENGII
+            -Dsonar.projectVersion=1.0
+            -Dsonar.sources=sgo_systems
+            -Dsonar.tests=sgo_systems
+            -Dsonar.test.inclusions=sgo_systems/**/test_*.py,sgo_systems/**/tests_*.py,sgo_systems/**/tests.py
+            -Dsonar.python.coverage.reportPaths=sgo_systems/coverage.xml
+            -Dsonar.exclusions=**/tests/**,docs/**,**/static/**,**/templates/**,**/migrations/**,**/__pycache__/**,**/admin.py,**/__init__.py,manage.py
+            -Dsonar.python.version=3.11
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
-      - name: SonarQube Quality Gate check
+      - name: SonarQube Quality Gate Check
         uses: sonarsource/sonarqube-quality-gate-action@v1.1.0
         timeout-minutes: 5
         env:
