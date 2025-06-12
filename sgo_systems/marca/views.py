@@ -28,15 +28,16 @@ def deletar_marca(request, pk):
   messages.success(request, "Marca excluída com sucesso.")
   return redirect("listar_marcas")
 
-
 def editar_marca(request, pk):
-    marca = marca.objects.get(pk=pk)
+    marca = Marca.objects.get(pk=pk)
     if request.method == "POST":
         form = MarcaForm(request.POST, instance=marca)
+        print(form.errors)
         if form.is_valid():
             form.save()
             return redirect("listar_marcas")
     else:
         form = MarcaForm(instance=marca)
+        print(form.errors)
 
     return render(request, "editar_marca.html", {"form": form})
