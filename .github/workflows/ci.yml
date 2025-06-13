@@ -86,8 +86,8 @@ jobs:
 
       - name: Verificar se coverage.xml existe
         run: |
-          ls -la sgo_systems/coverage.xml
-          head -20 sgo_systems/coverage.xml
+          ls -la coverage.xml
+          head -20 coverage.xml
 
       - name: Run SonarScanner
         env:
@@ -112,7 +112,7 @@ jobs:
           echo "Conteúdo de sgo_systems:"
           ls -la sgo_systems/
           echo "Conteúdo do coverage.xml:"
-          cat sgo_systems/coverage.xml || echo "Arquivo não encontrado"
+          cat coverage.xml || echo "Arquivo não encontrado"
           echo "Conteúdo do .scannerwork:"
           ls -la .scannerwork/
 
