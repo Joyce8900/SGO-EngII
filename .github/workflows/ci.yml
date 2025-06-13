@@ -98,7 +98,7 @@ jobs:
             -Dsonar.projectKey=sgo-engii \
             -Dsonar.projectName=SGO-ENGII \
             -Dsonar.projectVersion=1.0 \
-            -Dsonar.sources=s.
+            -Dsonar.sources=.
             -Dsonar.tests=.
             -Dsonar.test.inclusions=sgo_systems/**/test_*.py,sgo_systems/**/tests_*.py,sgo_systems/**/tests.py \
             -Dsonar.python.coverage.reportPaths=coverage.xml \
