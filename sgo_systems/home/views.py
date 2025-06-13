@@ -1,5 +1,8 @@
 from django.shortcuts import render
+import require_http_methods
 
+
+@require_http_methods(["GET"])
 def home_view(request):
     modules = [
         {'name': 'Fornecedores', 'url': 'fornecedores/'},
