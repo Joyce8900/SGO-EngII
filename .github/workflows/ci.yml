@@ -66,7 +66,8 @@ jobs:
         working-directory: sgo_systems
         run: |
           rm -f ../coverage.xml || true
-          coverage run --source='.' manage.py test --keepdb -v 2
+          # Usar --omit para excluir arquivos de teste do relatório de cobertura
+          coverage run --source=. --omit='*/tests/*','*test_*.py','*tests_*.py','*tests.py' manage.py test --keepdb -v 2
           coverage xml -o ../coverage.xml
           if [ ! -f "../coverage.xml" ]; then
             echo " coverage.xml não foi gerado!"
@@ -74,7 +75,7 @@ jobs:
           else
             echo " coverage.xml gerado com sucesso!"
             ls -la ../coverage.xml
-            coverage report
+            coverage report # Verifique a saída deste comando para garantir que a cobertura está correta
           fi
 
       - name: Install SonarScanner CLI
