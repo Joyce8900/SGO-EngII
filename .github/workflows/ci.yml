@@ -99,6 +99,7 @@ jobs:
             -Dsonar.tests=sgo_systems \
             -Dsonar.test.inclusions=sgo_systems/**/test_*.py,sgo_systems/**/tests_*.py,sgo_systems/**/tests.py \
             -Dsonar.python.coverage.reportPaths=sgo_systems/coverage.xml \
+            -Dsonar.python.coveragePlugin=cobertura \
             -Dsonar.exclusions=**/tests/**,docs/**,**/static/**,**/templates/**,**/migrations/**,**/__pycache__/**,**/admin.py,**/__init__.py,manage.py \
             -Dsonar.python.version=3.11 \
             -Dsonar.token=$SONAR_TOKEN \
