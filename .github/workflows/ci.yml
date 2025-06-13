@@ -65,29 +65,26 @@ jobs:
       - name: Run tests with coverage
         working-directory: sgo_systems
         run: |
-          rm -f ../coverage.xml || true
-          # Usar --omit para excluir arquivos de teste do relatório de cobertura
+          rm -f coverage.xml || true
           coverage run --source=. --omit='*/tests/*','*test_*.py','*tests_*.py','*tests.py' manage.py test --keepdb -v 2
-          coverage xml -o ../coverage.xml
-          if [ ! -f "../coverage.xml" ]; then
-            echo " coverage.xml não foi gerado!"
+          coverage xml -o coverage.xml
+          if [ ! -f "coverage.xml" ]; then
+            echo "coverage.xml não foi gerado!"
             exit 1
           else
-            echo " coverage.xml gerado com sucesso!"
-            ls -la ../coverage.xml
-            coverage report # Verifique a saída deste comando para garantir que a cobertura está correta
+            echo "coverage.xml gerado com sucesso!"
+            ls -la coverage.xml
+            coverage report
           fi
+
+      - name: Show coverage.xml head
+        run: head -40 sgo_systems/coverage.xml || true
 
       - name: Install SonarScanner CLI
         run: |
           curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
           unzip sonar-scanner.zip -d $HOME
           echo "$HOME/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
-
-      - name: Verificar se coverage.xml existe
-        run: |
-          ls -la coverage.xml
-          head -20 coverage.xml
 
       - name: Run SonarScanner
         env:
@@ -101,7 +98,7 @@ jobs:
             -Dsonar.sources=sgo_systems \
             -Dsonar.tests=sgo_systems \
             -Dsonar.test.inclusions=sgo_systems/**/test_*.py,sgo_systems/**/tests_*.py,sgo_systems/**/tests.py \
-            --Dsonar.python.coverage.reportPaths=../coverage.xml \
+            -Dsonar.python.coverage.reportPaths=sgo_systems/coverage.xml \
             -Dsonar.exclusions=**/tests/**,docs/**,**/static/**,**/templates/**,**/migrations/**,**/__pycache__/**,**/admin.py,**/__init__.py,manage.py \
             -Dsonar.python.version=3.11 \
             -Dsonar.token=$SONAR_TOKEN \
@@ -113,7 +110,7 @@ jobs:
           echo "Conteúdo de sgo_systems:"
           ls -la sgo_systems/
           echo "Conteúdo do coverage.xml:"
-          cat coverage.xml || echo "Arquivo não encontrado"
+          head -40 sgo_systems/coverage.xml || echo "Arquivo não encontrado"
           echo "Conteúdo do .scannerwork:"
           ls -la .scannerwork/
 
