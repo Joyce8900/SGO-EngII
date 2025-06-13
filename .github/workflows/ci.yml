@@ -65,17 +65,18 @@ jobs:
       - name: Run tests with coverage
         working-directory: sgo_systems
         run: |
-          rm -f coverage.xml || true
+          rm -f ../coverage.xml || true
           coverage run --source='.' manage.py test --keepdb -v 2
-          coverage xml -o coverage.xml
-          if [ ! -f "coverage.xml" ]; then
+          coverage xml -o ../coverage.xml
+          if [ ! -f "../coverage.xml" ]; then
             echo " coverage.xml não foi gerado!"
             exit 1
           else
             echo " coverage.xml gerado com sucesso!"
-            ls -la coverage.xml
+            ls -la ../coverage.xml
             coverage report
           fi
+
 
       - name: Install SonarScanner CLI
         run: |
@@ -100,7 +101,7 @@ jobs:
             -Dsonar.sources=sgo_systems \
             -Dsonar.tests=sgo_systems \
             -Dsonar.test.inclusions=sgo_systems/**/test_*.py,sgo_systems/**/tests_*.py,sgo_systems/**/tests.py \
-            -Dsonar.python.coverage.reportPaths=sgo_systems/coverage.xml \
+            -Dsonar.python.coverage.reportPaths=coverage.xml \
             -Dsonar.exclusions=**/tests/**,docs/**,**/static/**,**/templates/**,**/migrations/**,**/__pycache__/**,**/admin.py,**/__init__.py,manage.py \
             -Dsonar.python.version=3.11 \
             -Dsonar.token=$SONAR_TOKEN \
