@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from django.views.decorators.http import require_GET
 
+@require_GET  # Restringe apenas a GET
 def home_view(request):
     modules = [
         {'name': 'Fornecedores', 'url': 'fornecedores/'},
@@ -10,5 +12,4 @@ def home_view(request):
         {'name': 'Clientes', 'url': 'clientes/'},
         {'name': 'Entradas', 'url': 'entrada/listar/'},
     ]
-    
     return render(request, 'home/home.html', {'modules': modules})
