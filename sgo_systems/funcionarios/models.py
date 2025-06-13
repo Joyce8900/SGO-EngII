@@ -1,18 +1,33 @@
 from django.db import models
 from django.core.validators import RegexValidator
 
-# Create your models here.
+# Constantes
+TEXTO_CAMPO_OBRIGATORIO = "Campo obrigatório"
+MSG_ERRO_TELEFONE = "O número de telefone deve ter 11 dígitos numéricos"
+
 class Funcionario(models.Model):
     nome = models.CharField(
-        max_length=255, verbose_name="Nome do Funcionário", help_text="Campo obrigatório", unique=True, blank=False, null=False)
+        max_length=255, 
+        verbose_name="Nome do Funcionário", 
+        help_text=TEXTO_CAMPO_OBRIGATORIO, 
+        unique=True, 
+        blank=False, 
+        null=False
+    )
     cargo = models.CharField(
-        max_length=255, verbose_name="Cargo", help_text="Campo obrigatório")
+        max_length=255, 
+        verbose_name="Cargo", 
+        help_text=TEXTO_CAMPO_OBRIGATORIO
+    )
     telefone = models.CharField(
         max_length=11,
-        validators=[RegexValidator(
-            r'^\d{11}$', 'O número de telefone deve ter 11 dígitos númericos')],
+        validators=[RegexValidator(r'^\d{11}$', MSG_ERRO_TELEFONE)],
         verbose_name="Telefone",
-        help_text="Campo obrigatório", unique=True, blank=False, null=False)
+        help_text=TEXTO_CAMPO_OBRIGATORIO,
+        unique=True,
+        blank=False,
+        null=False
+    )
 
     def __str__(self):
         return self.nome
