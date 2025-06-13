@@ -34,7 +34,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0   # clone completo para evitar shallow clone
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v3
@@ -45,7 +45,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install coverage flake8 coverage-cobertura
+          pip install coverage flake8
 
       - name: Lint with flake8
         run: |
@@ -53,7 +53,6 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Setup environment variables
-        working-directory: sgo_systems
         run: |
           echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" > .env
           echo "DEBUG=True" >> .env
@@ -66,18 +65,28 @@ jobs:
       - name: Run tests with coverage
         working-directory: sgo_systems
         run: |
-          rm -f coverage.xml cobertura.xml || true
+          rm -f coverage.xml || true
           coverage run --source='.' manage.py test --keepdb -v 2
-          coverage-cobertura -o cobertura.xml
-
-      - name: Move cobertura.xml to root
-        run: mv sgo_systems/cobertura.xml cobertura.xml
+          coverage xml -o coverage.xml
+          if [ ! -f "coverage.xml" ]; then
+            echo " coverage.xml não foi gerado!"
+            exit 1
+          else
+            echo " coverage.xml gerado com sucesso!"
+            ls -la coverage.xml
+            coverage report
+          fi
 
       - name: Install SonarScanner CLI
         run: |
           curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
           unzip sonar-scanner.zip -d $HOME
           echo "$HOME/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
+
+      - name: Verificar se coverage.xml existe
+        run: |
+          ls -la sgo_systems/coverage.xml
+          head -20 sgo_systems/coverage.xml
 
       - name: Run SonarScanner
         env:
@@ -91,11 +100,20 @@ jobs:
             -Dsonar.sources=sgo_systems \
             -Dsonar.tests=sgo_systems \
             -Dsonar.test.inclusions=sgo_systems/**/test_*.py,sgo_systems/**/tests_*.py,sgo_systems/**/tests.py \
-            -Dsonar.coverageReportPaths=cobertura.xml \
+            -Dsonar.python.coverage.reportPaths=sgo_systems/coverage.xml \
             -Dsonar.exclusions=**/tests/**,docs/**,**/static/**,**/templates/**,**/migrations/**,**/__pycache__/**,**/admin.py,**/__init__.py,manage.py \
             -Dsonar.python.version=3.11 \
             -Dsonar.token=$SONAR_TOKEN \
             -Dsonar.host.url=$SONAR_HOST_URL
+
+      - name: Verify files
+        run: |
+          echo "Conteúdo de sgo_systems:"
+          ls -la sgo_systems/
+          echo "Conteúdo do coverage.xml:"
+          cat sgo_systems/coverage.xml || echo "Arquivo não encontrado"
+          echo "Conteúdo do .scannerwork:"
+          ls -la .scannerwork/
 
       - name: SonarQube Quality Gate Check
         uses: sonarsource/sonarqube-quality-gate-action@v1.1.0
