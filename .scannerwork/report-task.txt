@@ -1,0 +1,6 @@
+projectKey=sgo-engii
+serverUrl=http://labens.dct.ufrn.br/sonarqube
+serverVersion=25.5.0.107428
+dashboardUrl=http://labens.dct.ufrn.br/sonarqube/dashboard?id=sgo-engii
+ceTaskId=06761ffa-2aae-4945-ac00-8dc70aadc8e2
+ceTaskUrl=http://labens.dct.ufrn.br/sonarqube/api/ce/task?id=06761ffa-2aae-4945-ac00-8dc70aadc8e2

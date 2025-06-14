@@ -50,6 +50,7 @@ class CadastrarProdutoViewTests(TestCase):
       self.assertEqual(response.status_code, 200)
       form = response.context["form"]
       self.assertFalse(form.is_valid())
+      print(form.errors,"-")
       self.assertIn("nome", form.errors)
       self.assertIn("Este campo é obrigatório.", form.errors["nome"])
       self.assertEqual(Produtos.objects.count(), 0)

@@ -5,6 +5,7 @@ from .forms import ModeloForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from .models import Modelo
+from django.shortcuts import get_object_or_404
 
 
 def cadastrar_modelo(request):
@@ -29,13 +30,19 @@ def editar_modelo(request, pk):
         if form.is_valid():
             form.save()
             return redirect("listar_modelos")
+    
     else:
         form = ModeloForm(instance=modelo)
 
     return render(request, "editar_modelo.html", {"form": form})
 
 
-def deletar_modelo (request, pk):
-    modelo = Modelo.objects.get(pk=pk)
-    modelo.delete() 
+def deletar_modelo(request, pk):
+    modelo = get_object_or_404(Modelo, pk=pk)
+    if modelo.produtos_set.exists():  
+        messages.error(request, "Este modelo está vinculado a produtos e não pode ser excluído.")
+        return redirect("listar_modelos")
+
+    modelo.delete()
+    messages.success(request, "Modelo deletado com sucesso.")
     return redirect("listar_modelos")

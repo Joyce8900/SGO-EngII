@@ -1,0 +1,125 @@
+name: SGO-ENGII CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.11]
+
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: scdb_dev
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0    # clone completo para evitar shallow clone
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install coverage flake8
+
+      - name: Lint with flake8
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Setup environment variables
+        run: |
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" > .env
+          echo "DEBUG=True" >> .env
+          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+          echo "DB_HOST=postgres" >> .env
+          echo "DB_PORT=5432" >> .env
+
+      - name: Run tests with coverage
+        working-directory: sgo_systems
+        run: |
+          rm -f ../coverage.xml || true
+          # Usar --omit para excluir arquivos de teste do relatório de cobertura
+          coverage run --source=. --omit='*/tests/*','*test_*.py','*tests_*.py','*tests.py' manage.py test --keepdb -v 2
+          coverage xml -o ../coverage.xml
+          if [ ! -f "../coverage.xml" ]; then
+            echo " coverage.xml não foi gerado!"
+            exit 1
+          else
+            echo " coverage.xml gerado com sucesso!"
+            ls -la ../coverage.xml
+            coverage report # Verifique a saída deste comando para garantir que a cobertura está correta
+          fi
+
+      - name: Install SonarScanner CLI
+        run: |
+          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+          unzip sonar-scanner.zip -d $HOME
+          echo "$HOME/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
+
+      - name: Verificar se coverage.xml existe
+        run: |
+          ls -la coverage.xml
+          head -20 coverage.xml
+
+      - name: Run SonarScanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=sgo-engii \
+            -Dsonar.projectName=SGO-ENGII \
+            -Dsonar.projectVersion=1.0 \
+            -Dsonar.sources=sgo_systems \
+            -Dsonar.tests=sgo_systems \
+            -Dsonar.test.inclusions=sgo_systems/**/test_*.py,sgo_systems/**/tests_*.py,sgo_systems/**/tests.py \
+            -Dsonar.python.coverage.reportPaths=coverage.xml \
+            -Dsonar.python.coveragePlugin=cobertura \
+            -Dsonar.exclusions=**/tests/**,docs/**,**/static/**,**/templates/**,**/migrations/**,**/__pycache__/**,**/admin.py,**/__init__.py,manage.py \
+            -Dsonar.python.version=3.11 \
+            -Dsonar.token=$SONAR_TOKEN \
+            -Dsonar.host.url=$SONAR_HOST_URL \
+            -Dsonar.verbose=true
+
+      - name: Verify files
+        run: |
+          echo "Conteúdo de sgo_systems:"
+          ls -la sgo_systems/
+          echo "Conteúdo do coverage.xml:"
+          cat coverage.xml || echo "Arquivo não encontrado"
+          echo "Conteúdo do .scannerwork:"
+          ls -la .scannerwork/
+
+      - name: SonarQube Quality Gate Check
+        uses: sonarsource/sonarqube-quality-gate-action@v1.1.0
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

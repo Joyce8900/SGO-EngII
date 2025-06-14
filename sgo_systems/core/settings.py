@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'marca',
     'funcionarios',
     'cliente',
+    'entrada',
+    'home',
 ]
 
 MIDDLEWARE = [
