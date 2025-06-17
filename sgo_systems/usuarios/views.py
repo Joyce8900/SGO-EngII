@@ -1,14 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
 from django.contrib.auth.decorators import login_required
+from django.views.generic import View
+from django.utils.decorators import method_decorator
 
-def cadastro(request):
-    if request.method == "GET":
+class Cadastro(View):
+    def get(self, request):
         return render(request, 'cadastro.html')
-    else:
+    
+    def post(self, request):
         username = request.POST.get('username')
         email = request.POST.get('email')
         senha = request.POST.get('senha')
@@ -17,28 +20,25 @@ def cadastro(request):
         if user:
             return HttpResponse('Já existe um usuário com esse username')
         user = User.objects.create_user(username= username, email=email, password=senha)
-        user.save
+        user.save()
+        return redirect('login')
 
 
-        return HttpResponse('usuário cadastrado com sucesso')
-    
-
-def login(request):
-    if request.method == "GET":
-     return render(request, 'login.html')
-    else:
+class Login(View):
+    def post(self, request):    
         username= request.POST.get('username')
         senha= request.POST.get('senha')
 
         user = authenticate(username=username, password=senha)
         if user:
             login_django(request, user)
-            return HttpResponse('autenticado')
+            return redirect('plataforma')
         else:
             return HttpResponse('usuario ou senha inválidos')
-
-
-@login_required(login_url="/usuarios/login/")  #Usando decorators para fazer a validação/confirmar se o usuario está logado      
-def platarforma(request):
-    return HttpResponse('Plataforma')
-        
+    
+    def get(self, request):
+        return render(request, 'login.html')
+@method_decorator(login_required(login_url='/login/'), name='dispatch')
+class Plataforma(View):
+    def get(self, request):
+        return HttpResponse('Plataforma')
