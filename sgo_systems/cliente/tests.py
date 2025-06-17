@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from cliente.models import Cliente
-reverse("clientes:cliente_create")
+reverse("clientes:cliente_novo")
 
 class ClienteViewsTests(TestCase):
     def setUp(self):
@@ -12,34 +12,34 @@ class ClienteViewsTests(TestCase):
             endereco="Rua Central, 123"
         )
 
-    def test_cliente_create_get(self):
-        print("test_cliente_create_get")
-        response = self.client.get(reverse("clientes:cliente_create"))
+    def test_cliente_novo_get(self):
+        print("test_cliente_novo_get")
+        response = self.client.get(reverse("clientes:cliente_novo"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "cliente_form.html")
 
-    def test_cliente_create_post_valido(self):
+    def test_cliente_novo_post_valido(self):
         data = {
             "nome": "Cliente Novo",
             "cpf": "98765432100",
             "contato": "11999999999",
             "endereco": "Rua Nova, 456",
         }
-        response = self.client.post(reverse("clientes:cliente_create"), data)
+        response = self.client.post(reverse("clientes:cliente_novo"), data)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Cliente.objects.count(), 2)
         novo_cliente = Cliente.objects.get(nome="Cliente Novo")
         self.assertEqual(novo_cliente.cpf, "98765432100")
 
-    def test_cliente_create_post_invalido(self):
-        print("test_cliente_create_post_invalido")
+    def test_cliente_novo_post_invalido(self):
+        print("test_cliente_novo_post_invalido")
         data = {
             "nome": "",  # obrigatório
             "cpf": "",   # obrigatório
             "contato": "11999999999",
             "endereco": "Rua sem nome"
         }
-        response = self.client.post(reverse("clientes:cliente_create"), data)
+        response = self.client.post(reverse("clientes:cliente_novo"), data)
         self.assertEqual(response.status_code, 200)  # Não redireciona
         form = response.context["form"]
         self.assertFalse(form.is_valid())
