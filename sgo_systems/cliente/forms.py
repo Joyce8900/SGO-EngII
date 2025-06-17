@@ -1,6 +1,7 @@
 from django import forms
 from .models import Cliente
 
+
 class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
@@ -25,7 +26,11 @@ class ClienteForm(forms.ModelForm):
         return cleaned_data
 
 class ClienteFilterForm(forms.Form):
-    nome = forms.CharField(
+    termo = forms.CharField(
+        label="Buscar",
         required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Filtrar por nome'})
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Digite nome, cpf, contato ou endereço...',
+            'class': 'form-control'
+        })
     )
