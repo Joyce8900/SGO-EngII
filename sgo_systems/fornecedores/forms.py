@@ -25,11 +25,9 @@ class FornecedorForm(forms.ModelForm):
         return cleaned_data
 
 class FornecedorFilterForm(forms.Form):
-    nome = forms.CharField(
+    termo = forms.CharField(
+        label='Buscar',
         required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Filtrar por nome'})
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nome ou contato...'})
     )
-    contato = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Filtrar por contato'})
-    )
+    
