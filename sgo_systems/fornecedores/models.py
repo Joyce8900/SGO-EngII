@@ -3,7 +3,7 @@ from django.db import models
 class Fornecedor(models.Model):
     nome = models.CharField(max_length=100, verbose_name='Nome')
     endereco = models.TextField(verbose_name='Endereço', blank=True)
-    contato = models.CharField(max_length=100, verbose_name='Contato')
+    contato = models.CharField(max_length=100, verbose_name='Contato', unique=True)
     descricao = models.TextField(verbose_name='Descrição', blank=True)
     
     criado_em = models.DateTimeField(auto_now_add=True)
