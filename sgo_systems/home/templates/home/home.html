@@ -1,248 +1,89 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'constants/colors.css' %}">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGO - Sistema de Gestão Óptica</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-    
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    
-    body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #f5f7fa;
-        color: var(--Cinza);
-        line-height: 1.6;
-    }
-    
-    .dashboard {
-        display: flex;
-        min-height: 100vh;
-    }
-    
-    /* Sidebar */
-    .sidebar {
-        width: 250px;
-        background: var(--CianoEscuro);
-        color: white;
-        padding: 20px 0;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-    }
-    
-    .logo {
-        text-align: center;
-        padding: 20px 0;
-        margin-bottom: 30px;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    
-    .logo h2 {
-        color: white;
-        font-size: 1.5rem;
-    }
-    
-    .logo span {
-        color: var(--AzulClaro);
-    }
-    
-    /* Main Content */
-    .main-content {
-        flex: 1;
-        padding: 20px;
-    }
-    
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 20px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        margin-bottom: 30px;
-    }
-    
-    .user-info {
-        display: flex;
-        align-items: center;
-    }
-    
-    .user-info img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-    
-    /* Dashboard Grid */
-    .dashboard-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 25px;
-    }
-    
-    .dashboard-card {
-        background: white;
-        border-radius: 10px;
-        padding: 25px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        transition: all 0.3s ease;
-        border-top: 4px solid var(--AzulClaro);
-        text-align: center;
-    }
-    
-    .dashboard-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
-    
-    .card-icon {
-        font-size: 2.5rem;
-        color: var(--AzulClaro);
-        margin-bottom: 15px;
-    }
-    
-    .card-title {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-        color: var(--CianoEscuro);
-    }
-    
-    .card-link {
-        display: inline-block;
-        margin-top: 15px;
-        padding: 8px 20px;
-        background: var(--AzulClaro);
-        color: white;
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.3s ease;
-    }
-    
-    .card-link:hover {
-        background: var(--CianoEscuro);
-        transform: translateY(-2px);
-    }
-    
-    /* Responsividade */
-    @media (max-width: 768px) {
-        .dashboard {
-            flex-direction: column;
-        }
-        
-        .sidebar {
-            width: 100%;
-            height: auto;
-        }
-        
-        .dashboard-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>
-</head>
-<body>
-    <div class="dashboard">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="logo">
-                <h2>SGO <span>Óptica</span></h2>
-                <p>Sistema de Gestão</p>
+<!-- home_app/templates/home_app/home.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="main-content">
+        <div class="header">
+            <h3>Bem-vindo</h3>
+            <div class="user-info">
+                <img src="https://via.placeholder.com/40" alt="Usuário">
+                <span>Configurações <i class="fas fa-cog"></i></span>
             </div>
         </div>
-        
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="header">
-                <h3>Bem-vindo</h3>
-                <div class="user-info">
-                    <img src="https://via.placeholder.com/40" alt="Usuário">
-                    <span>Configurações <i class="fas fa-cog"></i></span>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Fornecedores -->
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-truck"></i>
                 </div>
+                <h3 class="card-title">Fornecedores</h3>
+                <p>Gerencie seus fornecedores de lentes e armações</p>
+                <a href="fornecedores/" class="card-link">Acessar</a>
             </div>
-            
-            <!-- Dashboard Grid -->
-            <div class="dashboard-grid">
-                <!-- Fornecedores -->
-                <div class="dashboard-card">
-                    <div class="card-icon">
-                        <i class="fas fa-truck"></i>
-                    </div>
-                    <h3 class="card-title">Fornecedores</h3>
-                    <p>Gerencie seus fornecedores de lentes e armações</p>
-                    <a href="fornecedores/" class="card-link">Acessar</a>
+
+            <!-- Produtos -->
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-glasses"></i>
                 </div>
-                
-                <!-- Produtos -->
-                <div class="dashboard-card">
-                    <div class="card-icon">
-                        <i class="fas fa-glasses"></i>
-                    </div>
-                    <h3 class="card-title">Produtos</h3>
-                    <p>Controle seu estoque de óculos e acessórios</p>
-                    <a href="produtos/listar_produtos/" class="card-link">Acessar</a>
+                <h3 class="card-title">Produtos</h3>
+                <p>Controle seu estoque de óculos e acessórios</p>
+                <a href="produtos/listar_produtos/" class="card-link">Acessar</a>
+            </div>
+
+            <!-- Modelos -->
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-shapes"></i>
                 </div>
-                
-                <!-- Modelos -->
-                <div class="dashboard-card">
-                    <div class="card-icon">
-                        <i class="fas fa-shapes"></i>
-                    </div>
-                    <h3 class="card-title">Modelos</h3>
-                    <p>Gerencie os modelos de armações disponíveis</p>
-                    <a href="modelo/listar_modelos/" class="card-link">Acessar</a>
+                <h3 class="card-title">Modelos</h3>
+                <p>Gerencie os modelos de armações disponíveis</p>
+                <a href="modelo/listar_modelos/" class="card-link">Acessar</a>
+            </div>
+
+            <!-- Marcas -->
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-tags"></i>
                 </div>
-                
-                <!-- Marcas -->
-                <div class="dashboard-card">
-                    <div class="card-icon">
-                        <i class="fas fa-tags"></i>
-                    </div>
-                    <h3 class="card-title">Marcas</h3>
-                    <p>Controle as marcas de produtos cadastradas</p>
-                    <a href="marca/listar_marcas/" class="card-link">Acessar</a>
+                <h3 class="card-title">Marcas</h3>
+                <p>Controle as marcas de produtos cadastradas</p>
+                <a href="marca/listar_marcas/" class="card-link">Acessar</a>
+            </div>
+
+            <!-- Funcionários -->
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-user-tie"></i>
                 </div>
-                
-                <!-- Funcionários -->
-                <div class="dashboard-card">
-                    <div class="card-icon">
-                        <i class="fas fa-user-tie"></i>
-                    </div>
-                    <h3 class="card-title">Funcionários</h3>
-                    <p>Gerencie sua equipe de colaboradores</p>
-                    <a href="funcionarios/" class="card-link">Acessar</a>
+                <h3 class="card-title">Funcionários</h3>
+                <p>Gerencie sua equipe de colaboradores</p>
+                <a href="funcionarios/" class="card-link">Acessar</a>
+            </div>
+
+            <!-- Clientes -->
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
                 </div>
-                
-                <!-- Clientes -->
-                <div class="dashboard-card">
-                    <div class="card-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3 class="card-title">Clientes</h3>
-                    <p>Gerencie o cadastro e histórico de clientes</p>
-                    <a href="clientes/" class="card-link">Acessar</a>
+                <h3 class="card-title">Clientes</h3>
+                <p>Gerencie o cadastro e histórico de clientes</p>
+                <a href="clientes/" class="card-link">Acessar</a>
+            </div>
+
+            <!-- Entradas -->
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-arrow-down"></i>
                 </div>
-                
-                <!-- Entradas -->
-                <div class="dashboard-card">
-                    <div class="card-icon">
-                        <i class="fas fa-arrow-down"></i>
-                    </div>
-                    <h3 class="card-title">Entradas</h3>
-                    <p>Controle as entradas de produtos no estoque</p>
-                    <a href="entrada/listar/" class="card-link">Acessar</a>
-                </div>
+                <h3 class="card-title">Entradas</h3>
+                <p>Controle as entradas de produtos no estoque</p>
+                <a href="entrada/listar/" class="card-link">Acessar</a>
             </div>
         </div>
     </div>
-</body>
-</html>
+    </div>
+{% endblock %}
