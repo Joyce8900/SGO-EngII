@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 
 # Create your views here.
 class CadastrarFuncaoView(View):
-    template_name = 'funcao/cadastrar_funcao.html'
+    template_name = 'funcao/templates/form_funcao.html'
 
 
     def get(self, request, *args, **kwargs):
