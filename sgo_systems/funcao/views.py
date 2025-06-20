@@ -19,3 +19,19 @@ class CadastrarFuncaoView(View):
         funcao.save()
 
         return redirect('listar_funcoes')
+    
+
+class ListarFuncaoView(View):
+    template_name = 'funcao/templates/listar_funcao.html'
+
+    def get(self, request, *args, **kwargs):
+        filtro_nome = request.GET.get('filtro_nome', '')
+        if filtro_nome:
+            funcoes = Funcao.objects.filter(nome__icontains=filtro_nome)
+        else:
+            funcoes = Funcao.objects.all()
+
+        return render(request, self.template_name, {'funcoes': funcoes,})
+        
+
+
