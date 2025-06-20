@@ -34,4 +34,16 @@ class ListarFuncaoView(View):
         return render(request, self.template_name, {'funcoes': funcoes,})
         
 
+class EditarFuncaoView(View):
+    template_name = 'funcao/templates/form_funcao.html'
 
+    def get(self, request, id, *args, **kwargs):
+        funcao = get_object_or_404(Funcao, id=kwargs['id'])
+        return render(request, self.template_name, {'funcao': funcao})
+    
+    def post(self, request, id, *args, **kwargs):
+        funcao = get_object_or_404(Funcao, id=kwargs['id'])
+        funcao.nome = request.POST.get('nome')
+        funcao.salario = request.POST.get('salario')
+        funcao.save()
+        return redirect('listar_funcoes')
