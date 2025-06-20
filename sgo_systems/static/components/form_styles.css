@@ -1,0 +1,107 @@
+@import url('../constants/colors.css');
+
+.form-container {
+    background: linear-gradient(135deg, var(--Branco), #ffffff);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.form-card {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-card-header {
+    background: linear-gradient(to right, var(--AzulEscuro), var(--CianoEscuro));
+    border-bottom: none;
+    padding: 1.5rem;
+    border-radius: 20px 20px 0 0 !important;
+    color: white;
+}
+
+.form-card-header h2 {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    margin-bottom: 0;
+}
+
+.form-card-body {
+    padding: 2rem;
+    background-color: white;
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--Cinza);
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 10px 15px;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s;
+}
+
+.form-control:focus {
+    border-color: var(--AzulClaro);
+    box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+}
+
+.form-btn {
+    border-radius: 10px;
+    padding: 10px 25px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+    border: none;
+}
+
+.form-btn-primary {
+    background: var(--VerdeEscuro);
+    box-shadow: 0 4px 15px rgba(6, 6, 115, 0.3);
+    color: white;
+}
+
+.form-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(6, 6, 115, 0.4);
+    color: white;
+}
+
+.form-btn-secondary {
+    background: var(--Vermelho);
+    box-shadow: 0 4px 15px rgba(51, 51, 51, 0.2);
+    color: var(--Branco)
+}
+
+.form-btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(51, 51, 51, 0.3);
+    color: white;
+}
+
+.form-text-danger {
+    color: var(--Vermelho) !important;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+    .form-card {
+        border-radius: 15px;
+    }
+    
+    .form-card-header, .form-card-body {
+        padding: 1.25rem;
+    }
+    
+    .form-btn {
+        padding: 8px 20px;
+    }
+}

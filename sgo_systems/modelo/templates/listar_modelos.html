@@ -57,9 +57,13 @@
                 <a href="{% url 'editar_modelo' modelo.pk %}" class="btn btn-outline-primary" title="Editar">
                   <i class="bi bi-pencil-square"></i>
                 </a>
-                <a href="{% url 'deletar_modelo' modelo.pk %}" class="btn btn-outline-danger" title="Excluir">
-                  <i class="bi bi-trash"></i>
-                </a>
+                <form action="{% url 'deletar_modelo' modelo.pk %}" method="post" style="display:inline;" onclick="return confirm('Deseja realmente excluir?')">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-danger" title="Excluir">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </form>
+                
               </div>
             </td>
           </tr>

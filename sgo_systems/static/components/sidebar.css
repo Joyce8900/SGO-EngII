@@ -1,0 +1,56 @@
+/* static/components/sidebar.css */
+.sidebar {
+    width: 250px;
+    background: var(--CianoEscuro);
+    color: white;
+    padding: 20px 0;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    overflow-y: auto;
+}
+
+.sidebar-logo {
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-logo h2 {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.sidebar-logo span {
+    color: var(--AzulClaro);
+}
+
+.sidebar-menu {
+    padding: 0 15px;
+}
+
+.sidebar-menu a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 12px 15px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    transition: all 0.3s;
+}
+
+.sidebar-menu a:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+}

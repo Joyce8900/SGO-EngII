@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista de Clientes</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
+
 <div class="container mt-4">
     <div class="d-flex justify-content-between mb-3">
         <h1>Clientes</h1>
@@ -48,5 +44,4 @@
         </tbody>
     </table>
 </div>
-</body>
-</html>
+{% endblock %}
