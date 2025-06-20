@@ -39,7 +39,10 @@
                     <td>{{ funcao.salario|floatformat:2 }}</td>
                     <td>
                       <a href="{% url 'editar_funcao' funcao.id %}" class="btn btn-sm btn-primary">Editar</a>
-                      <a href="{% url 'deletar_funcao' funcao.id %}" class="btn btn-sm btn-danger">Excluir</a>
+                      <form action="{% url 'deletar_funcao' funcao.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                      </form>
                     </td>
                   </tr>
                 {% empty %}
