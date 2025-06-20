@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lista de Funções</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  </head>
+  <body class="bg-light">
+    <div class="container py-5">
+      <div class="row mb-4">
+        <div class="col-12">
+          <h2 class="text-center">Lista de Funções</h2>
+          <form action="{% url 'listar_funcoes' %}" method="GET" class="d-flex mb-3">
+            <input type="text" name="filtro_nome" class="form-control me-2" placeholder="Filtrar por nome" value="{{ request.GET.filtro_nome }}">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+          </form>
+          <div class="d-flex justify-content-end mb-3">
+            <a href="{% url 'cadastrar_funcao' %}" class="btn btn-success">Nova Função</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive shadow-sm">
+            <table class="table table-bordered table-hover table-striped">
+              <thead class="table-dark">
+                <tr>
+                  <th>Nome</th>
+                  <th>Salário</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for funcao in funcoes %}
+                  <tr>
+                    <td>{{ funcao.nome }}</td>
+                    <td>{{ funcao.salario|floatformat:2 }}</td>
+                    <td>
+                      <a href="{% url 'editar_funcao' funcao.id %}" class="btn btn-sm btn-primary">Editar</a>
+                      <a href="{% url 'deletar_funcao' funcao.id %}" class="btn btn-sm btn-danger">Excluir</a>
+                    </td>
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="3" class="text-center">Nenhuma função cadastrada.</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  </body>
+</html>
