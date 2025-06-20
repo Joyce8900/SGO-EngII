@@ -1,48 +1,63 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.urls import reverse
+from django.views import View
 from .forms import ModeloForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from .models import Modelo
 from django.shortcuts import get_object_or_404
+URL_LISTAR_MODELOS = ("listar_modelos.html")
+URL_EDITAR_MODELO = ("editar_modelo.html")
+URL_CADASTRAR_MODELO = ("cadastrar_modelo.html")
 
-
-def cadastrar_modelo(request):
-  if request.method == "POST":
+class CadastrarModelo(View):
+  def get(self, request):
+    form = ModeloForm()
+    return render(request, URL_CADASTRAR_MODELO, {"form": form})
+     
+  def post(self, request):
     form = ModeloForm(request.POST)
     if form.is_valid():
       form.save()
       messages.success(request, "✔ Modelo cadastrado com sucesso!")
       return redirect("listar_modelos")
-  else:
-    form = ModeloForm()
-  return render(request, "cadastrar_modelo.html", {"form": form})
+    return render(request, URL_CADASTRAR_MODELO, {"form": form} )
+     
 
-def listar_modelos(request):
-    modelos = Modelo.objects.all().order_by('nome')  
-    return render(request, "listar_modelos.html", {"modelos": modelos})
-
-def editar_modelo(request, pk):
-    modelo = Modelo.objects.get(pk=pk)
-    if request.method == "POST":
-        form = ModeloForm(request.POST, instance=modelo)
-        if form.is_valid():
-            form.save()
-            return redirect("listar_modelos")
-    
-    else:
-        form = ModeloForm(instance=modelo)
-
-    return render(request, "editar_modelo.html", {"form": form})
+class ListarModelos(View):
+  def get(self, request):
+    modelos = Modelo.objects.all().order_by('nome')
+    return render(request, URL_LISTAR_MODELOS, {"modelos": modelos})
 
 
-def deletar_modelo(request, pk):
+class EditarModelo(View):
+  def get(self, request, pk):
     modelo = get_object_or_404(Modelo, pk=pk)
-    if modelo.produtos_set.exists():  
-        messages.error(request, "Este modelo está vinculado a produtos e não pode ser excluído.")
-        return redirect("listar_modelos")
+    form = ModeloForm(instance=modelo)
+    return render(request, URL_EDITAR_MODELO, {"form": form})
+  
+  def post(self, request, pk):
+    modelo = get_object_or_404(Modelo, pk=pk)
+    form = ModeloForm(request.POST, instance=modelo)
+    if form.is_valid():
+      form.save()
+      messages.success(request, "✔ Modelo editado com sucesso!")
+      return redirect("listar_modelos")
+    return render(request, URL_EDITAR_MODELO, {"form": form})
 
+
+
+class DeletarModelo(View):
+  def post(self, request, pk):
+    modelo = get_object_or_404(Modelo, pk=pk)
     modelo.delete()
-    messages.success(request, "Modelo deletado com sucesso.")
-    return redirect("listar_modelos")
+    messages.success(request, "Modelo excluído com sucesso.")
+    return redirect('listar_modelos')
+  
+  def get(self, request, pk):
+    modelo = get_object_or_404(Modelo, pk=pk)
+    modelo.delete()
+    return redirect('listar_modelos')
+
+  
+
+
