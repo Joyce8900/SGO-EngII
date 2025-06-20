@@ -47,3 +47,10 @@ class EditarFuncaoView(View):
         funcao.salario = request.POST.get('salario')
         funcao.save()
         return redirect('listar_funcoes')
+
+class DeletarFuncaoView(View):
+    def post(self, request, id, *args, **kwargs):
+        funcao = get_object_or_404(Funcao, id=kwargs['id'])
+        funcao.delete()
+        messages.success(request, "Função deletada com sucesso!")
+        return redirect('listar_funcoes')
