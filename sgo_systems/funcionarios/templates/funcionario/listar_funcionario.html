@@ -41,7 +41,10 @@
                     <td>{{ funcionario.telefone }}</td>
                     <td>
                         <a href="{% url 'editar_funcionario' funcionario.id %}" class="btn btn-sm btn-primary">Editar</a>
-                        <a href="{% url 'deletar_funcionario' funcionario.id %}" class="btn btn-sm btn-danger">Excluir</a>
+                        <form action="{% url 'deletar_funcionario' funcionario.id %}" method="POST" style="display:inline;">
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                        </form>
                       </td>
                   </tr>
                 {% empty %}
