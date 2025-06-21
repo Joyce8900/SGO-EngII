@@ -1,0 +1,171 @@
+/* static/components/list_styles.css */
+@import url('../constants/colors.css');
+
+.list-container {
+    background: linear-gradient(135deg, var(--Branco), #ffffff);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.list-card {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+}
+
+.list-card-header {
+    background: linear-gradient(to right, var(--AzulEscuro), var(--CianoEscuro));
+    padding: 1.5rem;
+    color: white;
+    border-radius: 20px 20px 0 0;
+}
+
+.list-card-header h2 {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.list-card-body {
+    padding: 2rem;
+    background-color: white;
+}
+
+/* Estilos para a tabela */
+.list-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.list-table thead th {
+    background-color: var(--AzulClaro);
+    color: white;
+    font-weight: 500;
+    padding: 12px 15px;
+    border: none;
+}
+
+.list-table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.list-table tbody tr:hover {
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+.list-table tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.list-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Badges */
+.list-badge {
+    padding: 5px 10px;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+/* Ações */
+.list-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.list-btn-action {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.list-btn-action:hover {
+    transform: translateY(-2px);
+}
+
+.list-btn-edit {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: var(--AzulEscuro);
+}
+
+.list-btn-edit:hover {
+    background-color: rgba(52, 152, 219, 0.2);
+}
+
+.list-btn-delete {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--Vermelho);
+}
+
+.list-btn-delete:hover {
+    background-color: rgba(231, 76, 60, 0.2);
+}
+
+/* Mensagens */
+.list-message {
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(46, 204, 113, 0.1);
+    color: var(--VerdeEscuro);
+}
+
+.list-message i {
+    margin-right: 10px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .list-card {
+        border-radius: 15px;
+    }
+    
+    .list-card-header, .list-card-body {
+        padding: 1rem;
+    }
+    
+    .list-table thead {
+        display: none;
+    }
+    
+    .list-table tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .list-table tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .list-table tbody td::before {
+        content: attr(data-label);
+        font-weight: 500;
+        color: var(--Cinza);
+        margin-right: 15px;
+    }
+    
+    .list-actions {
+        justify-content: flex-end;
+    }
+}
