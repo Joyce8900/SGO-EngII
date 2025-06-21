@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.views import View
 from .models import Funcionario
 from django.shortcuts import get_object_or_404
 
