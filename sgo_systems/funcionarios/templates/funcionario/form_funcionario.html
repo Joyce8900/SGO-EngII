@@ -11,7 +11,7 @@
       <h2 class="mb-4 text-center">
         {% if funcionario %}Editar{% else %}Cadastrar{% endif %} Funcionário
       </h2>
-      <form action="{% if funcionario %}{% url 'editar_funcionario' funcionario.id %}{% else %}{% url 'cadastrar_funcionario' %}{% endif %}" method="POST">
+      <form action="{% if funcionario and funcionario.id %}{% url 'editar_funcionario' funcionario.id %}{% else %}{% url 'cadastrar_funcionario' %}{% endif %}" method="POST">
         {% csrf_token %}
         <label>Nome do funcionário:</label>
         <input type="text" name="nome" class="form-control" placeholder="Digite o nome aqui"
@@ -23,8 +23,11 @@
         <br>
         <label>Número de telefone:</label>
         <input type="tel" name="telefone" class="form-control" placeholder="Digite o telefone com DDD"
-               pattern="\d{11}" title="Digite 11 números, incluindo o DDD"
-               value="{{ funcionario.telefone|default_if_none:'' }}" required>
+              pattern="\d{11}" title="Digite 11 números, incluindo o DDD"
+              value="{{ funcionario.telefone|default_if_none:'' }}" required>
+        {% if error %}
+          <div class="text-danger mt-1">{{ error }}</div>
+        {% endif %}
         <br>
         <input type="submit" class="btn btn-success" 
                value="{% if funcionario %}Salvar Alterações{% else %}Cadastrar Funcionário{% endif %}">

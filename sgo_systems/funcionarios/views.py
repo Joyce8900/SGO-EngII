@@ -16,7 +16,7 @@ class CadastrarFuncionarioView(View):
 
         if Funcionario.objects.filter(telefone=telefone).exists():
             messages.error(request, "Já existe um funcionário cadastrado com este telefone.")
-            return render(request, self.template_name)
+            return render(request, self.template_name, {'funcionario': {'nome': nome, 'cargo': cargo, 'telefone': telefone}, 'error': 'Telefone já cadastrado.'})
         
         funcionario = Funcionario(nome=nome, cargo=cargo, telefone=telefone)
         funcionario.save()
