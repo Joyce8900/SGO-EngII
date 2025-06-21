@@ -14,6 +14,7 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | 05/04/2025 | 0.0.3   | Correções de inconsistências nas descrições, requisitos envolvidos e testes de aceitação | Gabriel |
 | 11/06/2025 | 0.0.4   | Adição da US06 - Manter Quantidade em Estoque e reordenação | Cayo |
 | 11/06/2025 | 0.0.5   | Adição da US11 Dashboard e ajustes na contagem de PF | Cayo |
+| 20/06/2025 | 0.0.6   | Criação da US função | Gabriel |
 
 
 ### User Story US01 - Manter Funcionário
@@ -405,3 +406,42 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | **TA11.04** | **Atalhos visíveis:** Deve exibir os 5 processos mais utilizados (ex: Nova Venda, Consultar Estoque) com destaque. |
 | **TA11.05** | **Informações contextuais:** Deve mostrar resumo do dia (total de vendas, alertas de estoque baixo) quando aplicável. |
 | **TA11.06** | **Personalização:** O gerente pode reorganizar os atalhos principais conforme necessidade. |
+
+
+### User Story US05 - Manter Função
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
+| **Descrição** | O sistema deve permitir ao administrador cadastrar, editar, visualizar e excluir funções que serão atribuídas aos funcionários. Isso inclui informações como nome da função e salário base. |
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF04.01          | Inserir Função |
+| RF04.02          | Listar Funções |
+| RF04.03          | Atualizar Função |
+| RF04.04          | Deletar Função |
+
+|                           |                                     |
+| ------------------------- | ----------------------------------- | 
+| **Prioridade**            | Essencial                           | 
+| **Estimativa**            | 4 h                                 | 
+| **Tempo Gasto (real):**   |                                     | 
+| **Tamanho Funcional**     | 6 PF                                | 
+| **Analista**              | Pessoa 1                            | 
+| **Desenvolvedor**         | Pessoa 2                            | 
+| **Revisor**               | Pessoa 3                            | 
+| **Testador**              | Pessoa 4                            | 
+
+| Testes de Aceitação (TA) |  |
+| ----------- | --------- |
+| **Código**      | **Descrição** |
+| **TA04.01** | **Cadastrar Função com sucesso:** O administrador acessa a tela de cadastro de função, preenche os campos obrigatórios (como nome e salário base) e clica em "Salvar". O sistema exibe: "Função cadastrada com sucesso". |
+| **TA04.02** | **Cadastrar Função com erro:** O administrador tenta cadastrar uma função com dados inválidos (por exemplo, nome em branco ou salário negativo). O sistema exibe: "Erro no cadastro. Verifique os campos obrigatórios". |
+| **TA04.03** | **Editar Função com sucesso:** O administrador seleciona uma função existente, altera as informações e confirma. O sistema exibe: "Função atualizada com sucesso". |
+| **TA04.04** | **Editar Função com erro:** O administrador tenta editar uma função, mas insere dados inválidos. O sistema exibe: "Alterações não salvas. Verifique os dados informados". |
+| **TA04.05** | **Excluir Função com sucesso:** O administrador exclui uma função que não está vinculada a nenhum funcionário. O sistema exibe: "Função excluída com sucesso". |
+| **TA04.06** | **Excluir Função com erro:** O administrador tenta excluir uma função que está vinculada a um ou mais funcionários. O sistema exibe: "Erro: esta função está associada a funcionários e não pode ser excluída". |
+| **TA04.07** | **Pesquisar Função com sucesso:** O administrador realiza uma busca por nome de função e o sistema retorna os resultados esperados. |
+| **TA04.08** | **Pesquisar Função sem resultados:** O administrador faz uma busca que não encontra funções. O sistema exibe: "Nenhuma função encontrada". |
+| **TA04.09** | **Cancelar Cadastro de Função:** O administrador começa o cadastro, mas decide cancelar antes de salvar. O sistema retorna à tela anterior sem salvar os dados. |
+| **TA04.10** | **Cancelar Edição de Função:** O administrador edita uma função, mas cancela antes de confirmar. O sistema descarta as alterações e retorna à tela anterior. |

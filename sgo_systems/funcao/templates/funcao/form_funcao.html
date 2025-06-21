@@ -18,7 +18,7 @@
                    value="{{ funcao.nome|default_if_none:'' }}" required>
             <br>
             <label>Salário</label>
-            <input type="number" step="100" min="0" name="salario" class="form-control"
+            <input type="number" step="0.01" min="0" name="salario" class="form-control"
                   placeholder="Digite o salário da função aqui"
                   value="{{ funcao.salario|default_if_none:'' }}" required>
             <br>
