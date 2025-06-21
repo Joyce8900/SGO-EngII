@@ -16,7 +16,10 @@ class CadastrarFuncionarioView(View):
 
         if Funcionario.objects.filter(telefone=telefone).exists():
             messages.error(request, "Já existe um funcionário cadastrado com este telefone.")
-            return render(request, self.template_name, {'funcionario': {'nome': nome, 'cargo': cargo, 'telefone': telefone}, 'error': 'Telefone já cadastrado.'})
+
+            contexto = {'funcionario': {'nome': nome, 'cargo': cargo, 'telefone': telefone}, 'error': 'Telefone já cadastrado.', 'is_edit': False}
+            
+            return render(request, self.template_name, contexto)
         
         funcionario = Funcionario(nome=nome, cargo=cargo, telefone=telefone)
         funcionario.save()
@@ -39,13 +42,27 @@ class EditarFuncionarioView(View):
 
     def get(self, request, *args, **kwargs):
         funcionario = get_object_or_404(Funcionario, id=kwargs['pk'])
-        return render(request, self.template_name, {'funcionario': funcionario})
+        return render(request, self.template_name, {'funcionario': funcionario, 'is_edit': True})
 
     def post(self, request, *args, **kwargs):
         funcionario = get_object_or_404(Funcionario, id=kwargs['pk'])
-        funcionario.nome = request.POST.get('nome')
-        funcionario.cargo = request.POST.get('cargo')
-        funcionario.telefone = request.POST.get('telefone')
+        nome = request.POST.get('nome')
+        cargo = request.POST.get('cargo')
+        telefone = request.POST.get('telefone')
+
+        # Verifica se existe outro funcionário com o mesmo telefone
+        if Funcionario.objects.filter(telefone=telefone).exclude(id=funcionario.id).exists():
+            messages.error(request, "Já existe um funcionário cadastrado com este telefone.")
+            contexto = {
+                'funcionario': {'id': funcionario.id, 'nome': nome, 'cargo': cargo, 'telefone': telefone},
+                'error': 'Telefone já cadastrado.',
+                'is_edit': True
+            }
+            return render(request, self.template_name, contexto)
+
+        funcionario.nome = nome
+        funcionario.cargo = cargo
+        funcionario.telefone = telefone
         funcionario.save()
         return redirect('listar_funcionario')
 
