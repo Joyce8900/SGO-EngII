@@ -1,77 +1,128 @@
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <title>Cadastrar Produtos</title>
-</head>
+{% extends 'base.html' %}
+{% load static %}
 
-<body>
-  <div class="container mt-5">
-    <h2 class="mb-4">Cadastrar Produto</h2>
-    
-    <form method="post" class="col-md-6">
-      {% csrf_token %}
-        
-      <div class="mb-3">
-        {{ form.nome.label_tag }}
-        {{ form.nome }}
-        
-      </div>
-      
-      <div class="mb-3">
-        {{ form.preco.label_tag }}
-        {{ form.preco }}
-        {{form.preco.errors}}    
+{% block content %}
 
-      </div>
-      <div class="mb-3">
-        {{ form.quantidade.label_tag }}
-        {{ form.quantidade }}
-        {{form.quantidade.errors}}
-        
-      </div>
-      <div class="mb-3">
-        {{ form.cor.label_tag }}
-        {{ form.cor }}
-      </div>
-      <div class="mb-3">
-        {{ form.tamanho.label_tag }}
-        {{ form.tamanho }}
-      </div>
-      <div class="mb-3">
-        {{ form.marca.label_tag }}
-        {{ form.marca }}
-      </div>
-      <div class="mb-3">
-        {{ form.descricao.label_tag }}
-        {{ form.descricao }}
-      </div>
-      <div class="mb-3">
-        {{ form.categoria.label_tag }}
-        {{ form.categoria }}
-      <div>
-      <div class="mb-3">
-        {{ form.modelo.label_tag }}
-        {{ form.modelo }}
-        <a class="btn btn-primary" href="{% url 'cadastrar_modelo' %}">Deseja cadastrar um novo modelo?</a> 
-      </div>
-      
-      <button type="submit" class="btn btn-success">Salvar</button>
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-success" role="alert">
-            {{ message }}
-          </div>
-        {% endfor %}
-      {% endif %}
+<div class="form-container">
+    <div class="form-card shadow">
+        <div class="form-card-header">
+            <h2>{% if form.instance.pk %}Editar{% else %}Cadastrar{% endif %} Produto</h2>
+        </div>
+        <div class="form-card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-4">
+                    <label for="{{ form.nome.id_for_label }}" class="form-label">{{ form.nome.label }}</label>
+                    <input type="text" name="{{ form.nome.name }}" id="{{ form.nome.id_for_label }}" 
+                           class="form-control" value="{{ form.nome.value|default_if_none:'' }}">
+                    {% if form.nome.errors %}
+                    <div class="form-text-danger">{{ form.nome.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="{{ form.preco.id_for_label }}" class="form-label">{{ form.preco.label }}</label>
+                    <input type="number" name="{{ form.preco.name }}" id="{{ form.preco.id_for_label }}" 
+                           class="form-control" value="{{ form.preco.value|default_if_none:'' }}" step="0.01">
+                    {% if form.preco.errors %}
+                    <div class="form-text-danger">{{ form.preco.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="{{ form.quantidade.id_for_label }}" class="form-label">{{ form.quantidade.label }}</label>
+                    <input type="number" name="{{ form.quantidade.name }}" id="{{ form.quantidade.id_for_label }}" 
+                           class="form-control" value="{{ form.quantidade.value|default_if_none:'' }}">
+                    {% if form.quantidade.errors %}
+                    <div class="form-text-danger">{{ form.quantidade.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="{{ form.cor.id_for_label }}" class="form-label">{{ form.cor.label }}</label>
+                    <input type="text" name="{{ form.cor.name }}" id="{{ form.cor.id_for_label }}" 
+                           class="form-control" value="{{ form.cor.value|default_if_none:'' }}">
+                    {% if form.cor.errors %}
+                    <div class="form-text-danger">{{ form.cor.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="{{ form.tamanho.id_for_label }}" class="form-label">{{ form.tamanho.label }}</label>
+                    <input type="text" name="{{ form.tamanho.name }}" id="{{ form.tamanho.id_for_label }}" 
+                           class="form-control" value="{{ form.tamanho.value|default_if_none:'' }}">
+                    {% if form.tamanho.errors %}
+                    <div class="form-text-danger">{{ form.tamanho.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="{{ form.marca.id_for_label }}" class="form-label">{{ form.marca.label }}</label>
+                    <input type="text" name="{{ form.marca.name }}" id="{{ form.marca.id_for_label }}" 
+                           class="form-control" value="{{ form.marca.value|default_if_none:'' }}">
+                    {% if form.marca.errors %}
+                    <div class="form-text-danger">{{ form.marca.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="{{ form.descricao.id_for_label }}" class="form-label">{{ form.descricao.label }}</label>
+                    <textarea name="{{ form.descricao.name }}" id="{{ form.descricao.id_for_label }}" 
+                              class="form-control" rows="3">{{ form.descricao.value|default_if_none:'' }}</textarea>
+                    {% if form.descricao.errors %}
+                    <div class="form-text-danger">{{ form.descricao.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="{{ form.categoria.id_for_label }}" class="form-label">{{ form.categoria.label }}</label>
+                    <select name="{{ form.categoria.name }}" id="{{ form.categoria.id_for_label }}" class="form-control">
+                        {% for value, label in form.categoria.field.choices %}
+                            <option value="{{ value }}" {% if form.categoria.value == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if form.categoria.errors %}
+                    <div class="form-text-danger">{{ form.categoria.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="{{ form.modelo.id_for_label }}" class="form-label">{{ form.modelo.label }}</label>
+                    <select name="{{ form.modelo.name }}" id="{{ form.modelo.id_for_label }}" class="form-control">
+                        {% for value, label in form.modelo.field.choices %}
+                            <option value="{{ value }}" {% if form.modelo.value == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if form.modelo.errors %}
+                    <div class="form-text-danger">{{ form.modelo.errors }}</div>
+                    {% endif %}
+                    <a href="{% url 'cadastrar_modelo' %}" class="btn btn-outline-primary mt-2 d-inline-flex align-items-center">
+                        <i class="fas fa-plus-circle me-2"></i> Cadastrar novo modelo
+                    </a>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-5">
+                    <a href="{% url 'listar_produtos' %}" class="form-btn form-btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i> Voltar
+                    </a>
+                    <button type="submit" class="form-btn form-btn-primary">
+                        <i class="fas fa-save me-2"></i> Salvar
+                    </button>
+                </div>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success mt-4" role="alert">
+                            <i class="fas fa-check-circle me-2"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
 
-      <a href="{% url 'listar_produtos' %}" class="btn btn-primary">Voltar</a>
-      
-    </form>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<!-- Adicione Font Awesome para os ícones -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}
