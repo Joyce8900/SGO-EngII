@@ -10,7 +10,7 @@ class Funcionario(models.Model):
         max_length=255, 
         verbose_name="Nome do Funcionário", 
         help_text=TEXTO_CAMPO_OBRIGATORIO, 
-        unique=True, 
+        unique=False,
         blank=False, 
         null=False
     )

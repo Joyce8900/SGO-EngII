@@ -13,6 +13,10 @@ class CadastrarFuncionarioView(View):
         nome = request.POST.get('nome')
         cargo = request.POST.get('cargo')
         telefone = request.POST.get('telefone')
+
+        if Funcionario.objects.filter(telefone=telefone).exists():
+            messages.error(request, "Já existe um funcionário cadastrado com este telefone.")
+            return render(request, self.template_name)
         
         funcionario = Funcionario(nome=nome, cargo=cargo, telefone=telefone)
         funcionario.save()
