@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator, RegexValidator
 
 # Constantes
 TEXTO_CAMPO_OBRIGATORIO = "Campo obrigatório"
@@ -12,6 +13,12 @@ class Funcao(models.Model):
         unique=True,
         blank=False,
         null=False,
+        validators=[
+            RegexValidator(
+                regex=r'^[a-zA-Z\s]+$',
+                message='O nome da função deve conter apenas letras e espaços.',
+            )
+        ]
     )
     salario = models.DecimalField(
         max_digits=10,
@@ -20,6 +27,7 @@ class Funcao(models.Model):
         help_text=TEXTO_CAMPO_OBRIGATORIO,
         blank=False,
         null=False,
+        validators=[MinValueValidator(0.01, message='O salário deve ser maior que zero.')]
     )
 
     def __str__(self):
