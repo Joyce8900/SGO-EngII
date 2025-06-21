@@ -3,11 +3,12 @@ from django.shortcuts import render, redirect
 from .models import Funcionario
 from django.shortcuts import get_object_or_404
 
+class CadastrarFuncionarioView(View):
+    template_name = 'funcionario/form_funcionario.html'
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
 
-def cadastrar_funcionario(request):
-    if request.method == 'GET':
-        return render(request, 'form_funcionario.html')
-    elif request.method == 'POST':
+    def post(self, request, *args, **kwargs):
         nome = request.POST.get('nome')
         cargo = request.POST.get('cargo')
         telefone = request.POST.get('telefone')
@@ -17,30 +18,35 @@ def cadastrar_funcionario(request):
 
         return redirect('listar_funcionario')
 
+class ListarFuncionarioView(View):
+    template_name = 'funcionario/listar_funcionario.html'
 
-def listar_funcionario(request):
-    filtro_nome = request.GET.get('filtro_nome', '')
-    if filtro_nome:
-        funcionarios = Funcionario.objects.filter(nome__icontains=filtro_nome)
-    else:
-        funcionarios = Funcionario.objects.all()
-    return render(request, 'listar_funcionario.html', {'funcionarios': funcionarios})
+    def get(self, request, *args, **kwargs):
+        filtro_nome = request.GET.get('filtro_nome', '')
+        if filtro_nome:
+            funcionarios = Funcionario.objects.filter(nome__icontains=filtro_nome)
+        else:
+            funcionarios = Funcionario.objects.all()
+        return render(request, self.template_name, {'funcionarios': funcionarios})
 
+class EditarFuncionarioView(View):
+    template_name = 'funcionario/form_funcionario.html'
 
-def editar_funcionario(request, id):
-    funcionario = Funcionario.objects.get(id=id)
-    if request.method == 'GET':
-        return render(request, 'form_funcionario.html', {'funcionario': funcionario})
-    elif request.method == 'POST':
+    def get(self, request, *args, **kwargs):
+        funcionario = get_object_or_404(Funcionario, id=kwargs['pk'])
+        return render(request, self.template_name, {'funcionario': funcionario})
+
+    def post(self, request, *args, **kwargs):
+        funcionario = get_object_or_404(Funcionario, id=kwargs['pk'])
         funcionario.nome = request.POST.get('nome')
         funcionario.cargo = request.POST.get('cargo')
         funcionario.telefone = request.POST.get('telefone')
         funcionario.save()
         return redirect('listar_funcionario')
 
-
-def excluir_funcionario(request, id):
-    funcionario = get_object_or_404(Funcionario, id=id)
-    funcionario.delete()
-    messages.success(request, "Produto deletado com sucesso!")
-    return redirect('listar_funcionario')
+class DeletarFuncionarioView(View):
+    def post(self, request, *args, **kwargs):
+        funcionario = get_object_or_404(Funcionario, id=kwargs['pk'])
+        funcionario.delete()
+        messages.success(request, "Funcionário deletado com sucesso!")
+        return redirect('listar_funcionario')
