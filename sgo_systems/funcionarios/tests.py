@@ -54,6 +54,6 @@ class FuncionarioViewTest(TestCase):
 
     def test_excluir_funcionario(self):
         url = reverse('deletar_funcionario', args=[self.funcionario.id])
-        response = self.client.get(url)
+        response = self.client.post(url)
         self.assertEqual(response.status_code, 302)
         self.assertFalse(Funcionario.objects.filter(id=self.funcionario.id).exists())
