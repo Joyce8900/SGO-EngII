@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.views import View
 from .models import Funcao
 from django.shortcuts import get_object_or_404
+from django.db.models.deletion import ProtectedError
 
 # Create your views here.
 class CadastrarFuncaoView(View):
@@ -52,6 +53,9 @@ class EditarFuncaoView(View):
 class DeletarFuncaoView(View):
     def post(self, request, *args, **kwargs):
         funcao = get_object_or_404(Funcao, id=kwargs['pk'])
-        funcao.delete()
-        messages.success(request, "Função deletada com sucesso!")
+        try:
+            funcao.delete()
+            messages.success(request, "Função deletada com sucesso!")
+        except ProtectedError:
+            messages.error(request, "Não é possível deletar esta função porque há funcionários associados a ela.")
         return redirect('listar_funcoes')
