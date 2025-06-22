@@ -41,6 +41,23 @@ class FuncionarioViewTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertTrue(Funcionario.objects.filter(nome="Carlos Lima").exists())
 
+    def test_cadastrar_funcionario_sem_funcao(self):
+        response = self.client.post(reverse('cadastrar_funcionario'), {
+            'nome': 'Sem Funcao',
+            'telefone': '83911112222'
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Selecione uma função.')
+
+    def test_cadastrar_funcionario_telefone_duplicado(self):
+        response = self.client.post(reverse('cadastrar_funcionario'), {
+            'nome': 'Repetido',
+            'funcao': self.funcao.id,
+            'telefone': self.funcionario.telefone
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Telefone já cadastrado.')
+
     def test_editar_funcionario(self):
         url = reverse('editar_funcionario', args=[self.funcionario.id])
         response = self.client.post(url, {
@@ -51,6 +68,31 @@ class FuncionarioViewTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.funcionario.refresh_from_db()
         self.assertEqual(self.funcionario.nome, 'Maria Silva')
+
+    def test_editar_funcionario_sem_funcao(self):
+        url = reverse('editar_funcionario', args=[self.funcionario.id])
+        response = self.client.post(url, {
+            'nome': 'Maria Editada',
+            'telefone': '83999997777',
+            # funcao não enviada
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Selecione uma função.')
+
+    def test_editar_funcionario_telefone_duplicado(self):
+        outro = Funcionario.objects.create(
+            nome="Outro",
+            funcao=self.funcao,
+            telefone="83912345678"
+        )
+        url = reverse('editar_funcionario', args=[self.funcionario.id])
+        response = self.client.post(url, {
+            'nome': 'Maria',
+            'funcao': self.funcao.id,
+            'telefone': "83912345678"  # telefone do outro
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Telefone já cadastrado.')
 
     def test_excluir_funcionario(self):
         url = reverse('deletar_funcionario', args=[self.funcionario.id])
