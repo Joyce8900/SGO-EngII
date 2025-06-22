@@ -4,7 +4,7 @@ from produtos.models import Produtos
 from categorias.models import Categorias
 from modelo.models import Modelo
 from marca.models import Marca
-from funcionarios.models import Funcionario
+from funcionarios.models import Funcionario, Funcao
 from fornecedores.models import Fornecedor
 from entrada.models import Entrada 
 
