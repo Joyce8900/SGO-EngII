@@ -30,12 +30,12 @@
 
     <!-- Tabela -->
     <div class="table-responsive">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped table-hover">
             <thead class="table-dark">
                 <tr>
                     <th>Nome</th>
                     <th>Marca</th>
-                    <th>Ações</th>
+                    <th class="text-center">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,16 +43,17 @@
                 <tr>
                     <td>{{ modelo.nome }}</td>
                     <td>{{ modelo.marca.nome }}</td>
-                    <td>
-                        <div class="btn-group btn-group-sm">
-                            <a href="{% url 'editar_modelo' modelo.pk %}" class="btn btn-outline-primary">
-                                <i class="fas fa-edit"></i> Editar
+                    <td class="text-center">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <a href="{% url 'editar_modelo' modelo.pk %}" class="btn btn-outline-primary" title="Editar">
+                                <i class="fas fa-edit"></i>
                             </a>
                             <form action="{% url 'deletar_modelo' modelo.pk %}" method="post" class="d-inline ms-1">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-outline-danger" 
-                                        onclick="return confirm('Tem certeza que deseja excluir este modelo?')">
-                                    <i class="fas fa-trash-alt"></i> Excluir
+                                        onclick="return confirm('Tem certeza que deseja excluir este modelo?')"
+                                        title="Excluir">
+                                    <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form>
                         </div>
@@ -61,7 +62,7 @@
                 {% empty %}
                 <tr>
                     <td colspan="3" class="text-center text-muted">
-                        Nenhum modelo encontrado
+                        Nenhum modelo encontrado. <a href="{% url 'cadastrar_modelo' %}">Cadastre o primeiro modelo</a>.
                     </td>
                 </tr>
                 {% endfor %}
