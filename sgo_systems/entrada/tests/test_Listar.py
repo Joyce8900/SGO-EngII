@@ -61,7 +61,7 @@ class ListarEntradaViewTests(TestCase):
             endereco="Endereco Teste",
         )
 
-        funcao = Funcao.objects.create(nome="Cargo Teste")  # Corrigido: cria função
+        funcao = Funcao.objects.create(nome="Cargo Teste", salario=1300.0)  # Corrigido: cria função
 
         funcionario = Funcionario.objects.create(
             nome="Funcionario Teste",

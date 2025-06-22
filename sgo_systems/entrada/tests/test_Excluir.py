@@ -29,7 +29,7 @@ class ExcluirEntradaViewTests(TestCase):
             contato="Contato Teste",
             endereco="Endereco Teste",
         )
-        self.funcao = Funcao.objects.create(nome="Cargo Teste")  # Criar funcao
+        self.funcao = Funcao.objects.create(nome="Cargo Teste", salario=1200.0)  # Criar funcao
 
         self.funcionario = Funcionario.objects.create(
             nome="Funcionario Teste",

@@ -34,7 +34,7 @@ class EditarEntradaViewTests(TestCase):
             endereco="Endereco Edit Teste",
         )
 
-        self.funcao_edit = Funcao.objects.create(nome="Cargo Edit Teste")  # Criar funcao
+        self.funcao_edit = Funcao.objects.create(nome="Cargo Edit Teste", salario=1500.0)  # Criar funcao
 
         self.funcionario_edit = Funcionario.objects.create(
             nome="Funcionario Edit Teste",

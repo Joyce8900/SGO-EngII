@@ -33,7 +33,7 @@ class CadastrarEntradaViewTests(TestCase):
         endereco="Endereco Teste",
         )
 
-        self.funcao = Funcao.objects.create(nome="Cargo Teste")  # Criar funcao
+        self.funcao = Funcao.objects.create(nome="Cargo Teste", salario=1000.0)  # Criar funcao
 
         self.funcionario = Funcionario.objects.create(
             nome="Funcionario Teste",
