@@ -39,6 +39,6 @@ class PesquisaEntradaForm(forms.Form):
         queryset=Funcionario.objects.all(),
         required=False,
         label="Funcionario",
-        empty_label="Todas os funcionarios",
+        empty_label="Todos os funcionarios",
         widget=forms.Select(attrs={'class': 'form-select'})
     )

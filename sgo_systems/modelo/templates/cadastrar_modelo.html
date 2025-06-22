@@ -1,35 +1,65 @@
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <title>Cadastrar Modelo</title>
-</head>
+{% extends 'base.html' %}
+{% load static %}
 
-<body>
-  <div class="container mt-5">
-    <h2 class="mb-4">Cadastrar Modelo</h2>
-    
-    <form method="post" class="col-md-6">
-      {% csrf_token %}
-        
-      <div class="mb-3">
-        {{form.nome.errors}}
-        {{ form.nome.label_tag }}
-        {{ form.nome }}
-      </div>    
-      <div class="mb-3">
-        {{ form.marca.label_tag }}
-        {{ form.marca}}
-        <a class="btn btn-primary" href="{% url 'cadastrar_marca' %}">Deseja cadastrar uma nova marca?</a> 
-      </div>
-      <button type="submit" class="btn btn-success">Salvar</button>
-      
-      
-    </form>
-  </div>
+{% block content %}
+<link rel="stylesheet" href="{% static 'components/form_styles.css' %}">
+<link rel="stylesheet" href="{% static 'constants/colors.css' %}">
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<div class="form-container">
+    <div class="form-card shadow">
+        <div class="form-card-header">
+            <h2>Cadastrar Modelo</h2>
+        </div>
+        <div class="form-card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-4">
+                    <label for="{{ form.nome.id_for_label }}" class="form-label">{{ form.nome.label }}</label>
+                    <input type="text" name="{{ form.nome.name }}" id="{{ form.nome.id_for_label }}" 
+                           class="form-control" value="{{ form.nome.value|default_if_none:'' }}">
+                    {% if form.nome.errors %}
+                    <div class="form-text-danger">{{ form.nome.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-4">
+                    <label for="{{ form.marca.id_for_label }}" class="form-label">{{ form.marca.label }}</label>
+                    <select name="{{ form.marca.name }}" id="{{ form.marca.id_for_label }}" class="form-control">
+                        {% for value, label in form.marca.field.choices %}
+                            <option value="{{ value }}" {% if form.marca.value == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if form.marca.errors %}
+                    <div class="form-text-danger">{{ form.marca.errors }}</div>
+                    {% endif %}
+                    <div class="mt-2">
+                        <a href="{% url 'cadastrar_marca' %}" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-plus me-1"></i> Cadastrar nova marca
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-5">
+                    <a href="{% url 'listar_modelos' %}" class="form-btn form-btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i> Cancelar
+                    </a>
+                    <button type="submit" class="form-btn form-btn-primary">
+                        <i class="fas fa-save me-2"></i> Salvar
+                    </button>
+                </div>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success mt-4" role="alert">
+                            <i class="fas fa-check-circle me-2"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}
