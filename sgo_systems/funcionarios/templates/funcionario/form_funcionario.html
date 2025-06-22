@@ -31,6 +31,7 @@
         <br>
         <input type="submit" class="btn btn-success" 
               value="{% if is_edit %}Salvar Alterações{% else %}Cadastrar Funcionário{% endif %}">
+        <a href="{% url 'listar_funcionario' %}" class="btn btn-danger">Cancelar</a>
       </form>
     </div>
   </body>
