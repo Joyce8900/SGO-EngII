@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import Funcionario
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
 class CadastrarFuncionarioView(View):
@@ -30,9 +31,9 @@ class ListarFuncionarioView(View):
     template_name = 'funcionario/listar_funcionario.html'
 
     def get(self, request, *args, **kwargs):
-        filtro_nome = request.GET.get('filtro_nome', '')
-        if filtro_nome:
-            funcionarios = Funcionario.objects.filter(nome__icontains=filtro_nome)
+        filtro = request.GET.get('filtro_nome', '')
+        if filtro:
+            funcionarios = Funcionario.objects.filter( Q(nome__icontains=filtro) | Q(telefone__icontains=filtro))
         else:
             funcionarios = Funcionario.objects.all()
         return render(request, self.template_name, {'funcionarios': funcionarios})
