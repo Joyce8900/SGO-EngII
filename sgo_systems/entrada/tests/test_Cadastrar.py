@@ -11,35 +11,33 @@ from entrada.models import Entrada
 class CadastrarEntradaViewTests(TestCase):
     def setUp(self):
         self.client = Client()
-        # Crie todas as dependências necessárias para Produtos e depois para Entrada
         self.categoria = Categorias.objects.create(nome="Eletrônicos")
         self.marca = Marca.objects.create(nome="Samsung")
         self.modelo = Modelo.objects.create(nome="Galaxy S22", marca=self.marca)
 
-        # Crie um produto para ser usado na Entrada
-        # Garanta que todos os campos obrigatórios do seu modelo Produtos sejam preenchidos
         self.produto_teste = Produtos.objects.create(
             nome="Produto Teste para Entrada",
-            preco=100.00,  # Preço é obrigatório no seu modelo Produtos
-            quantidade=50, # Quantidade é obrigatória no seu modelo Produtos
+            preco=100.00,
+            quantidade=50,
             cor="Azul",
             tamanho=7.0,
             modelo=self.modelo,
             marca=self.marca,
             descricao="Um produto para testes de entrada.",
             categoria=self.categoria
-
-            # Adicione outros campos obrigatórios do seu modelo Produtos aqui
         )
 
         self.fornecedor = Fornecedor.objects.create(
-          nome="Fornecedor Teste",
-          contato="Contato Teste",
-          endereco="Endereco Teste",
+        nome="Fornecedor Teste",
+        contato="Contato Teste",
+        endereco="Endereco Teste",
         )
+
+        self.funcao = Funcao.objects.create(nome="Cargo Teste")  # Criar funcao
+
         self.funcionario = Funcionario.objects.create(
             nome="Funcionario Teste",
-            cargo = "Cargo Teste",
+            funcao=self.funcao,  # usar funcao
             telefone="84999999999",
         )
 

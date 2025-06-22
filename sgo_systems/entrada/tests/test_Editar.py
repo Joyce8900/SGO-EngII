@@ -19,7 +19,7 @@ class EditarEntradaViewTests(TestCase):
         self.produto_para_editar = Produtos.objects.create(
             nome="Produto Teste para Editar Entrada",
             preco=150.00,
-            quantidade=100,  # Quantidade inicial do produto
+            quantidade=100,
             cor="Preto",
             tamanho=8.0,
             modelo=self.modelo,
@@ -33,13 +33,15 @@ class EditarEntradaViewTests(TestCase):
             contato="Contato Edit Teste",
             endereco="Endereco Edit Teste",
         )
+
+        self.funcao_edit = Funcao.objects.create(nome="Cargo Edit Teste")  # Criar funcao
+
         self.funcionario_edit = Funcionario.objects.create(
             nome="Funcionario Edit Teste",
-            cargo="Cargo Edit Teste",
+            funcao=self.funcao_edit,  # usar funcao
             telefone="84888888888",
         )
 
-        # Cria uma entrada inicial que será editada nos testes
         self.entrada_para_editar = Entrada.objects.create(
             quantidade=20,
             valor=3000.00,
