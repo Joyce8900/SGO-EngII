@@ -10,14 +10,14 @@
     <div class="container py-5">
       <div class="row mb-4">
         <div class="col-12">
+          <div class="d-flex justify-content-end mb-3">
+            <a href ="{% url 'cadastrar_funcionario' %}" class="btn btn-success">Novo Funcionário</a>
+          </div>
           <h2 class="text-center">Lista de Funcionários</h2>
           <form action="{% url 'listar_funcionario' %}" method="GET" class="d-flex mb-3">
             <input type="text" name="filtro" class="form-control me-2" placeholder="Filtrar por nome ou telefone" value="{{ request.GET.filtro }}">
             <button type="submit" class="btn btn-primary">Filtrar</button>
           </form>
-          <div class="d-flex justify-content-end mb-3">
-            <a href ="{% url 'cadastrar_funcionario' %}" class="btn btn-success">Novo Funcionário</a>
-          </div>
         </div>
       </div>
 
