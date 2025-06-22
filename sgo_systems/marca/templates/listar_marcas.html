@@ -1,78 +1,66 @@
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Adicionando Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <title>Listar Modelos</title>
-  <style>
-    .actions-column {
-      width: 120px; /* Largura fixa para coluna de ações */
-    }
-    .empty-table-message {
-      padding: 20px;
-      font-style: italic;
-    }
-  </style>
-</head>
+{% extends 'base.html' %}
+{% load static %}
 
-<body>
-  <div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2>Lista de Marcas</h2>
-      <a href="{% url 'cadastrar_marca' %}" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> Cadastrar Marcas
-      </a>
-    </div>
+{% block content %}
 
-    {% if messages %}
-    <div class="alert-container">
-      {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-      {% endfor %}
-    </div>
-    {% endif %}
-
-    <div class="table-responsive">
-      <table class="table table-striped table-hover">
-        <thead class="table-dark">
-          <tr>
-            <th scope="col">Nome</th>
-            <th scope="col" class="text-center actions-column">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for marca in marcas %}
-          <tr>
-            <td>{{ marca.nome }}</td>
-            <td class="text-center">
-              <div class="btn-group btn-group-sm" role="group">
-                <a href="{% url 'editar_marca' marca.pk %}" class="btn btn-outline-primary" title="Editar">
-                  <i class="bi bi-pencil-square"></i>
-                </a> 
-                <a href="{% url 'deletar_marca' marca.pk %}" class="btn btn-outline-danger" title="Excluir">
-                  <i class="bi bi-trash"></i>
+<div class="list-container">
+    <div class="list-card shadow">
+        <div class="list-card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Lista de Marcas</h2>
+                <a href="{% url 'cadastrar_marca' %}" class="btn btn-light">
+                    <i class="bi bi-plus-circle me-1"></i> Cadastrar Marca
                 </a>
-              </div> 
-            </td>
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="3" class="text-center empty-table-message">
-              Nenhuma marca cadastrada. <a href="{% url 'cadastrar_marca' %}">Cadastre a primeira marca</a>.
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
+            </div>
+        </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+        <div class="list-card-body">
+            {% if messages %}
+            <div class="list-message">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="table-responsive">
+                <table class="list-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for marca in marcas %}
+                        <tr>
+                            <td data-label="Nome">{{ marca.nome }}</td>
+                            <td data-label="Ações" class="text-center">
+                                <div class="list-actions">
+                                    <a href="{% url 'editar_marca' marca.pk %}" class="list-btn-action list-btn-edit" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="{% url 'deletar_marca' marca.pk %}" class="list-btn-action list-btn-delete" title="Excluir">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2" class="text-center py-4 text-muted">
+                                <i class="bi bi-exclamation-circle me-2"></i>
+                                Nenhuma marca cadastrada. <a href="{% url 'cadastrar_marca' %}" class="text-primary">Cadastre a primeira marca</a>.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
