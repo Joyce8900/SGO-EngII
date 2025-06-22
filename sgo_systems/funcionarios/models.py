@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from funcao.models import Funcao
 
 # Constantes
 TEXTO_CAMPO_OBRIGATORIO = "Campo obrigatório"
@@ -14,11 +15,15 @@ class Funcionario(models.Model):
         blank=False, 
         null=False
     )
-    cargo = models.CharField(
-        max_length=255, 
-        verbose_name="Cargo", 
-        help_text=TEXTO_CAMPO_OBRIGATORIO
+    funcao = models.ForeignKey(
+        Funcao, 
+        on_delete=models.PROTECT, 
+        verbose_name="Função",
+        help_text=TEXTO_CAMPO_OBRIGATORIO,
+        blank=False,
+        null=False
     )
+
     telefone = models.CharField(
         max_length=11,
         validators=[RegexValidator(r'^\d{11}$', MSG_ERRO_TELEFONE)],

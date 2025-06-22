@@ -17,9 +17,16 @@
         <input type="text" name="nome" class="form-control" placeholder="Digite o nome aqui"
                value="{{ funcionario.nome|default_if_none:'' }}" required>
         <br>
-        <label>Cargo:</label>
-        <input type="text" name="cargo" class="form-control" placeholder="Digite o cargo aqui"
-               value="{{ funcionario.cargo|default_if_none:'' }}" required>
+        <label>Função:</label>
+        <select name="funcao" class="form-control" required>
+          <option value="">-- Selecione uma função --</option>
+          {% for f in funcoes %}
+            <option value="{{ f.id }}" {% if funcionario.funcao.id == f.id %}selected{% endif %}>{{ f.nome }}</option>
+          {% endfor %}
+        </select>
+        {% if error %}
+          <div class="text-danger mt-1">{{ error }}</div>
+        {% endif %}
         <br>
         <label>Número de telefone:</label>
         <input type="tel" name="telefone" class="form-control" placeholder="Digite o telefone com DDD"
