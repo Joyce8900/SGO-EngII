@@ -24,6 +24,7 @@
             <br>
             <input type="submit" class="btn btn-success" 
                    value="{% if funcao %}Salvar Alterações{% else %}Cadastrar Função{% endif %}">
+            <a href="{% url 'listar_funcoes' %}" class="btn btn-danger">Cancelar</a>
         </form>
     </div>
   </body>
