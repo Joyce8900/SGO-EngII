@@ -31,7 +31,7 @@ class ListarFuncionarioView(View):
     template_name = 'funcionario/listar_funcionario.html'
 
     def get(self, request, *args, **kwargs):
-        filtro = request.GET.get('filtro_nome', '')
+        filtro = request.GET.get('filtro', '')
         if filtro:
             funcionarios = Funcionario.objects.filter( Q(nome__icontains=filtro) | Q(telefone__icontains=filtro))
         else:
