@@ -5,7 +5,7 @@ from funcao.models import Funcao
 
 class FuncionarioModelTest(TestCase):
     def setUp(self):
-        self.funcao = Funcao.objects.create(nome="Gerente")
+        self.funcao = Funcao.objects.create(nome="Gerente", salario=5000)
 
     def test_criacao_funcionario(self):
         funcionario = Funcionario.objects.create(
@@ -20,7 +20,7 @@ class FuncionarioModelTest(TestCase):
 class FuncionarioViewTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.funcao = Funcao.objects.create(nome="Vendedora")
+        self.funcao = Funcao.objects.create(nome="Vendedora", salario=3000)
         self.funcionario = Funcionario.objects.create(
             nome="Maria Souza",
             funcao=self.funcao,
