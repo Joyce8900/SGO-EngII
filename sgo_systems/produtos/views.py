@@ -7,19 +7,21 @@ from django.contrib import messages
 
 
 class CadastrarProdutos(View):
+    template = "cadastrar_produto.html"
     def get(self, request):
         form = ProdutoForm()
-        return render(request, "cadastrar_produto.html", {"form": form})
+        return render(request, self.template, {"form": form})
 
     def post(self, request):
         form = ProdutoForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect("listar_produtos")
-        return render(request, "cadastrar_produto.html", {"form": form})
+        return render(request, self.template, {"form": form})
 
 
 class ListarProdutos(View):
+    template = "listar_produtos.html"
     def get(self, request):
         form = PesquisaProdutoForm(request.GET or None)
         produtos = Produtos.objects.all().order_by('nome')
@@ -36,7 +38,7 @@ class ListarProdutos(View):
         if categoria:
             produtos = produtos.filter(categoria=categoria)
 
-        return render(request, "listar_produtos.html", {
+        return render(request, self.template, {
             "produtos": produtos,
             "form": form,
         })
@@ -44,45 +46,37 @@ class ListarProdutos(View):
     def post(self, request):
         return self.get(request)
 
-def listar_produtos(request):
-    form = PesquisaProdutoForm(request.GET or None)
-    produtos = Produtos.objects.all().order_by('nome')
-    categoria = request.GET.get('categoria')
-    termo = request.GET.get('termo')
 
-    if termo:
-        produtos = produtos.filter(
-            Q(nome__icontains=termo) |
-            Q(marca__nome__icontains=termo) |
-            Q(preco__icontains=termo)
-        )
+class EditarProduto(View):
+    template = "editar_produto.html"
+    def get(self, request, pk):
+        produto = get_object_or_404(Produtos, pk=pk)
+        form = ProdutoForm(instance=produto)
+        return render(request, self.template, {"form": form})
 
-    if categoria:
-        produtos = produtos.filter(categoria=categoria)
-
-    return render(request, "listar_produtos.html", {
-        "produtos": produtos,
-        "form": form,
-    })
-
-
-def editar_produto(request, pk):
-    produto = Produtos.objects.get(pk=pk)
-    if request.method == "POST":
+    def post(self, request, pk):
+        produto = get_object_or_404(Produtos, pk=pk)
         form = ProdutoForm(request.POST, instance=produto)
-        print(form.errors)
         if form.is_valid():
             form.save()
             return redirect("listar_produtos")
-    else:
-        form = ProdutoForm(instance=produto)
-        print(form.errors)
-
-    return render(request, "editar_produto.html", {"form": form})
+        return render(request, self.template, {"form": form})
 
 
-def excluir_produto(request, pk):
-    produto = get_object_or_404(Produtos, pk=pk)
-    produto.delete()
-    messages.success(request, "Produto deletado com sucesso!")
-    return redirect("listar_produtos")
+class ExcluirProduto(View):
+    def post(self, request, pk):
+        produto = get_object_or_404(Produtos, pk=pk)
+        produto.delete()
+        messages.success(request, "Produto excluído com sucesso.")
+        return redirect('listar_produtos')
+  
+    def get(self, request, pk):
+        produto = get_object_or_404(Produtos, pk=pk)
+        produto.delete()
+        return redirect('listar_produtos')
+
+# def excluir_produto(request, pk):
+#     produto = get_object_or_404(Produtos, pk=pk)
+#     produto.delete()
+#     messages.success(request, "Produto deletado com sucesso!")
+#     return redirect("listar_produtos")
