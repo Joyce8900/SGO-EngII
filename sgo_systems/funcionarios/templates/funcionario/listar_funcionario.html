@@ -37,7 +37,7 @@
                 {% for funcionario in funcionarios %}
                   <tr>
                     <td>{{ funcionario.nome }}</td>
-                    <td>{{ funcionario.funcao.nome }}</td>
+                    <td>{{ funcionario.funcao.nome}}</td>
                     <td>{{ funcionario.telefone }}</td>
                     <td>
                         <a href="{% url 'editar_funcionario' funcionario.id %}" class="btn btn-sm btn-primary">Editar</a>

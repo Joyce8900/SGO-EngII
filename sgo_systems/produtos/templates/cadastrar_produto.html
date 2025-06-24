@@ -16,44 +16,53 @@
         
       <div class="mb-3">
         {{ form.nome.label_tag }}
+        <br>
         {{ form.nome }}
-        
+
       </div>
       
       <div class="mb-3">
         {{ form.preco.label_tag }}
+        <br>
         {{ form.preco }}
         {{form.preco.errors}}    
 
       </div>
       <div class="mb-3">
         {{ form.quantidade.label_tag }}
+        <br>
         {{ form.quantidade }}
         {{form.quantidade.errors}}
         
       </div>
       <div class="mb-3">
         {{ form.cor.label_tag }}
+        <br>
         {{ form.cor }}
       </div>
       <div class="mb-3">
         {{ form.tamanho.label_tag }}
+        <br>
         {{ form.tamanho }}
       </div>
       <div class="mb-3">
         {{ form.marca.label_tag }}
+        <br>
         {{ form.marca }}
       </div>
       <div class="mb-3">
         {{ form.descricao.label_tag }}
+        <br>
         {{ form.descricao }}
       </div>
       <div class="mb-3">
         {{ form.categoria.label_tag }}
+        <br>
         {{ form.categoria }}
       <div>
       <div class="mb-3">
         {{ form.modelo.label_tag }}
+        <br>
         {{ form.modelo }}
         <a class="btn btn-primary" href="{% url 'cadastrar_modelo' %}">Deseja cadastrar um novo modelo?</a> 
       </div>
