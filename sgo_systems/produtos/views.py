@@ -74,9 +74,3 @@ class ExcluirProduto(View):
         produto = get_object_or_404(Produtos, pk=pk)
         produto.delete()
         return redirect('listar_produtos')
-
-# def excluir_produto(request, pk):
-#     produto = get_object_or_404(Produtos, pk=pk)
-#     produto.delete()
-#     messages.success(request, "Produto deletado com sucesso!")
-#     return redirect("listar_produtos")
