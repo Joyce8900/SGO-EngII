@@ -1,22 +1,48 @@
 from django.shortcuts import get_object_or_404, render, redirect
+from django.views import View
 from .forms import ProdutoForm, PesquisaProdutoForm
 from django.db.models import Q
 from .models import Produtos, Categorias
 from django.contrib import messages
 
-def cadastrar_produtos(request):
-    form = ProdutoForm()
-    if request.method == "POST":
+
+class CadastrarProdutos(View):
+    def get(self, request):
+        form = ProdutoForm()
+        return render(request, "cadastrar_produto.html", {"form": form})
+
+    def post(self, request):
         form = ProdutoForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "✔ Produto cadastrado com sucesso!")
             return redirect("listar_produtos")
-        
+        return render(request, "cadastrar_produto.html", {"form": form})
+
+
+class ListarProdutos(View):
+    def get(self, request):
+        form = PesquisaProdutoForm(request.GET or None)
+        produtos = Produtos.objects.all().order_by('nome')
+        categoria = request.GET.get('categoria')
+        termo = request.GET.get('termo')
+
+        if termo:
+            produtos = produtos.filter(
+                Q(nome__icontains=termo) |
+                Q(marca__nome__icontains=termo) |
+                Q(preco__icontains=termo)
+            )
+
+        if categoria:
+            produtos = produtos.filter(categoria=categoria)
+
+        return render(request, "listar_produtos.html", {
+            "produtos": produtos,
+            "form": form,
+        })
     
-
-    return render(request, "cadastrar_produto.html", {"form": form})
-
+    def post(self, request):
+        return self.get(request)
 
 def listar_produtos(request):
     form = PesquisaProdutoForm(request.GET or None)
