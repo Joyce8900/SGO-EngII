@@ -33,8 +33,7 @@
         <thead class="table-dark">
           <tr>
             <th scope="col">Nome</th>
-            <th scope="col" class="text-end">Preço</th>
-            <th scope="col" class="text-center">Quantidade</th>
+            <th scope="col">Fornecedor</th>
             <th scope="col">Cor</th>
             <th scope="col">Tamanho</th>
             <th scope="col">Marca</th>
@@ -55,12 +54,7 @@
           {% for produto in produtos %}
           <tr>
             <td>{{ produto.nome }}</td>
-            <td class="text-end">R$ {{ produto.preco|floatformat:2 }}</td>
-            <td class="text-center">
-              <span class="badge bg-{% if produto.quantidade > 5 %}success{% elif produto.quantidade > 0 %}warning{% else %}danger{% endif %}">
-                {{ produto.quantidade }}
-              </span>
-            </td>
+            <td>{{ produto.fornecedor }}</td>
             <td><span class="text-capitalize">{{ produto.cor }}</span></td>
             <td>{{ produto.tamanho }}</td>
             <td>{{ produto.marca.nome }}</td>
