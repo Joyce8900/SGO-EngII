@@ -4,6 +4,7 @@ from produtos.models import Produtos
 from categorias.models import Categorias
 from modelo.models import Modelo
 from marca.models import Marca
+from fornecedores.models import Fornecedor
 
 class ExcluirProdutoViewTests(TestCase):
   def test_excluir_produto_view(self):
@@ -12,10 +13,12 @@ class ExcluirProdutoViewTests(TestCase):
     self.marca = Marca.objects.create(nome='Marca Teste')
     self.modelo = Modelo.objects.create(nome='Modelo Teste', marca=self.marca)  
     self.categoria = Categorias.objects.create(nome='Categoria Teste')
+    self.fornecedor = Fornecedor.objects.create(
+        nome='Fornecedor Teste'
+    )
     self.produto = Produtos.objects.create(
         nome='Produto Teste',
-        preco=10.0,
-        quantidade=5,  
+        fornecedor = self.fornecedor,       
         categoria=self.categoria,
         marca=self.marca,
         descricao='Descrição Teste',
