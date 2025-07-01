@@ -32,7 +32,7 @@ class ListarProdutos(View):
             produtos = produtos.filter(
                 Q(nome__icontains=termo) |
                 Q(marca__nome__icontains=termo) |
-                Q(preco__icontains=termo)
+                Q(fornecedor__nome__icontains=termo)
             )
 
         if categoria:

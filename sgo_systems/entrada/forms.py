@@ -5,7 +5,14 @@ from funcionarios.models import Funcionario
 from produtos.models import Produtos
 
 class EntradaForm(forms.ModelForm):
+    
     class Meta:
+        def clean_valor(self):
+            valor = self.cleaned_data.get('valor')
+            if valor <= 0:
+                raise forms.ValidationError("O valor deve ser maior que zero.")
+            return valor
+
         model = Entrada
         fields = ('quantidade', 'valor', 'produto', 'fornecedor', 'funcionario')
         labels = {

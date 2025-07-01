@@ -32,11 +32,14 @@ class ListarEntradaViewTests(TestCase):
         marca = Marca.objects.create(nome='Marca Testedddd')
         modelo = Modelo.objects.create(nome='Modelo Testes', marca=marca)
         categoria = Categorias.objects.create(nome='Categoria Testes')
+        fornecedor = Fornecedor.objects.create(
+            nome='Fornecedor Teste',
+            contato = 'contato'
+        )
 
         produto_a = Produtos.objects.create(
             nome='Produtos A',
-            preco=10.0,
-            quantidade=5,
+            fornecedor = fornecedor,
             categoria=categoria,
             marca=marca,
             descricao='Descrição A',
@@ -46,19 +49,12 @@ class ListarEntradaViewTests(TestCase):
 
         produto_b = Produtos.objects.create(
             nome='Produtos B',
-            preco=20.0,
-            quantidade=10,
+            fornecedor = fornecedor,
             categoria=categoria,
             marca=marca,
             descricao='Descrição B',
             tamanho=0.5,
             modelo=modelo,
-        )
-
-        fornecedor = Fornecedor.objects.create(
-            nome="Fornecedor Teste",
-            contato="Contato Teste",
-            endereco="Endereco Teste",
         )
 
         funcao = Funcao.objects.create(nome="Cargo Teste", salario=1300.0)  # Corrigido: cria função
