@@ -10,10 +10,23 @@ from entrada.models import Entrada
 
 
 class ListarEntradaViewTests(TestCase):
-    
+
     def setUp(self):
+        self.client = Client()
         self.categoria = Categorias.objects.create(nome='Categoria Teste')
         self.marca = Marca.objects.create(nome='Marca Teste')
+        self.modelo = Modelo.objects.create(nome='Modelo Teste', marca=self.marca)
+        self.fornecedor = Fornecedor.objects.create(
+            nome='Fornecedor Teste',
+            contato='Contato Teste',
+            endereco='Endereco Teste',
+        )
+        self.funcao = Funcao.objects.create(nome='Cargo Teste', salario=1300.0)
+        self.funcionario = Funcionario.objects.create(
+            nome='Funcionario Teste',
+            funcao=self.funcao,
+            telefone='84999999999'
+        )
 
     def test_listar_entrada_view(self):
         print("test_listar_entrada_view")
@@ -24,72 +37,54 @@ class ListarEntradaViewTests(TestCase):
             response.context["entrada"],
             Entrada.objects.all().order_by("data_entrada"),
             transform=lambda p: p
-        )                              
-    
+        )
+
     def test_listar_entrada_com_termo(self):
         print("test_listar_entrada_com_termo")
 
-        marca = Marca.objects.create(nome='Marca Testedddd')
-        modelo = Modelo.objects.create(nome='Modelo Testes', marca=marca)
-        categoria = Categorias.objects.create(nome='Categoria Testes')
-        fornecedor = Fornecedor.objects.create(
-            nome='Fornecedor Teste',
-            contato = 'contato'
-        )
-
         produto_a = Produtos.objects.create(
             nome='Produtos A',
-            fornecedor = fornecedor,
-            categoria=categoria,
-            marca=marca,
+            fornecedor=self.fornecedor,
+            categoria=self.categoria,
+            marca=self.marca,
             descricao='Descrição A',
             tamanho=0.5,
-            modelo=modelo,
+            modelo=self.modelo,
         )
 
         produto_b = Produtos.objects.create(
             nome='Produtos B',
-            fornecedor = fornecedor,
-            categoria=categoria,
-            marca=marca,
+            fornecedor=self.fornecedor,
+            categoria=self.categoria,
+            marca=self.marca,
             descricao='Descrição B',
             tamanho=0.5,
-            modelo=modelo,
-        )
-
-        funcao = Funcao.objects.create(nome="Cargo Teste", salario=1300.0)  # Corrigido: cria função
-
-        funcionario = Funcionario.objects.create(
-            nome="Funcionario Teste",
-            funcao=funcao,  # Corrigido: usa campo funcao
-            telefone="84888888888",
+            modelo=self.modelo,
         )
 
         Entrada.objects.create(
-            fornecedor=fornecedor,
-            funcionario=funcionario,
+            fornecedor=self.fornecedor,
+            funcionario=self.funcionario,
             produto=produto_a,
             quantidade=10,
             valor=100.0,
         )
 
         Entrada.objects.create(
-            fornecedor=fornecedor,
-            funcionario=funcionario,
+            fornecedor=self.fornecedor,
+            funcionario=self.funcionario,
             produto=produto_b,
             quantidade=10,
             valor=100.0,
         )
 
         response = self.client.get(reverse('listar_entrada') + '?termo=Produtos A')
-
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Produtos A')
         self.assertNotContains(response, 'Produtos B')
 
     def test_listar_entrada_sem_produtos(self):
         print("test_listar_entrada_sem_produtos")
-        Entrada.objects.all().delete()
         response = self.client.get(reverse('listar_entrada'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Nenhuma entrada cadastrada")

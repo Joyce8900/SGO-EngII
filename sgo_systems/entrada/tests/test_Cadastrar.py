@@ -53,7 +53,7 @@ class EditarEntradaViewTests(TestCase):
         print("test_editar_entrada_view_post")
         data_atualizada = {
             "quantidade": 10,
-            "valor": 3000.00,
+            "valor": 2500.00,
             "produto": self.produto_para_editar.id,
             "fornecedor": self.fornecedor_edit.id,
             "funcionario": self.funcionario_edit.id
@@ -67,7 +67,7 @@ class EditarEntradaViewTests(TestCase):
         # Verificar se os dados foram atualizados corretamente
         self.entrada_para_editar.refresh_from_db()
         self.assertEqual(self.entrada_para_editar.quantidade, 10)
-        self.assertEqual(self.entrada_para_editar.valor, 3000.00)
+        self.assertEqual(self.entrada_para_editar.valor, 2500.00)
 
     def test_editar_entrada_view_post_invalido(self):
         print("test_editar_entrada_view_post_invalido")
