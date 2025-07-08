@@ -5,7 +5,7 @@ from categorias.models import Categorias
 from modelo.models import Modelo
 from marca.models import Marca
 from fornecedores.models import Fornecedor
-
+import uuid
 class ListarProdutoViewTests(TestCase):
     
     def setUp(self):
@@ -30,7 +30,7 @@ class ListarProdutoViewTests(TestCase):
       self.categoria = Categorias.objects.create(nome='Categoria Testes')
       self.fornecedor = Fornecedor.objects.create(
           nome='Fornecedor Teste',
-          contato='Contato Teste',
+          contato=f'{uuid.uuid4()}@teste.com',
           endereco='Endereco Teste',
       )
       Produtos.objects.create(
@@ -68,12 +68,12 @@ class ListarProdutoViewTests(TestCase):
       self.categoria2 = Categorias.objects.create(nome='Categoria2')
       self.fornecedor = Fornecedor.objects.create(
           nome='Fornecedor Teste',
-          contato='Contato Teste',
+          contato=f'{uuid.uuid4()}@teste.com',
           endereco='Endereco Teste',
       )
       self.fornecedor2 = Fornecedor.objects.create(
           nome='Fornecedor Teste2',
-          contato='Contato Teste2',
+          contato= f'{uuid.uuid4()}@teste.com',
           endereco='Endereco Teste2',
       )
       Produtos.objects.create(
