@@ -4,6 +4,7 @@ from produtos.models import Produtos
 from categorias.models import Categorias
 from modelo.models import Modelo
 from marca.models import Marca
+from fornecedores.models import Fornecedor
 
 class EditarProdutoViewTests(TestCase):
     
@@ -11,12 +12,16 @@ class EditarProdutoViewTests(TestCase):
         self.categoria = Categorias.objects.create(nome="Eletrônicos")
         self.marca = Marca.objects.create(nome="Samsung")
         self.modelo = Modelo.objects.create(nome="Galaxy S22", marca=self.marca)
+        self.fornecedor = Fornecedor.objects.create(
+            nome="Fornecedor Teste",
+            contato="Contato Teste",
+            endereco="Endereco Teste",
+        )
 
         self.produto = Produtos.objects.create(
             nome="Oculos",
             categoria=self.categoria,
-            preco=2500.00,
-            quantidade=10,
+            fornecedor = self.fornecedor,
             cor="Preto",
             tamanho=6.5,
             modelo=self.modelo,
@@ -31,8 +36,7 @@ class EditarProdutoViewTests(TestCase):
         data_atualizada = {
             "categoria": self.categoria.id,
             "nome": "Óculos Atualizado",
-            "preco": 1999.99,
-            "quantidade": 5,
+            "fornecedor": self.fornecedor.id,
             "cor": "Azul",
             "tamanho": 6.5,
             "modelo": self.modelo.id,
@@ -49,7 +53,7 @@ class EditarProdutoViewTests(TestCase):
         # Atualize os dados do produto para o que foi salvo no banco
         self.produto.refresh_from_db()
         self.assertEqual(self.produto.nome, "Óculos Atualizado")
-        self.assertEqual(self.produto.preco, 1999.99)
+        
 
 
     def test_editar_produto_view_get(self):
@@ -64,9 +68,6 @@ class EditarProdutoViewTests(TestCase):
      # Dados inválidos: faltando campos obrigatórios
       data = {
            "nome": "",  
-           "preco": -10,  
-           "quantidade": 0,  # Quantidade inválida (MinValueValidator exige >= 1)
-           # categoria, modelo e marca não enviados (obrigatórios)
           }
       response = self.client.post(reverse("editar_produto", args=[self.produto.id]), data)
       self.assertEqual(response.status_code, 200)

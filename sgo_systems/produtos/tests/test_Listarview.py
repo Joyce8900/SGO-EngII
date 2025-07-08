@@ -4,6 +4,7 @@ from produtos.models import Produtos
 from categorias.models import Categorias
 from modelo.models import Modelo
 from marca.models import Marca
+from fornecedores.models import Fornecedor
 
 class ListarProdutoViewTests(TestCase):
     
@@ -27,10 +28,14 @@ class ListarProdutoViewTests(TestCase):
       self.marca = Marca.objects.create(nome='Marca Testedddd')
       self.modelo = Modelo.objects.create(nome='Modelo Testes', marca=self.marca)
       self.categoria = Categorias.objects.create(nome='Categoria Testes')
+      self.fornecedor = Fornecedor.objects.create(
+          nome='Fornecedor Teste',
+          contato='Contato Teste',
+          endereco='Endereco Teste',
+      )
       Produtos.objects.create(
           nome='Produtos A',
-          preco=10.0,
-          quantidade=5,  
+          fornecedor = self.fornecedor,  
           categoria=self.categoria,
           marca=self.marca,
           descricao='Descrição A',
@@ -41,8 +46,7 @@ class ListarProdutoViewTests(TestCase):
 
       Produtos.objects.create(
           nome='Produtos B',
-          preco=20.0,
-          quantidade=10,  
+          fornecedor = self.fornecedor, 
           categoria=self.categoria,
           marca=self.marca,
           descricao='Descrição B',
@@ -62,10 +66,19 @@ class ListarProdutoViewTests(TestCase):
       self.modelo = Modelo.objects.create(nome='Modelo Testes1', marca=self.marca)
       self.categoria = Categorias.objects.create(nome='Categoria1')
       self.categoria2 = Categorias.objects.create(nome='Categoria2')
+      self.fornecedor = Fornecedor.objects.create(
+          nome='Fornecedor Teste',
+          contato='Contato Teste',
+          endereco='Endereco Teste',
+      )
+      self.fornecedor2 = Fornecedor.objects.create(
+          nome='Fornecedor Teste2',
+          contato='Contato Teste2',
+          endereco='Endereco Teste2',
+      )
       Produtos.objects.create(
           nome='Produtos A',
-          preco=10.0,
-          quantidade=5,  
+          fornecedor = self.fornecedor,
           categoria=self.categoria,
           marca=self.marca,
           descricao='Descrição A',
@@ -74,8 +87,7 @@ class ListarProdutoViewTests(TestCase):
       )
       Produtos.objects.create(
           nome='Produtos B',
-          preco=20.0,
-          quantidade=10,  
+          fornecedor = self.fornecedor2, 
           categoria=self.categoria2,
           marca=self.marca,
           descricao='Descrição B',
