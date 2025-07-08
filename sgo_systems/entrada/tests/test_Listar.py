@@ -29,58 +29,60 @@ class ListarEntradaViewTests(TestCase):
     def test_listar_entrada_com_termo(self):
         print("test_listar_entrada_com_termo")
 
-        marca = Marca.objects.create(nome='Marca Testedddd')
-        modelo = Modelo.objects.create(nome='Modelo Testes', marca=marca)
-        categoria = Categorias.objects.create(nome='Categoria Testes')
-
-        produto_a = Produtos.objects.create(
+        self.marca = Marca.objects.create(nome='Marca Testedddd')
+        self.modelo = Modelo.objects.create(nome='Modelo Testes', marca=self.marca)
+        self.categoria = Categorias.objects.create(nome='Categoria Testes')
+        self.fornecedor = Fornecedor.objects.create(
+            nome='Fornecedor Teste',
+            contato='Contato Teste899',
+            endereco='Endereco Teste',
+        )
+        self.produto_a = Produtos.objects.create(
             nome='Produtos A',
-            preco=10.0,
-            quantidade=5,
-            categoria=categoria,
-            marca=marca,
+            fornecedor = self.fornecedor,
+            categoria=self.categoria,
+            marca=self.marca,
             descricao='Descrição A',
             tamanho=0.5,
-            modelo=modelo,
+            modelo=self.modelo,
         )
 
-        produto_b = Produtos.objects.create(
+        self.produto_b = Produtos.objects.create(
             nome='Produtos B',
-            preco=20.0,
-            quantidade=10,
-            categoria=categoria,
-            marca=marca,
+            fornecedor = self.fornecedor,
+            categoria=self.categoria,
+            marca=self.marca,
             descricao='Descrição B',
             tamanho=0.5,
-            modelo=modelo,
+            modelo=self.modelo,
         )
 
-        fornecedor = Fornecedor.objects.create(
+        self.fornecedor = Fornecedor.objects.create(
             nome="Fornecedor Teste",
-            contato="Contato Teste",
+            contato="Contato Teste88",
             endereco="Endereco Teste",
         )
 
-        funcao = Funcao.objects.create(nome="Cargo Teste", salario=1300.0)  # Corrigido: cria função
+        self.funcao = Funcao.objects.create(nome="Cargo Teste", salario=1300.0)  # Corrigido: cria função
 
-        funcionario = Funcionario.objects.create(
+        self.funcionario = Funcionario.objects.create(
             nome="Funcionario Teste",
-            funcao=funcao,  # Corrigido: usa campo funcao
+            funcao=self.funcao,  # Corrigido: usa campo funcao
             telefone="84888888888",
         )
 
         Entrada.objects.create(
-            fornecedor=fornecedor,
-            funcionario=funcionario,
-            produto=produto_a,
+            fornecedor=self.fornecedor,
+            funcionario=self.funcionario,
+            produto=self.produto_a,
             quantidade=10,
             valor=100.0,
         )
 
         Entrada.objects.create(
-            fornecedor=fornecedor,
-            funcionario=funcionario,
-            produto=produto_b,
+            fornecedor=self.fornecedor,
+            funcionario=self.funcionario,
+            produto=self.produto_b,
             quantidade=10,
             valor=100.0,
         )

@@ -14,21 +14,20 @@ class ExcluirEntradaViewTests(TestCase):
         self.marca = Marca.objects.create(nome='Marca Teste')
         self.modelo = Modelo.objects.create(nome='Modelo Teste', marca=self.marca)
         self.categoria = Categorias.objects.create(nome='Categoria Teste')
+        self.fornecedor = Fornecedor.objects.create(
+            nome='Fornecedor Teste',
+            contato='Contato Teste000',
+        )
         self.produto = Produtos.objects.create(
             nome='Produto Teste',
-            preco=10.0,
-            quantidade=15,
+            fornecedor = self.fornecedor,
             categoria=self.categoria,
             marca=self.marca,
             descricao='Descrição Teste',
             tamanho=0.5,
             modelo=self.modelo,
         )
-        self.fornecedor = Fornecedor.objects.create(
-            nome="Fornecedor Teste",
-            contato="Contato Teste",
-            endereco="Endereco Teste",
-        )
+        
         self.funcao = Funcao.objects.create(nome="Cargo Teste", salario=1200.0)  # Criar funcao
 
         self.funcionario = Funcionario.objects.create(
