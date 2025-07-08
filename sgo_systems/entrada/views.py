@@ -14,7 +14,7 @@ class CadastrarEntradaView(View):
     def post(self, request):
         form = EntradaForm(request.POST)
         if form.is_valid():
-            entrada = form.save()
+            form.save()
             return redirect('listar_entrada')
         return render(request, self.template_name, {'form': form})
 
@@ -48,14 +48,14 @@ class ListarEntradaView(View):
             funcionario = form.cleaned_data.get('funcionario')
             if termo:
                 entradas = entradas.filter(
-                    Q(produto__nome__icontains=termo) | 
+                    Q(produto__nome__icontains=termo) |
                     Q(fornecedor__nome__icontains=termo) |
-                    Q(funcionario__nome__icontains=termo) 
+                    Q(funcionario__nome__icontains=termo)
                 )
             if funcionario:
                 entradas = entradas.filter(funcionario=funcionario)
 
         return render(request, self.template_name, {
-            "entrada": entradas, 
+            "entrada": entradas,
             "form": form,
         })
