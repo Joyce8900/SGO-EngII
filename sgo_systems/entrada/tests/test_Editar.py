@@ -15,21 +15,11 @@ class EditarEntradaViewTests(TestCase):
         self.categoria = Categorias.objects.create(nome="Eletrônicos Edit")
         self.marca = Marca.objects.create(nome="Marca Edit")
         self.modelo = Modelo.objects.create(nome="Modelo Edit", marca=self.marca)
+
         self.fornecedor = Fornecedor.objects.create(
             nome="Fornecedor Teste",
             contato="Contato Teste1111",
             endereco="Endereco Teste",
-        )
-
-        self.produto_para_editar = Produtos.objects.create(
-            nome="Produto Teste para Editar Entrada",
-            fornecedor = self.fornecedor,
-            cor="Preto",
-            tamanho=8.0,
-            modelo=self.modelo,
-            marca=self.marca,
-            descricao="Um produto para testes de edição de entrada.",
-            categoria=self.categoria
         )
 
         self.fornecedor_edit = Fornecedor.objects.create(
@@ -38,11 +28,22 @@ class EditarEntradaViewTests(TestCase):
             endereco="Endereco Edit Teste",
         )
 
-        self.funcao_edit = Funcao.objects.create(nome="Cargo Edit Teste", salario=1500.0)  # Criar funcao
+        self.produto_para_editar = Produtos.objects.create(
+            nome="Produto Teste para Editar Entrada",
+            fornecedor=self.fornecedor,
+            cor="Preto",
+            tamanho=8.0,
+            modelo=self.modelo,
+            marca=self.marca,
+            descricao="Um produto para testes de edição de entrada.",
+            categoria=self.categoria
+        )
+
+        self.funcao_edit = Funcao.objects.create(nome="Cargo Edit Teste", salario=1500.0)
 
         self.funcionario_edit = Funcionario.objects.create(
             nome="Funcionario Edit Teste",
-            funcao=self.funcao_edit,  # usar funcao
+            funcao=self.funcao_edit,
             telefone="84888888888",
         )
 
@@ -58,7 +59,7 @@ class EditarEntradaViewTests(TestCase):
 
     def test_editar_entrada_view_post(self):
         print("test_editar_entrada_view_post")
-        
+
         data_atualizada = {
             "quantidade": 10,
             "valor": 3000.00,
@@ -74,21 +75,18 @@ class EditarEntradaViewTests(TestCase):
 
         self.assertEqual(response.status_code, 302)
 
-        # Recarrega a entrada do banco
         self.entrada_para_editar.refresh_from_db()
-
-        # Verifica se a quantidade foi atualizada para 10
         self.assertEqual(self.entrada_para_editar.quantidade, 10)
-
+        self.assertEqual(self.entrada_para_editar.valor, 3000.00)
 
     def test_editar_entrada_view_post_invalido(self):
         print("test_editar_entrada_view_post_invalido")
-        
+
         data = {
             "produto": self.produto_para_editar.id,
             "funcionario": self.funcionario_edit.id,
-            "valor": -10,              # Corrigido de "preco" para "valor"
-            "quantidade": 0,
+            "valor": -10,  # valor inválido
+            "quantidade": 0,  # quantidade inválida
             "fornecedor": self.fornecedor_edit.id,
         }
 
