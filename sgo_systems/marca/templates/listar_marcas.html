@@ -1,78 +1,55 @@
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Adicionando Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-  <title>Listar Modelos</title>
-  <style>
-    .actions-column {
-      width: 120px; /* Largura fixa para coluna de ações */
-    }
-    .empty-table-message {
-      padding: 20px;
-      font-style: italic;
-    }
-  </style>
-</head>
+{% extends 'base.html' %}
 
-<body>
-  <div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2>Lista de Marcas</h2>
-      <a href="{% url 'cadastrar_marca' %}" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> Cadastrar Marcas
-      </a>
+{% block content %}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between mb-3">
+        <h1>Marcas</h1>
+        <a href="{% url 'marca:cadastrar_marca' %}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Nova Marca
+        </a>
     </div>
 
     {% if messages %}
-    <div class="alert-container">
-      {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
         </div>
-      {% endfor %}
-    </div>
     {% endif %}
 
-    <div class="table-responsive">
-      <table class="table table-striped table-hover">
+    <table class="table table-bordered table-striped">
         <thead class="table-dark">
-          <tr>
-            <th scope="col">Nome</th>
-            <th scope="col" class="text-center actions-column">Ações</th>
-          </tr>
+            <tr>
+                <th>Nome</th>
+                <th class="text-center">Ações</th>
+            </tr>
         </thead>
         <tbody>
-          {% for marca in marcas %}
-          <tr>
-            <td>{{ marca.nome }}</td>
-            <td class="text-center">
-              <div class="btn-group btn-group-sm" role="group">
-                <a href="{% url 'editar_marca' marca.pk %}" class="btn btn-outline-primary" title="Editar">
-                  <i class="bi bi-pencil-square"></i>
-                </a> 
-                <a href="{% url 'deletar_marca' marca.pk %}" class="btn btn-outline-danger" title="Excluir">
-                  <i class="bi bi-trash"></i>
-                </a>
-              </div> 
-            </td>
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="3" class="text-center empty-table-message">
-              Nenhuma marca cadastrada. <a href="{% url 'cadastrar_marca' %}">Cadastre a primeira marca</a>.
-            </td>
-          </tr>
-          {% endfor %}
+            {% for marca in marcas %}
+            <tr>
+                <td>{{ marca.nome }}</td>
+                <td class="text-center">
+                    <a href="{% url 'marca:editar_marca' marca.pk %}" class="btn btn-sm btn-primary">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </a>
+                    <a href="{% url 'marca:deletar_marca' marca.pk %}" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> Excluir
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" class="text-center text-muted">
+                    Nenhuma marca cadastrada. <a href="{% url 'marca:cadastrar_marca' %}">Cadastre a primeira marca</a>.
+                </td>
+            </tr>
+            {% endfor %}
         </tbody>
-      </table>
-    </div>
-  </div>
+    </table>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}
