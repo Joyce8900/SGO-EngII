@@ -4,6 +4,8 @@ from django.db.models import Q
 from .models import Produtos, Categorias
 from django.contrib import messages
 
+URL_PRODUTOS = 'produtos:listar_produtos'
+
 def cadastrar_produtos(request):
     form = ProdutoForm()
     if request.method == "POST":
@@ -11,7 +13,7 @@ def cadastrar_produtos(request):
         if form.is_valid():
             form.save()
             messages.success(request, "✔ Produto cadastrado com sucesso!")
-            return redirect("listar_produtos")
+            return redirect(URL_PRODUTOS)
         
     
 
@@ -47,7 +49,7 @@ def editar_produto(request, pk):
         print(form.errors)
         if form.is_valid():
             form.save()
-            return redirect("listar_produtos")
+            return redirect(URL_PRODUTOS)
     else:
         form = ProdutoForm(instance=produto)
         print(form.errors)
@@ -59,4 +61,4 @@ def excluir_produto(request, pk):
     produto = get_object_or_404(Produtos, pk=pk)
     produto.delete()
     messages.success(request, "Produto deletado com sucesso!")
-    return redirect("listar_produtos")
+    return redirect(URL_PRODUTOS)
