@@ -4,6 +4,8 @@ from .models import Funcionario
 from django.shortcuts import get_object_or_404
 
 
+URL_FUNCIONARIOS =  'funcionarios:listar_funcionario'
+
 def cadastrar_funcionario(request):
     if request.method == 'GET':
         return render(request, 'form_funcionario.html')
@@ -15,7 +17,7 @@ def cadastrar_funcionario(request):
         funcionario = Funcionario(nome=nome, cargo=cargo, telefone=telefone)
         funcionario.save()
 
-        return redirect('listar_funcionario')
+        return redirect(URL_FUNCIONARIOS)
 
 
 def listar_funcionario(request):
@@ -36,11 +38,11 @@ def editar_funcionario(request, id):
         funcionario.cargo = request.POST.get('cargo')
         funcionario.telefone = request.POST.get('telefone')
         funcionario.save()
-        return redirect('listar_funcionario')
+        return redirect(URL_FUNCIONARIOS)
 
 
 def excluir_funcionario(request, id):
     funcionario = get_object_or_404(Funcionario, id=id)
     funcionario.delete()
     messages.success(request, "Produto deletado com sucesso!")
-    return redirect('listar_funcionario')
+    return redirect(URL_FUNCIONARIOS)
