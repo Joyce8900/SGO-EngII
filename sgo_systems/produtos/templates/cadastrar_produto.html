@@ -1,77 +1,73 @@
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <title>Cadastrar Produtos</title>
-</head>
+{% extends 'base.html' %}
 
-<body>
-  <div class="container mt-5">
-    <h2 class="mb-4">Cadastrar Produto</h2>
-    
-    <form method="post" class="col-md-6">
-      {% csrf_token %}
-        
-      <div class="mb-3">
-        {{ form.nome.label_tag }}
-        {{ form.nome }}
-        
-      </div>
-      
-      <div class="mb-3">
-        {{ form.preco.label_tag }}
-        {{ form.preco }}
-        {{form.preco.errors}}    
+{% block content %}
 
-      </div>
-      <div class="mb-3">
-        {{ form.quantidade.label_tag }}
-        {{ form.quantidade }}
-        {{form.quantidade.errors}}
-        
-      </div>
-      <div class="mb-3">
-        {{ form.cor.label_tag }}
-        {{ form.cor }}
-      </div>
-      <div class="mb-3">
-        {{ form.tamanho.label_tag }}
-        {{ form.tamanho }}
-      </div>
-      <div class="mb-3">
-        {{ form.marca.label_tag }}
-        {{ form.marca }}
-      </div>
-      <div class="mb-3">
-        {{ form.descricao.label_tag }}
-        {{ form.descricao }}
-      </div>
-      <div class="mb-3">
-        {{ form.categoria.label_tag }}
-        {{ form.categoria }}
-      <div>
-      <div class="mb-3">
-        {{ form.modelo.label_tag }}
-        {{ form.modelo }}
-        <a class="btn btn-primary" href="{% url 'cadastrar_modelo' %}">Deseja cadastrar um novo modelo?</a> 
-      </div>
-      
-      <button type="submit" class="btn btn-success">Salvar</button>
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-success" role="alert">
-            {{ message }}
-          </div>
-        {% endfor %}
-      {% endif %}
+<div class="container mt-5">
+  <h2 class="mb-4">Cadastrar Produto</h2>
 
-      <a href="{% url 'listar_produtos' %}" class="btn btn-primary">Voltar</a>
-      
-    </form>
-  </div>
+  <form method="post" class="col-md-6">
+    {% csrf_token %}
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <div class="mb-3">
+      {{ form.nome.label_tag }}
+      {{ form.nome }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.preco.label_tag }}
+      {{ form.preco }}
+      {{ form.preco.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.quantidade.label_tag }}
+      {{ form.quantidade }}
+      {{ form.quantidade.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.cor.label_tag }}
+      {{ form.cor }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.tamanho.label_tag }}
+      {{ form.tamanho }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.marca.label_tag }}
+      {{ form.marca }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.descricao.label_tag }}
+      {{ form.descricao }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.categoria.label_tag }}
+      {{ form.categoria }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.modelo.label_tag }}
+      {{ form.modelo }}
+      <a class="btn btn-primary" href="{% url 'modelo:cadastrar_modelo' %}">Deseja cadastrar um novo modelo?</a>
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success mt-3" role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <a href="{% url 'produtos:listar_produtos' %}" class="btn btn-primary mt-3">Voltar</a>
+  </form>
+</div>
+
+{% endblock %}
