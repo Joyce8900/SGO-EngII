@@ -8,6 +8,8 @@ from django.shortcuts import get_object_or_404
 URL_LISTAR_MODELOS = ("listar_modelos.html")
 URL_EDITAR_MODELO = ("editar_modelo.html")
 URL_CADASTRAR_MODELO = ("cadastrar_modelo.html")
+URL_MODELOS = 'modelos:listar_modelos'
+
 
 class CadastrarModelo(View):
   def get(self, request):
@@ -19,7 +21,7 @@ class CadastrarModelo(View):
     if form.is_valid():
       form.save()
       messages.success(request, "✔ Modelo cadastrado com sucesso!")
-      return redirect("listar_modelos")
+      return redirect(URL_MODELOS)
     return render(request, URL_CADASTRAR_MODELO, {"form": form} )
      
 
@@ -41,7 +43,7 @@ class EditarModelo(View):
     if form.is_valid():
       form.save()
       messages.success(request, "✔ Modelo editado com sucesso!")
-      return redirect("listar_modelos")
+      return redirect(URL_MODELOS)
     return render(request, URL_EDITAR_MODELO, {"form": form})
 
 
