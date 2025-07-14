@@ -1,8 +1,6 @@
-<!-- home_app/templates/home_app/home.html -->
 {% extends 'base.html' %}
 
 {% block content %}
-
     <div class="main-content">
         <div class="header">
             <h3>Bem-vindo</h3>
@@ -21,7 +19,7 @@
                 </div>
                 <h3 class="card-title">Fornecedores</h3>
                 <p>Gerencie seus fornecedores de lentes e armações</p>
-                <a href="fornecedores/" class="card-link">Acessar</a>
+                <a href="{% url 'fornecedores:fornecedor_list' %}" class="card-link">Acessar</a>
             </div>
 
             <!-- Produtos -->
@@ -31,7 +29,7 @@
                 </div>
                 <h3 class="card-title">Produtos</h3>
                 <p>Controle seu estoque de óculos e acessórios</p>
-                <a href="produtos/listar_produtos/" class="card-link">Acessar</a>
+                <a href="{% url 'produtos:listar_produtos' %}" class="card-link">Acessar</a>
             </div>
 
             <!-- Modelos -->
@@ -41,7 +39,7 @@
                 </div>
                 <h3 class="card-title">Modelos</h3>
                 <p>Gerencie os modelos de armações disponíveis</p>
-                <a href="modelo/listar_modelos/" class="card-link">Acessar</a>
+                <a href="{% url 'modelo:listar_modelos' %}" class="card-link">Acessar</a>
             </div>
 
             <!-- Marcas -->
@@ -51,7 +49,7 @@
                 </div>
                 <h3 class="card-title">Marcas</h3>
                 <p>Controle as marcas de produtos cadastradas</p>
-                <a href="marca/listar_marcas/" class="card-link">Acessar</a>
+                <a href="{% url 'marca:listar_marcas' %}" class="card-link">Acessar</a>
             </div>
 
             <!-- Funcionários -->
@@ -61,7 +59,7 @@
                 </div>
                 <h3 class="card-title">Funcionários</h3>
                 <p>Gerencie sua equipe de colaboradores</p>
-                <a href="funcionarios/" class="card-link">Acessar</a>
+                <a href="{% url 'funcionarios:listar_funcionario' %}" class="card-link">Acessar</a>
             </div>
 
             <!-- Clientes -->
@@ -71,7 +69,7 @@
                 </div>
                 <h3 class="card-title">Clientes</h3>
                 <p>Gerencie o cadastro e histórico de clientes</p>
-                <a href="clientes/" class="card-link">Acessar</a>
+                <a href="{% url 'clientes:cliente_list' %}" class="card-link">Acessar</a>
             </div>
 
             <!-- Entradas -->
@@ -81,9 +79,8 @@
                 </div>
                 <h3 class="card-title">Entradas</h3>
                 <p>Controle as entradas de produtos no estoque</p>
-                <a href="entrada/listar/" class="card-link">Acessar</a>
+                <a href="{% url 'entrada:listar_entrada' %}" class="card-link">Acessar</a>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}
