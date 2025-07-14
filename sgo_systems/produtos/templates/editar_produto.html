@@ -1,115 +1,65 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'components/form_styles.css' %}">
-<link rel="stylesheet" href="{% static 'constants/colors.css' %}">
 
-<div class="form-container">
-    <div class="form-card shadow">
-        <div class="form-card-header">
-            <h2>Editar Produto</h2>
-        </div>
-        <div class="form-card-body">
-            <form method="post">
-                {% csrf_token %}
-                
-                <div class="mb-4">
-                    <label for="{{ form.nome.id_for_label }}" class="form-label">{{ form.nome.label }}</label>
-                    <input type="text" name="{{ form.nome.name }}" id="{{ form.nome.id_for_label }}" 
-                           class="form-control" value="{{ form.nome.value|default_if_none:'' }}">
-                    {% if form.nome.help_text %}
-                    <div class="form-text">{{ form.nome.help_text }}</div>
-                    {% endif %}
-                    {% if form.nome.errors %}
-                    <div class="form-text-danger">{{ form.nome.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="mb-4">
-                    <label for="{{ form.preco.id_for_label }}" class="form-label">{{ form.preco.label }}</label>
-                    <input type="number" name="{{ form.preco.name }}" id="{{ form.preco.id_for_label }}" 
-                           class="form-control" value="{{ form.preco.value|default_if_none:'' }}" step="0.01">
-                    {% if form.preco.errors %}
-                    <div class="form-text-danger">{{ form.preco.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="mb-4">
-                    <label for="{{ form.quantidade.id_for_label }}" class="form-label">{{ form.quantidade.label }}</label>
-                    <input type="number" name="{{ form.quantidade.name }}" id="{{ form.quantidade.id_for_label }}" 
-                           class="form-control" value="{{ form.quantidade.value|default_if_none:'' }}">
-                    {% if form.quantidade.errors %}
-                    <div class="form-text-danger">{{ form.quantidade.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="mb-4">
-                    <label for="{{ form.cor.id_for_label }}" class="form-label">{{ form.cor.label }}</label>
-                    <input type="text" name="{{ form.cor.name }}" id="{{ form.cor.id_for_label }}" 
-                           class="form-control" value="{{ form.cor.value|default_if_none:'' }}">
-                    {% if form.cor.errors %}
-                    <div class="form-text-danger">{{ form.cor.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="mb-4">
-                    <label for="{{ form.tamanho.id_for_label }}" class="form-label">{{ form.tamanho.label }}</label>
-                    <input type="text" name="{{ form.tamanho.name }}" id="{{ form.tamanho.id_for_label }}" 
-                           class="form-control" value="{{ form.tamanho.value|default_if_none:'' }}">
-                    {% if form.tamanho.errors %}
-                    <div class="form-text-danger">{{ form.tamanho.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="mb-4">
-                    <label for="{{ form.marca.id_for_label }}" class="form-label">{{ form.marca.label }}</label>
-                    <input type="text" name="{{ form.marca.name }}" id="{{ form.marca.id_for_label }}" 
-                           class="form-control" value="{{ form.marca.value|default_if_none:'' }}">
-                    {% if form.marca.errors %}
-                    <div class="form-text-danger">{{ form.marca.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="mb-4">
-                    <label for="{{ form.categoria.id_for_label }}" class="form-label">{{ form.categoria.label }}</label>
-                    <select name="{{ form.categoria.name }}" id="{{ form.categoria.id_for_label }}" class="form-control">
-                        {% for value, label in form.categoria.field.choices %}
-                            <option value="{{ value }}" {% if form.categoria.value == value %}selected{% endif %}>{{ label }}</option>
-                        {% endfor %}
-                    </select>
-                    {% if form.categoria.errors %}
-                    <div class="form-text-danger">{{ form.categoria.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="mb-4">
-                    <label for="{{ form.descricao.id_for_label }}" class="form-label">{{ form.descricao.label }}</label>
-                    <textarea name="{{ form.descricao.name }}" id="{{ form.descricao.id_for_label }}" 
-                              class="form-control" rows="3">{{ form.descricao.value|default_if_none:'' }}</textarea>
-                    {% if form.descricao.errors %}
-                    <div class="form-text-danger">{{ form.descricao.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="mb-4">
-                    <label for="{{ form.modelo.id_for_label }}" class="form-label">{{ form.modelo.label }}</label>
-                    <select name="{{ form.modelo.name }}" id="{{ form.modelo.id_for_label }}" class="form-control">
-                        {% for value, label in form.modelo.field.choices %}
-                            <option value="{{ value }}" {% if form.modelo.value == value %}selected{% endif %}>{{ label }}</option>
-                        {% endfor %}
-                    </select>
-                    {% if form.modelo.errors %}
-                    <div class="form-text-danger">{{ form.modelo.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="d-flex justify-content-between mt-4">
-                    <a href="{% url 'listar_produtos' %}" class="form-btn form-btn-secondary">Cancelar</a>
-                    <button type="submit" class="form-btn form-btn-primary">Salvar</button>
-                </div>
-            </form>
-        </div>
+<div class="container mt-5">
+  <h2 class="mb-4">Editar Produto</h2>
+
+  <form method="post" class="col-md-6">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      {{ form.nome.label_tag }}
+      {{ form.nome }}
+      <div class="form-text">{{ form.nome.help_text }}</div>
     </div>
+
+    <div class="mb-3">
+      {{ form.preco.label_tag }}
+      {{ form.preco }}
+      {{ form.preco.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.quantidade.label_tag }}
+      {{ form.quantidade }}
+      {{ form.quantidade.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.cor.label_tag }}
+      {{ form.cor }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.tamanho.label_tag }}
+      {{ form.tamanho }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.marca.label_tag }}
+      {{ form.marca }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.categoria.label_tag }}
+      {{ form.categoria }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.descricao.label_tag }}
+      {{ form.descricao }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.modelo.label_tag }}
+      {{ form.modelo }}
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="{% url 'produtos:listar_produtos' %}" class="btn btn-outline-secondary">Cancelar</a>
+
+  </form>
 </div>
+
 {% endblock %}

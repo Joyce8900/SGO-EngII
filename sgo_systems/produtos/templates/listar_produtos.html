@@ -1,102 +1,90 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
-<div class="list-container">
-    <div class="list-card shadow">
-        <div class="list-card-header">
-            <div class="d-flex justify-content-between align-items-center">
-                <h2>Lista de Produtos</h2>
-                <a href="{% url 'cadastrar_produto' %}" class="btn btn-light">
-                    <i class="bi bi-plus-circle me-1"></i> Novo Produto
-                </a>
-            </div>
-        </div>
-        
-        <div class="list-card-body">
-            <!-- Filtros -->
-            <form method="GET" class="mb-4">
-                <div class="row g-3">
-                    <div class="col-md-8">
-                        <input type="text" name="{{ form.termo.name }}" class="form-control" 
-                               placeholder="Pesquisar por nome..." value="{{ form.termo.value|default_if_none:'' }}">
-                    </div>
-                    <div class="col-md-2">
-                        <select name="{{ form.categoria.name }}" class="form-select">
-                            <option value="">Todas categorias</option>
-                            {% for value, label in form.categoria.field.choices %}
-                                <option value="{{ value }}" {% if form.categoria.value == value %}selected{% endif %}>{{ label }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary w-100">
-                            <i class="bi bi-search me-1"></i> Filtrar
-                        </button>
-                    </div>
-                </div>
-            </form>
 
-            <!-- Mensagens -->
-            {% if messages %}
-            <div class="list-message">
-                <i class="bi bi-check-circle-fill"></i>
-                {% for message in messages %}
-                    {{ message }}
-                {% endfor %}
-            </div>
-            {% endif %}
+<div class="container mt-5">
+  <div class="d-flex justify-content-between">
+    <h2 class="mb-4">Listar Produtos</h2>
+    <a href="{% url 'produtos:cadastrar_produto' %}" class="btn btn-primary mb-4">Cadastrar Produto</a>
+  </div>
 
-            <!-- Tabela -->
-            <div class="table-responsive">
-                <table class="list-table">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th class="text-end">Preço</th>
-                            <th class="text-center">Estoque</th>
-                            <th>Cor</th>
-                            <th>Tamanho</th>
-                            <th>Categoria</th>
-                            <th class="text-center">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for produto in produtos %}
-                        <tr>
-                            <td data-label="Nome">{{ produto.nome }}</td>
-                            <td data-label="Preço" class="text-end">R$ {{ produto.preco|floatformat:2 }}</td>
-                            <td data-label="Estoque" class="text-center">
-                                <span class="list-badge bg-{% if produto.quantidade > 5 %}success{% elif produto.quantidade > 0 %}warning{% else %}danger{% endif %}">
-                                    {{ produto.quantidade }}
-                                </span>
-                            </td>
-                            <td data-label="Cor"><span class="text-capitalize">{{ produto.cor }}</span></td>
-                            <td data-label="Tamanho">{{ produto.tamanho }}</td>
-                            <td data-label="Categoria">{{ produto.categoria.nome }}</td>
-                            <td data-label="Ações" class="text-center">
-                                <div class="list-actions">
-                                    <a href="{% url 'editar_produto' produto.pk %}" class="list-btn-action list-btn-edit" title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <a href="{% url 'excluir_produto' produto.pk %}" class="list-btn-action list-btn-delete" title="Excluir">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="7" class="text-center py-4 text-muted">
-                                <i class="bi bi-exclamation-circle me-2"></i>
-                                Nenhum produto encontrado
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+  <div class="table-responsive mb-4">
+    <form method="GET" class="form-inline">
+      <div class="input-group mb-3">
+        {{ form.termo }}
+        {{ form.categoria }}
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i> Pesquisar
+          </button>
         </div>
-    </div>
+      </div>
+    </form>
+  </div>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success" role="alert">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col" class="text-end">Preço</th>
+          <th scope="col" class="text-center">Quantidade</th>
+          <th scope="col">Cor</th>
+          <th scope="col">Tamanho</th>
+          <th scope="col">Marca</th>
+          <th scope="col">Categoria</th>
+          <th scope="col">Modelo</th>
+          <th scope="col">Descrição</th>
+          <th scope="col" class="text-center">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for produto in produtos %}
+        <tr>
+          <td>{{ produto.nome }}</td>
+          <td class="text-end">R$ {{ produto.preco|floatformat:2 }}</td>
+          <td class="text-center">
+            <span class="badge bg-{% if produto.quantidade > 5 %}success{% elif produto.quantidade > 0 %}warning{% else %}danger{% endif %}">
+              {{ produto.quantidade }}
+            </span>
+          </td>
+          <td><span class="text-capitalize">{{ produto.cor }}</span></td>
+          <td>{{ produto.tamanho }}</td>
+          <td>{{ produto.marca.nome }}</td>
+          <td>{{ produto.categoria.nome }}</td>
+          <td>{{ produto.modelo.nome }}</td>
+          <td>
+            <span class="d-inline-block text-truncate" style="max-width: 200px;">
+              {{ produto.descricao }}
+            </span>
+          </td>
+          <td class="text-center">
+            <div class="btn-group btn-group-sm" role="group">
+              <a href="{% url 'produtos:editar_produto' produto.pk %}" class="btn btn-outline-primary">
+                <i class="bi bi-pencil-square"></i>
+              </a>
+              <a href="{% url 'produtos:excluir_produto' produto.pk %}" class="btn btn-outline-danger">
+                <i class="bi bi-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="10" class="text-center text-muted">Nenhum produto cadastrado</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
+
 {% endblock %}

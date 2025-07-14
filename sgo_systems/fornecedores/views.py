@@ -3,9 +3,10 @@ from django.views import View
 from .models import Fornecedor
 from .forms import FornecedorForm, FornecedorFilterForm
 from django.db.models import Q
+from core.views import LoginRequiredView
 
-url_fornecedores = 'fornecedores:fornecedor_list'
-class FornecedoresList(View):
+URL_FORNECEDORES = 'fornecedores:fornecedor_list'
+class FornecedoresList(LoginRequiredView):
     template_name = 'fornecedores/fornecedor_list.html'
     def get(self, request,  *args, **kwargs):
         form_filter = FornecedorFilterForm(request.GET or None)
@@ -29,7 +30,7 @@ class FornecedoresList(View):
         return self.get(request, *args, **kwargs)
 
 
-class FornecedorCreate(View):
+class FornecedorCreate(LoginRequiredView):
     template_name = 'fornecedores/fornecedor_form.html'
     def get(self, request):
         form = FornecedorForm()
@@ -39,10 +40,10 @@ class FornecedorCreate(View):
         form = FornecedorForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(url_fornecedores)
+            return redirect(URL_FORNECEDORES)
         return render(request, self.template_name, {'form': form})
 
-class FornecedorUpdate(View):
+class FornecedorUpdate(LoginRequiredView):
     template_name = 'fornecedores/fornecedor_form.html'
     def get(self, request, pk):
         fornecedor = get_object_or_404(Fornecedor, pk=pk)
@@ -54,11 +55,11 @@ class FornecedorUpdate(View):
         form = FornecedorForm(request.POST, instance=fornecedor)
         if form.is_valid():
             form.save()
-            return redirect(url_fornecedores)
+            return redirect(URL_FORNECEDORES)
         return render(request, self.template_name, {'form': form})
 
 
-class FornecedorDelete(View):
+class FornecedorDelete(LoginRequiredView):
     def get(self, request, pk):
         fornecedor = get_object_or_404(Fornecedor, pk=pk)
         return render(request, 'fornecedores/fornecedor_delete.html', {'fornecedor': fornecedor})
@@ -66,4 +67,4 @@ class FornecedorDelete(View):
     def post(self, request, pk):    
         fornecedor = get_object_or_404(Fornecedor, pk=pk)
         fornecedor.delete()
-        return redirect(url_fornecedores)
+        return redirect(URL_FORNECEDORES)

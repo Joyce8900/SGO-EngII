@@ -2,15 +2,15 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include('home.urls')),
-    path('fornecedores/', include('fornecedores.urls')),
+    path('home/', include(('home.urls', 'home'), namespace='home')),
+    path('fornecedores/', include(('fornecedores.urls', 'fornecedores'), namespace='fornecedores')),
     path('admin/', admin.site.urls),
-    path('produtos/', include('produtos.urls')),
-    path('categorias/', include('categorias.urls')),
-    path('usuarios/', include('usuarios.urls')),
-    path('modelo/', include('modelo.urls')),
-    path('marca/', include('marca.urls')),
-    path('funcionarios/', include('funcionarios.urls')),
-    path('clientes/', include('cliente.urls')),
-    path('entrada/', include('entrada.urls')),
+    path('produtos/', include(('produtos.urls', 'produtos'), namespace='produtos')),
+    path('categorias/', include('categorias.urls')),  # Não tem namespace, então não precisa
+    path('', include('usuarios.urls')),  # Não tem namespace, então não precisa
+    path('modelo/', include(('modelo.urls', 'modelo'), namespace='modelo')),
+    path('marca/', include(('marca.urls', 'marca'), namespace='marca')),
+    path('funcionarios/', include(('funcionarios.urls', 'funcionarios'), namespace='funcionarios')),
+    path('clientes/', include(('cliente.urls', 'clientes'), namespace='clientes')),
+    path('entrada/', include(('entrada.urls', 'entrada'), namespace='entrada')),
 ]

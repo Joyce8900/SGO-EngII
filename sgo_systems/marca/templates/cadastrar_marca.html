@@ -1,42 +1,21 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
 
-<div class="form-container">
-    <div class="form-card shadow">
-        <div class="form-card-header">
-            <h2>Cadastrar Marca</h2>
-        </div>
-        <div class="form-card-body">
-            <form method="post">
-                {% csrf_token %}
-                
-                <div class="mb-4">
-                    <label for="{{ form.nome.id_for_label }}" class="form-label">{{ form.nome.label }}</label>
-                    <input type="text" name="{{ form.nome.name }}" id="{{ form.nome.id_for_label }}" 
-                           class="form-control" value="{{ form.nome.value|default_if_none:'' }}"
-                           placeholder="Digite o nome do marca">
-                    {% if form.nome.errors %}
-                    <div class="form-text-danger">
-                        <i class="fas fa-exclamation-circle me-2"></i>{{ form.nome.errors }}
-                    </div>
-                    {% endif %}
-                </div>
-                
-                <div class="d-flex justify-content-between mt-4">
-                    <a href="{% url 'listar_marcas' %}" class="form-btn form-btn-secondary">
-                        <i class="fas fa-arrow-left me-2"></i> Cancelar
-                    </a>
-                    <button type="submit" class="form-btn form-btn-primary">
-                        <i class="fas fa-save me-2"></i> Salvar
-                    </button>
-                </div>
-            </form>
-        </div>
+<div class="container mt-5">
+  <h2 class="mb-4">Cadastrar Modelo</h2>
+
+  <form method="post" class="col-md-6">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      {{ form.nome.errors }}
+      {{ form.nome.label_tag }}
+      {{ form.nome }}
     </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+  </form>
 </div>
 
-<!-- Font Awesome para ícones -->
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 {% endblock %}

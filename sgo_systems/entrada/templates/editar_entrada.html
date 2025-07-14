@@ -1,94 +1,50 @@
 {% extends 'base.html' %}
-{% load static %}
-
 {% block content %}
-<link rel="stylesheet" href="{% static 'components/form_styles.css' %}">
-<link rel="stylesheet" href="{% static 'constants/colors.css' %}">
 
-<div class="form-container">
-    <div class="form-card shadow">
-        <div class="form-card-header">
-            <h2>Editar Entrada de Produtos</h2>
+<div class="container mt-4">
+    <h1 class="mb-4">Editar Entrada de Pedidos</h1>
+
+    <form method="post" class="col-md-6">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            {{ form.quantidade.label_tag }}
+            {{ form.quantidade }}
+            {{ form.quantidade.errors }}
         </div>
-        <div class="form-card-body">
-            <form method="post">
-                {% csrf_token %}
-                
-                <div class="mb-4">
-                    <label for="{{ form.quantidade.id_for_label }}" class="form-label">{{ form.quantidade.label }}</label>
-                    <input type="number" name="{{ form.quantidade.name }}" id="{{ form.quantidade.id_for_label }}" 
-                           class="form-control" value="{{ form.quantidade.value|default_if_none:'' }}">
-                    {% if form.quantidade.errors %}
-                    <div class="form-text-danger">{{ form.quantidade.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="mb-4">
-                    <label for="{{ form.valor.id_for_label }}" class="form-label">{{ form.valor.label }}</label>
-                    <input type="number" name="{{ form.valor.name }}" id="{{ form.valor.id_for_label }}" 
-                           class="form-control" value="{{ form.valor.value|default_if_none:'' }}" step="0.01">
-                    {% if form.valor.errors %}
-                    <div class="form-text-danger">{{ form.valor.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="mb-4">
-                    <label for="{{ form.produto.id_for_label }}" class="form-label">{{ form.produto.label }}</label>
-                    <select name="{{ form.produto.name }}" id="{{ form.produto.id_for_label }}" class="form-control">
-                        {% for value, label in form.produto.field.choices %}
-                            <option value="{{ value }}" {% if form.produto.value == value %}selected{% endif %}>{{ label }}</option>
-                        {% endfor %}
-                    </select>
-                    {% if form.produto.errors %}
-                    <div class="form-text-danger">{{ form.produto.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="mb-4">
-                    <label for="{{ form.fornecedor.id_for_label }}" class="form-label">{{ form.fornecedor.label }}</label>
-                    <select name="{{ form.fornecedor.name }}" id="{{ form.fornecedor.id_for_label }}" class="form-control">
-                        {% for value, label in form.fornecedor.field.choices %}
-                            <option value="{{ value }}" {% if form.fornecedor.value == value %}selected{% endif %}>{{ label }}</option>
-                        {% endfor %}
-                    </select>
-                    {% if form.fornecedor.errors %}
-                    <div class="form-text-danger">{{ form.fornecedor.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="mb-4">
-                    <label for="{{ form.funcionario.id_for_label }}" class="form-label">{{ form.funcionario.label }}</label>
-                    <select name="{{ form.funcionario.name }}" id="{{ form.funcionario.id_for_label }}" class="form-control">
-                        {% for value, label in form.funcionario.field.choices %}
-                            <option value="{{ value }}" {% if form.funcionario.value == value %}selected{% endif %}>{{ label }}</option>
-                        {% endfor %}
-                    </select>
-                    {% if form.funcionario.errors %}
-                    <div class="form-text-danger">{{ form.funcionario.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div class="d-flex justify-content-between mt-5">
-                    <a href="{% url 'listar_entrada' %}" class="form-btn form-btn-secondary">
-                        <i class="fas fa-arrow-left me-2"></i> Cancelar
-                    </a>
-                    <button type="submit" class="form-btn form-btn-primary">
-                        <i class="fas fa-save me-2"></i> Salvar
-                    </button>
-                </div>
-                
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-success mt-4" role="alert">
-                            <i class="fas fa-check-circle me-2"></i> {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            </form>
+
+        <div class="mb-3">
+            {{ form.valor.label_tag }}
+            {{ form.valor }}
+            {{ form.valor.errors }}
         </div>
-    </div>
+
+        <div class="mb-3">
+            {{ form.produto.label_tag }}
+            {{ form.produto }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.fornecedor.label_tag }}
+            {{ form.fornecedor }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.funcionario.label_tag }}
+            {{ form.funcionario }}
+        </div>
+
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a href="{% url 'entrada:listar_entrada' %}" class="btn btn-primary ms-2">Voltar</a>
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success mt-3" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
 
-<!-- Adicione Font Awesome para os ícones -->
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 {% endblock %}

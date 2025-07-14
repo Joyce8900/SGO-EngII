@@ -1,6 +1,9 @@
 from django.urls import path
 from .views import CadastrarEntradaView, EditarEntradaView, ExcluirEntradaView, ListarEntradaView
 
+app_name = 'entrada'  
+
+
 urlpatterns = [
     path('cadastrar/', CadastrarEntradaView.as_view(), name='cadastrar_entrada'),
     path('editar/<int:pk>/', EditarEntradaView.as_view(), name='editar_entrada'),

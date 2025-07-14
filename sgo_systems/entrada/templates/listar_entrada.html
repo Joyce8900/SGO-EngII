@@ -1,54 +1,44 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'components/form_styles.css' %}">
-<link rel="stylesheet" href="{% static 'constants/colors.css' %}">
 
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="mb-0">Entradas de Produtos</h1>
-        <a href="{% url 'cadastrar_entrada' %}" class="btn btn-success btn-sm">
-            <i class="fas fa-plus me-1"></i> Nova Entrada
-        </a>
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <h2 class="mb-0">Listar Entradas</h2>
+        <a href="{% url 'entrada:cadastrar_entrada' %}" class="btn btn-primary">Cadastrar Entrada</a>
     </div>
 
-    <!-- Barra de pesquisa -->
-   <div class="card mb-3">
-    <div class="card-body p-2">
-        <form method="get">
-            <div class="row gx-2 align-items-center">
-                <div class="col-md-5">
-                    <input type="text" 
-                           name="termo"
-                           class="form-control form-control-sm"
-                           value="{{ request.GET.termo|default:'' }}"
-                           placeholder="Pesquisar produto ou fornecedor">
-                </div>
-                
-                <div class="col-md-4">
-                    </label>
-                    {{ form.funcionario }}
-                </div>
-                
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary btn-sm w-100">
-                        <i class="fas fa-filter me-1"></i> Filtrar
-                    </button>
-                </div>
+    <form method="get" class="mb-4">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-6">
+                <label for="{{ form.termo.id_for_label }}" class="form-label">{{ form.termo.label }}</label>
+                {{ form.termo }}
             </div>
-        </form>
-    </div>
-</div>
+            <div class="col-md-4">
+                <label for="{{ form.funcionario.id_for_label }}" class="form-label">{{ form.funcionario.label }}</label>
+                {{ form.funcionario }}
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Buscar</button>
+            </div>
+        </div>
+    </form>
 
-    <!-- Tabela -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <div class="table-responsive">
-        <table class="table table-sm table-bordered">
+        <table class="table table-striped table-hover table-bordered">
             <thead class="table-dark">
                 <tr>
                     <th>Produto</th>
-                    <th class="text-center">Quantidade</th>
-                    <th class="text-center">Valor Unitário</th>
+                    <th>Quantidade</th>
+                    <th>Valor</th>
                     <th>Fornecedor</th>
                     <th>Funcionário</th>
                     <th class="text-center">Ações</th>
@@ -56,39 +46,35 @@
             </thead>
             <tbody>
                 {% for ent in entrada %}
-                <tr>
-                    <td>{{ ent.produto.nome }}</td>
-                    <td class="text-center">{{ ent.quantidade }}</td>
-                    <td class="text-center">R$ {{ ent.valor|floatformat:2 }}</td>
-                    <td>{{ ent.fornecedor.nome }}</td>
-                    <td>{{ ent.funcionario.nome }}</td>
-                    <td class="text-center">
-                        <div class="btn-group btn-group-sm">
-                            <a href="{% url 'editar_entrada' ent.pk %}" class="btn btn-outline-primary">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <form action="{% url 'excluir_entrada' ent.pk %}" method="post" class="d-inline ms-1">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-outline-danger" 
-                                        onclick="return confirm('Tem certeza que deseja excluir?')">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>{{ ent.produto.nome }}</td>
+                        <td class="text-end">{{ ent.quantidade }}</td>
+                        <td class="text-end">R$ {{ ent.valor|floatformat:2 }}</td>
+                        <td>{{ ent.fornecedor.nome }}</td>
+                        <td>{{ ent.funcionario.nome }}</td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a href="{% url 'entrada:editar_entrada' ent.pk %}" class="btn btn-outline-primary" title="Editar">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <form action="{% url 'entrada:excluir_entrada' ent.pk %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Deseja realmente excluir?')" title="Excluir">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
                 {% empty %}
-                <tr>
-                    <td colspan="6" class="text-center py-3 text-muted">
-                        Nenhuma entrada encontrada
-                    </td>
-                </tr>
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">Nenhuma entrada cadastrada</td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
 
-<!-- Font Awesome -->
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 {% endblock %}
+

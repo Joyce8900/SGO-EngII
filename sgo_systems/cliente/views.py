@@ -3,10 +3,14 @@ from .models import Cliente
 from .forms import ClienteForm, ClienteFilterForm
 from django.views import View
 from django.db.models import Q
+from django.views.generic import View
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 CLIENTE_LIST_REDIRECT = 'clientes:cliente_list'
 CLIENTE_CREATE_RENDER = 'cliente_form.html'
 
+@method_decorator(login_required(login_url='login'), name='dispatch')
 
 class ClienteList(View):
     def get(self, request, *args, **kwargs):
@@ -30,7 +34,9 @@ class ClienteList(View):
     
     def post(self, request, *args, **kwargs):
         return self.get(request, *args, **kwargs)
-    
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
+   
 class ClienteCreate(View):  
     
     def get(self, request):

@@ -1,66 +1,55 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
 
-<div class="list-container">
-    <div class="list-card shadow">
-        <div class="list-card-header">
-            <div class="d-flex justify-content-between align-items-center">
-                <h2>Lista de Marcas</h2>
-                <a href="{% url 'cadastrar_marca' %}" class="btn btn-light">
-                    <i class="bi bi-plus-circle me-1"></i> Cadastrar Marca
-                </a>
-            </div>
-        </div>
-
-        <div class="list-card-body">
-            {% if messages %}
-            <div class="list-message">
-                <i class="bi bi-check-circle-fill me-2"></i>
-                {% for message in messages %}
-                    {{ message }}
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="table-responsive">
-                <table class="list-table">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th class="text-center">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for marca in marcas %}
-                        <tr>
-                            <td data-label="Nome">{{ marca.nome }}</td>
-                            <td data-label="Ações" class="text-center">
-                                <div class="list-actions">
-                                    <a href="{% url 'editar_marca' marca.pk %}" class="list-btn-action list-btn-edit" title="Editar">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <a href="{% url 'deletar_marca' marca.pk %}" class="list-btn-action list-btn-delete" title="Excluir">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="2" class="text-center py-4 text-muted">
-                                <i class="bi bi-exclamation-circle me-2"></i>
-                                Nenhuma marca cadastrada. <a href="{% url 'cadastrar_marca' %}" class="text-primary">Cadastre a primeira marca</a>.
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between mb-3">
+        <h1>Marcas</h1>
+        <a href="{% url 'marca:cadastrar_marca' %}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Nova Marca
+        </a>
     </div>
+
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Nome</th>
+                <th class="text-center">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for marca in marcas %}
+            <tr>
+                <td>{{ marca.nome }}</td>
+                <td class="text-center">
+                    <a href="{% url 'marca:editar_marca' marca.pk %}" class="btn btn-sm btn-primary">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </a>
+                    <a href="{% url 'marca:deletar_marca' marca.pk %}" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> Excluir
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" class="text-center text-muted">
+                    Nenhuma marca cadastrada. <a href="{% url 'marca:cadastrar_marca' %}">Cadastre a primeira marca</a>.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}

@@ -6,6 +6,8 @@ from .forms import EntradaForm
 from produtos.models import Produtos
 from .forms import PesquisaEntradaForm
 
+URL_ENTRADA = 'entrada:listar_entrada'
+
 class CadastrarEntradaView(View):
     template_name = 'cadastrar_entrada.html'
 
@@ -21,7 +23,7 @@ class CadastrarEntradaView(View):
             produto.quantidade += entrada.quantidade
             produto.save()
             entrada.save()
-            return redirect('listar_entrada')
+            return redirect(URL_ENTRADA)
         return render(request, self.template_name, {'form': form})
 
 
@@ -38,7 +40,7 @@ class EditarEntradaView(View):
             produto.preco = nova_entrada.valor
             produto.save()
             nova_entrada.save()
-            return redirect("listar_entrada")
+            return redirect(URL_ENTRADA)
         return render(request, "editar_entrada.html", {"form": form})
 
 
@@ -49,7 +51,7 @@ class ExcluirEntradaView(View):
         produto.quantidade -= entrada.quantidade
         produto.save()
         entrada.delete()
-        return redirect("listar_entrada")
+        return redirect(URL_ENTRADA)
 
 
 class ListarEntradaView(View):
