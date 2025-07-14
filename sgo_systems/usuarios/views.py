@@ -35,7 +35,7 @@ class Login(View):
         user = authenticate(username=username, password=senha)
         if user:
             login_django(request, user)
-            return redirect('home')
+            return redirect('home/')
         else:
             messages.error(request, 'Usuário ou senha inválidos.')
             return render(request, 'login.html', {
@@ -46,7 +46,7 @@ class Login(View):
         return render(request, 'login.html')
 
 
-@method_decorator(login_required(login_url='/login/'), name='dispatch')
+@method_decorator(login_required(login_url='login'), name='dispatch')
 class Home(View):
     def get(self, request):
         return render(request, 'home/home.html')
