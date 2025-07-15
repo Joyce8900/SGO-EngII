@@ -1,50 +1,73 @@
 {% extends 'base.html' %}
+
 {% block content %}
-
-<div class="container mt-4">
-    <h1 class="mb-4">Editar Entrada de Pedidos</h1>
-
-    <form method="post" class="col-md-6">
-        {% csrf_token %}
-
-        <div class="mb-3">
-            {{ form.quantidade.label_tag }}
-            {{ form.quantidade }}
-            {{ form.quantidade.errors }}
-        </div>
-
-        <div class="mb-3">
-            {{ form.valor.label_tag }}
-            {{ form.valor }}
-            {{ form.valor.errors }}
-        </div>
-
-        <div class="mb-3">
-            {{ form.produto.label_tag }}
-            {{ form.produto }}
-        </div>
-
-        <div class="mb-3">
-            {{ form.fornecedor.label_tag }}
-            {{ form.fornecedor }}
-        </div>
-
-        <div class="mb-3">
-            {{ form.funcionario.label_tag }}
-            {{ form.funcionario }}
-        </div>
-
-        <button type="submit" class="btn btn-success">Salvar</button>
-        <a href="{% url 'entrada:listar_entrada' %}" class="btn btn-primary ms-2">Voltar</a>
-    </form>
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-success mt-3" role="alert">
-                {{ message }}
+<body>
+    <div class="form-container">
+        <div class="form-card shadow">
+            <div class="form-card-header">
+                <h2>{% if form.instance.pk %}Editar{% else %}Nova{% endif %} Entrada de Pedidos</h2>
             </div>
-        {% endfor %}
-    {% endif %}
-</div>
+            <div class="form-card-body">
+                <form method="post">
+                    {% csrf_token %}
 
+                    <div class="mb-3">
+                        <label for="{{ form.quantidade.id_for_label }}" class="form-label">{{ form.quantidade.label }}</label>
+                        {{ form.quantidade }}
+                        {% if form.quantidade.errors %}
+                        <div class="form-text-danger">{{ form.quantidade.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.valor.id_for_label }}" class="form-label">{{ form.valor.label }}</label>
+                        {{ form.valor }}
+                        {% if form.valor.errors %}
+                        <div class="form-text-danger">{{ form.valor.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.produto.id_for_label }}" class="form-label">{{ form.produto.label }}</label>
+                        {{ form.produto }}
+                        {% if form.produto.errors %}
+                        <div class="form-text-danger">{{ form.produto.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.fornecedor.id_for_label }}" class="form-label">{{ form.fornecedor.label }}</label>
+                        {{ form.fornecedor }}
+                        {% if form.fornecedor.errors %}
+                        <div class="form-text-danger">{{ form.fornecedor.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ form.funcionario.id_for_label }}" class="form-label">{{ form.funcionario.label }}</label>
+                        {{ form.funcionario }}
+                        {% if form.funcionario.errors %}
+                        <div class="form-text-danger">{{ form.funcionario.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'entrada:listar_entrada' %}" class="form-btn form-btn-secondary">Voltar</a>
+                        <button type="submit" class="form-btn form-btn-primary">Salvar</button>
+                    </div>
+                </form>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success mt-3" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 {% endblock %}
