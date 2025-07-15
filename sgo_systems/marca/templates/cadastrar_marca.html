@@ -2,20 +2,35 @@
 
 {% block content %}
 
-<div class="container mt-5">
-  <h2 class="mb-4">Cadastrar Modelo</h2>
 
-  <form method="post" class="col-md-6">
-    {% csrf_token %}
+<body>
+    <div class="form-container">
+        <div class="form-card shadow">
+            <div class="form-card-header bg-primary text-white">
+                <h2 class="mb-0">Cadastrar Modelo</h2>
+            </div>
 
-    <div class="mb-3">
-      {{ form.nome.errors }}
-      {{ form.nome.label_tag }}
-      {{ form.nome }}
+            <div class="form-card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="{{ form.nome.id_for_label }}" class="form-label">{{ form.nome.label }}</label>
+                        {{ form.nome }}
+                        {% if form.nome.errors %}
+                        <div class="form-text-danger">{{ form.nome.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'modelo:listar_modelos' %}" class="form-btn form-btn-secondary">Cancelar</a>
+                        <button type="submit" class="form-btn form-btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <button type="submit" class="btn btn-success">Salvar</button>
-  </form>
-</div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 {% endblock %}
