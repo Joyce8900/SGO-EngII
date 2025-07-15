@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <title>Listar Vendas</title>
+  <style>
+    .actions-column {
+      white-space: nowrap; /* Impede quebra de linha nos botões */
+      width: 150px; /* Largura um pouco maior */
+    }
+    .empty-table-message {
+      padding: 20px;
+      font-style: italic;
+      color: #6c757d;
+    }
+    .table-responsive {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+    }
+    .img-thumbnail {
+      max-width: 100px;
+      height: auto;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container py-4">
+    <h2 class="mb-4">Excluir Venda</h2>
+    
+    <p>Tem certeza de que deseja excluir a venda "{{ object.data }}"?</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Excluir</button>
+      <a href="{% url 'venda:listar_venda' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
