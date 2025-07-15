@@ -1,47 +1,84 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class="container mt-4">
-    <div class="d-flex justify-content-between mb-3">
-        <h1>Clientes</h1>
-        <a href="{% url 'clientes:cliente_novo' %}" class="btn btn-success">Novo Cliente</a>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-primary">
+            <i class="bi bi-people me-2"></i>Clientes
+        </h1>
+        <a href="{% url 'clientes:cliente_novo' %}" class="btn btn-success">
+            <i class="bi bi-plus-lg me-1"></i> Novo Cliente
+        </a>
     </div>
 
-    <form method="get" class="mb-4">
-        <div class="input-group">
-            {{ form_filter.termo }}
-            <button type="submit" class="btn btn-outline-primary">Filtrar</button>
-            <a href="{% url 'clientes:cliente_list' %}" class="btn btn-outline-secondary">Limpar</a>
-        </div>
-    </form>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="get" class="mb-4">
+                <div class="row g-3 align-items-end"> {# Consistent g-3 gap #}
+                    <div class="col-md-8">
+                        <div class="row g-3"> {# Consistent g-3 gap #}
+                            {# Assuming 'form_filter.termo' is the only field in form_filter for Clients #}
+                            <div class="col-md-6"> {# Using col-md-6 for filter field #}
+                                <label for="{{ form_filter.termo.id_for_label }}" class="form-label">
+                                    <i class="bi bi-search me-1"></i> {{ form_filter.termo.label }}
+                                </label>
+                                {{ form_filter.termo }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary flex-grow-1">
+                                <i class="bi bi-funnel-fill me-1"></i> Filtrar
+                            </button>
+                            <a href="{% url 'clientes:cliente_list' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i> Limpar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Contato</th>
-                <th>Endereço</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for cliente in clientes %}
-            <tr>
-                <td>{{ cliente.nome }}</td>
-                <td>{{ cliente.cpf }}</td>
-                <td>{{ cliente.contato }}</td>
-                <td>{{ cliente.endereco }}</td>
-                <td>
-                    <a href="{% url 'clientes:cliente_update' cliente.pk %}" class="btn btn-sm btn-primary">Editar</a>
-                    <a href="{% url 'clientes:cliente_delete' cliente.pk %}" class="btn btn-sm btn-danger">Excluir</a>
-                </td>
-            </tr>
-        {% empty %}
-            <tr><td colspan="5" class="text-center text-muted">Nenhum cliente encontrado.</td></tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th><i class="bi bi-person me-1"></i> Nome</th>
+                            <th><i class="bi bi-file-earmark-text me-1"></i> CPF</th>
+                            <th><i class="bi bi-telephone me-1"></i> Contato</th>
+                            <th><i class="bi bi-geo-alt me-1"></i> Endereço</th>
+                            <th class="text-center"><i class="bi bi-gear me-1"></i> Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cliente in clientes %}
+                        <tr>
+                            <td>{{ cliente.nome }}</td>
+                            <td>{{ cliente.cpf|default:"-" }}</td>
+                            <td>{{ cliente.contato|default:"-" }}</td>
+                            <td>{{ cliente.endereco|truncatechars:30|default:"-" }}</td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'clientes:cliente_update' cliente.pk %}" class="btn btn-outline-primary" title="Editar">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <a href="{% url 'clientes:cliente_delete' cliente.pk %}" class="btn btn-outline-danger" title="Excluir">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                <i class="bi bi-exclamation-circle-fill me-1"></i> Nenhum cliente encontrado.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
