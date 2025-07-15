@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'entrada',
     'home',
     'funcao',
+    'venda',
 ]
 
 MIDDLEWARE = [
