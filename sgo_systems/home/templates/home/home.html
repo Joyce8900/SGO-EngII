@@ -1,86 +1,96 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="main-content">
-        <div class="header">
-            <h3>Bem-vindo</h3>
-            <!-- <div class="user-info">
+<div class="main-content">
+    <div class="header">
+        <h3>Bem-vindo</h3>
+        <!-- <div class="user-info">
                 <img src="https://via.placeholder.com/40" alt="Usuário">
                 <span>Configurações <i class="fas fa-cog"></i></span>
             </div> -->
-        </div>
-
-        <!-- Dashboard Grid -->
-        <div class="dashboard-grid">
-            <!-- Fornecedores -->
-            <div class="dashboard-card">
-                <div class="card-icon">
-                    <i class="fas fa-truck"></i>
-                </div>
-                <h3 class="card-title">Fornecedores</h3>
-                <p>Gerencie seus fornecedores de lentes e armações</p>
-                <a href="{% url 'fornecedores:fornecedor_list' %}" class="card-link">Acessar</a>
-            </div>
-
-            <!-- Produtos -->
-            <div class="dashboard-card">
-                <div class="card-icon">
-                    <i class="fas fa-glasses"></i>
-                </div>
-                <h3 class="card-title">Produtos</h3>
-                <p>Controle seu estoque de óculos e acessórios</p>
-                <a href="{% url 'produtos:listar_produtos' %}" class="card-link">Acessar</a>
-            </div>
-
-            <!-- Modelos -->
-            <div class="dashboard-card">
-                <div class="card-icon">
-                    <i class="fas fa-shapes"></i>
-                </div>
-                <h3 class="card-title">Modelos</h3>
-                <p>Gerencie os modelos de armações disponíveis</p>
-                <a href="{% url 'modelo:listar_modelos' %}" class="card-link">Acessar</a>
-            </div>
-
-            <!-- Marcas -->
-            <div class="dashboard-card">
-                <div class="card-icon">
-                    <i class="fas fa-tags"></i>
-                </div>
-                <h3 class="card-title">Marcas</h3>
-                <p>Controle as marcas de produtos cadastradas</p>
-                <a href="{% url 'marca:listar_marcas' %}" class="card-link">Acessar</a>
-            </div>
-
-            <!-- Funcionários -->
-            <div class="dashboard-card">
-                <div class="card-icon">
-                    <i class="fas fa-user-tie"></i>
-                </div>
-                <h3 class="card-title">Funcionários</h3>
-                <p>Gerencie sua equipe de colaboradores</p>
-                <a href="{% url 'funcionarios:listar_funcionario' %}" class="card-link">Acessar</a>
-            </div>
-
-            <!-- Clientes -->
-            <div class="dashboard-card">
-                <div class="card-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3 class="card-title">Clientes</h3>
-                <p>Gerencie o cadastro e histórico de clientes</p>
-                <a href="{% url 'clientes:cliente_list' %}" class="card-link">Acessar</a>
-            </div>
-
-            <!-- Entradas -->
-            <div class="dashboard-card">
-                <div class="card-icon">
-                    <i class="fas fa-arrow-down"></i>
-                </div>
-                <h3 class="card-title">Entradas</h3>
-                <p>Controle as entradas de produtos no estoque</p>
-                <a href="{% url 'entrada:listar_entrada' %}" class="card-link">Acessar</a>
-            </div>
-        </div>
     </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+        <!-- Fornecedores -->
+        <div class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-truck"></i>
+            </div>
+            <h3 class="card-title">Fornecedores</h3>
+            <p>Gerencie seus fornecedores de lentes e armações</p>
+            <a href="{% url 'fornecedores:fornecedor_list' %}" class="card-link">Acessar</a>
+        </div>
+
+        <!-- Produtos -->
+        <div class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-glasses"></i>
+            </div>
+            <h3 class="card-title">Produtos</h3>
+            <p>Controle seu estoque de óculos e acessórios</p>
+            <a href="{% url 'produtos:listar_produtos' %}" class="card-link">Acessar</a>
+        </div>
+
+        <!-- Modelos -->
+        <div class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-shapes"></i>
+            </div>
+            <h3 class="card-title">Modelos</h3>
+            <p>Gerencie os modelos de armações disponíveis</p>
+            <a href="{% url 'modelo:listar_modelos' %}" class="card-link">Acessar</a>
+        </div>
+
+        <!-- Marcas -->
+        <div class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-tags"></i>
+            </div>
+            <h3 class="card-title">Marcas</h3>
+            <p>Controle as marcas de produtos cadastradas</p>
+            <a href="{% url 'marca:listar_marcas' %}" class="card-link">Acessar</a>
+        </div>
+
+        <!-- Funcionários -->
+        <div class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            <h3 class="card-title">Funcionários</h3>
+            <p>Gerencie sua equipe de colaboradores</p>
+            <a href="{% url 'funcionarios:listar_funcionario' %}" class="card-link">Acessar</a>
+        </div>
+
+        <!-- Clientes -->
+        <div class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3 class="card-title">Clientes</h3>
+            <p>Gerencie o cadastro e histórico de clientes</p>
+            <a href="{% url 'clientes:cliente_list' %}" class="card-link">Acessar</a>
+        </div>
+
+        <!-- Entradas -->
+        <div class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-arrow-down"></i>
+            </div>
+            <h3 class="card-title">Entradas</h3>
+            <p>Controle as entradas de produtos no estoque</p>
+            <a href="{% url 'entrada:listar_entrada' %}" class="card-link">Acessar</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">
+                <i class="bi bi-receipt-cutoff"></i>
+            </div>
+            <h3 class="card-title">Vendas</h3>
+            <p>Controle as vendas</p>
+            <a href="{% url 'venda:listar_vendas' %}" class="card-link">Acessar</a>
+        </div>
+
+    </div>
+</div>
 {% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+  <div class="form-container">
+    <div class="form-card shadow">
+      <div class="form-card-header bg-danger text-white">
+        <h2 class="mb-0">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          Excluir Venda
+        </h2>
+      </div>
+
+      <div class="form-card-body">
+        <div class="alert alert-warning">
+          <i class="bi bi-exclamation-octagon-fill me-2"></i>
+          Tem certeza de que deseja excluir permanentemente a venda de <strong>{{ venda.data|date:"d/m/Y" }}</strong>?
+        </div>
+
+        <div class="venda-details mb-4 p-3 border rounded">
+          <h5 class="mb-3">Detalhes da Venda:</h5>
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>Cliente:</strong> {{ venda.cliente.nome }}</p>
+              <p><strong>Funcionário:</strong> {{ venda.funcionario.nome|default:"-" }}</p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Produto:</strong> {{ venda.produto.nome|default:"-" }}</p>
+              <p><strong>Valor Total:</strong> R$ {{ venda.valor_total|floatformat:2 }}</p>
+            </div>
+          </div>
+        </div>
+
+        <form method="post">
+          {% csrf_token %}
+          <div class="d-flex justify-content-between">
+            <a href="{% url 'venda:listar_vendas' %}" class="form-btn form-btn-secondary">
+              <i class="bi bi-x-circle me-1"></i> Cancelar
+            </a>
+            <button type="submit" class="form-btn form-btn-danger">
+              <i class="bi bi-trash-fill me-1"></i> Confirmar Exclusão
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+{% endblock %}

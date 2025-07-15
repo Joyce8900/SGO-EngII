@@ -2,9 +2,7 @@ from django.db.models import Q
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Entrada
-from .forms import EntradaForm
-from produtos.models import Produtos
-from .forms import PesquisaEntradaForm
+from .forms import EntradaForm, PesquisaEntradaForm
 
 URL_ENTRADA = 'entrada:listar_entrada'
 
@@ -30,8 +28,6 @@ class CadastrarEntradaView(View):
 class EditarEntradaView(View):
     def post(self, request, pk):
         entrada = get_object_or_404(Entrada, pk=pk)
-        produto = entrada.produto
-        quantidade_antiga = entrada.quantidade
         form = EntradaForm(request.POST, instance=entrada)
         if form.is_valid():
             nova_entrada = form.save(commit=False)
@@ -47,9 +43,6 @@ class EditarEntradaView(View):
 class ExcluirEntradaView(View):
     def post(self, request, pk):
         entrada = get_object_or_404(Entrada, pk=pk)
-        produto = entrada.produto
-        produto.quantidade -= entrada.quantidade
-        produto.save()
         entrada.delete()
         return redirect(URL_ENTRADA)
 
@@ -66,13 +59,14 @@ class ListarEntradaView(View):
             funcionario = form.cleaned_data.get('funcionario')
             if termo:
                 entradas = entradas.filter(
-                    Q(produto__nome__icontains=termo) | 
+                    Q(produto__nome__icontains=termo) |
                     Q(fornecedor__nome__icontains=termo) |
-                    Q(funcionario__nome__icontains=termo) 
+                    Q(funcionario__nome__icontains=termo)
                 )
             if funcionario:
                 entradas = entradas.filter(funcionario=funcionario)
+
         return render(request, self.template_name, {
-            "entrada": entradas, 
+            "entrada": entradas,
             "form": form,
         })

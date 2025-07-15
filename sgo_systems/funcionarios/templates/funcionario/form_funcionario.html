@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+    <div class="form-container">
+        <div class="form-card shadow">
+            <div class="form-card-header bg-primary text-white">
+                <h2 class="mb-0">
+                    {% if is_edit %}Editar{% else %}Cadastrar{% endif %} Funcionário
+                </h2>
+            </div>
+
+            <div class="form-card-body">
+                <form method="post">
+                    {% csrf_token %}
+
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+
+                    <!-- Nome Field -->
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">
+                            Nome do Funcionário
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" id="nome" name="nome" class="form-control" 
+                               value="{{ funcionario.nome|default_if_none:'' }}" required>
+                    </div>
+
+                    <!-- Função Field -->
+                    <div class="mb-3">
+                        <label for="funcao" class="form-label">
+                            Função
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select id="funcao" name="funcao" class="form-control" required>
+                            <option value="">-- Selecione uma função --</option>
+                            {% for f in funcoes %}
+                            <option value="{{ f.id }}" 
+                                    {% if funcionario.funcao.id == f.id %}selected{% endif %}>
+                                {{ f.nome }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Telefone Field -->
+                    <div class="mb-3">
+                        <label for="telefone" class="form-label">
+                            Telefone
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="tel" id="telefone" name="telefone" class="form-control" 
+                               pattern="\d{11}" title="Digite 11 números, incluindo o DDD"
+                               value="{{ funcionario.telefone|default_if_none:'' }}" required>
+                    </div>
+
+                    <div class="form-actions d-flex justify-content-between">
+                        <a href="{% url 'funcionarios:listar_funcionario' %}" class="form-btn form-btn-secondary">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="form-btn form-btn-primary">
+                            {% if is_edit %}Salvar Alterações{% else %}Cadastrar{% endif %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.classList.add('form-control');
+            });
+
+            const errorFields = document.querySelectorAll('.errorlist');
+            errorFields.forEach(field => {
+                field.parentElement.querySelector('input, select')?.classList.add('is-invalid');
+            });
+        });
+    </script>
+</body>
+{% endblock %}

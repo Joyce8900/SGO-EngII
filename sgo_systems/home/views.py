@@ -15,5 +15,7 @@ class HomeView(View):
             {'name': 'Funcionários', 'url': 'funcionarios/'},
             {'name': 'Clientes', 'url': 'clientes/'},
             {'name': 'Entradas', 'url': 'entrada/listar/'},
+            {'name': 'Vendas', 'url': 'vendas/listar_venda/'},
+
         ]
         return render(request, 'home/home.html', {'modules': modules})

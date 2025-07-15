@@ -32,7 +32,7 @@ class CadastrarMarcaViewTests(TestCase):
     print("test_cadastrar_marca_view_post_invalido")
     ## Teste para o POST da view cadastrar_marca com dados inválidos
     data = {
-        "nome": "",
+        "nome": ""
     }
     response = self.client.post(reverse("cadastrar_marca"), data)
     self.assertEqual(response.status_code, 200)
