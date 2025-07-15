@@ -15,7 +15,7 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | 11/06/2025 | 0.0.4   | Adição da US06 - Manter Quantidade em Estoque e reordenação | Cayo      |
 | 11/06/2025 | 0.0.5   | Adição da US11 Dashboard e ajustes na contagem de PF | Cayo      |
 | 20/06/2025 | 0.0.6   | Criação da US função               | Gabriel   |
-| 14/07/2025 | 0.0.7   | Adição das US13 - Manter Marca, US14 - Manter Modelo e US15 - Manter Usuário | Gabriel   |
+| 14/07/2025 | 0.0.7   | Adição das US13 - Manter Marca, US14 - Manter Modelo e US15 - Manter Usuário + correções de requisitos funcionais | Gabriel   |
 
 
 ### User Story US01 - Manter Funcionário
@@ -112,10 +112,10 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF02.01          | Inserir Fornecedor |
-| RF02.02          | Listar Fornecedores |
-| RF02.03          | Atualizar Fornecedor |
-| RF02.04          | Deletar Fornecedor |
+| RF03.01          | Inserir Fornecedor |
+| RF03.02          | Listar Fornecedores |
+| RF03.03          | Atualizar Fornecedor |
+| RF03.04          | Deletar Fornecedor |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
@@ -153,10 +153,10 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF03.01          | Inserir Produto |
-| RF03.02          | Listar Produtos |
-| RF03.03          | Atualizar Produto |
-| RF03.04          | Deletar Produto |
+| RF04.01          | Inserir Produto |
+| RF04.02          | Listar Produtos |
+| RF04.03          | Atualizar Produto |
+| RF04.04          | Deletar Produto |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
@@ -193,7 +193,13 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------------------- | -------------------------------------------------- |
-| Não especificado no doc de visão                   | ?                       |
+| RF05.01                   | Selecionar produto para entrada                     |
+| RF05.02                   | Registrar quantidade e data da entrada              |
+| RF05.03                   | Associar entrada ao fornecedor                       |
+| RF05.04                   | Validar dados de entrada (quantidade, produto)      |
+| RF05.05                   | Visualizar histórico de entradas                     |
+| RF05.06                   | Filtrar histórico por produto e data                 |
+| RF05.07                   | Cancelar registro de entrada                          |
 
 
 |                           |                                     |
@@ -225,10 +231,10 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------------------- | -------------------------------------------------- |
-| RF09.01                   | Atualizar estoque na entrada de produtos          |
-| RF09.02                   | Atualizar estoque na venda                        |
-| RF09.03                   | Atualizar estoque no cancelamento                 |
-| RF09.04                   | Ajuste manual de estoque                          |
+| RF06.01                   | Atualizar estoque na entrada de produtos          |
+| RF06.02                   | Atualizar estoque na venda                        |
+| RF06.03                   | Atualizar estoque no cancelamento                 |
+| RF06.04                   | Ajuste manual de estoque                          |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- |
@@ -292,7 +298,11 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------------------- | -------------------------------------------------- |
-| Não especificado no doc de visão                      | ?                        |
+| RF08.01                   | Gerar relatório completo de estoque                |
+| RF08.02                   | Filtrar relatório por critérios selecionados       |
+| RF08.03                   | Exibir mensagem de resultado vazio                 |
+| RF08.04                   | Exportar relatório em diferentes formatos          |
+| RF08.05                   | Cancelar emissão de relatório                      |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- |
@@ -353,7 +363,11 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------------------- | -------------------------------------------------- |
-| Não especificado no doc de visão                      | ?                                 |
+| RF10.01                   | Selecionar forma de pagamento                      |
+| RF10.02                   | Validar dados de pagamento                         |
+| RF10.03                   | Confirmar pagamento e registrar valor total/parcial|
+| RF10.04                   | Gerar comprovante de pagamento                     |
+| RF10.05                   | Cancelar pagamento antes da confirmação            |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- |
@@ -417,10 +431,10 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF04.01          | Inserir Função |
-| RF04.02          | Listar Funções |
-| RF04.03          | Atualizar Função |
-| RF04.04          | Deletar Função |
+| RF012.01          | Inserir Função |
+| RF12.02          | Listar Funções |
+| RF12.03          | Atualizar Função |
+| RF12.04          | Deletar Função |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
