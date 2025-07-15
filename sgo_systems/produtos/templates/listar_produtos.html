@@ -11,109 +11,76 @@
         </a>
     </div>
 
-    {% if messages %}
-        <div class="alert-container mb-4">
+    <div class="table-responsive mb-4">
+      <form method="GET" class="form-inline">
+        <div class="input-group mb-3">
+          {{ form.termo }}
+          {{ form.categoria }}
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-search"></i> Pesquisar
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Fornecedor</th>
+            <th scope="col">Cor</th>
+            <th scope="col">Tamanho</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Descrição</th>
+            <th scope="col" class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                     {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endfor %}
-        </div>
-    {% endif %}
-
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <form method="get" class="mb-4">
-                <div class="row g-3 align-items-end"> {# Consistent g-3 gap #}
-                    <div class="col-md-8">
-                        <div class="row g-3"> {# Consistent g-3 gap #}
-                            {# Assuming 'form.termo' and 'form.categoria' are the filter fields #}
-                            <div class="col-md-6">
-                                <label for="{{ form.termo.id_for_label }}" class="form-label">
-                                    <i class="bi bi-search me-1"></i> {{ form.termo.label|default:"Termo de Busca" }}
-                                </label>
-                                {{ form.termo }}
-                            </div>
-                            <div class="col-md-6">
-                                <label for="{{ form.categoria.id_for_label }}" class="form-label">
-                                    <i class="bi bi-tags me-1"></i> {{ form.categoria.label|default:"Categoria" }}
-                                </label>
-                                {{ form.categoria }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary flex-grow-1">
-                                <i class="bi bi-funnel-fill me-1"></i> Filtrar
-                            </button>
-                            <a href="{% url 'produtos:listar_produtos' %}" class="btn btn-outline-secondary">
-                                <i class="bi bi-arrow-counterclockwise me-1"></i> Limpar
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered">
-                    <thead class="table-light">
-                        <tr>
-                            <th><i class="bi bi-tag me-1"></i> Nome</th>
-                            <th class="text-end"><i class="bi bi-currency-dollar me-1"></i> Preço</th>
-                            <th class="text-center"><i class="bi bi-hash me-1"></i> Quantidade</th>
-                            <th><i class="bi bi-palette me-1"></i> Cor</th>
-                            <th><i class="bi bi-arrows-fullscreen me-1"></i> Tamanho</th>
-                            <th><i class="bi bi-bookmark me-1"></i> Marca</th>
-                            <th><i class="bi bi-folder me-1"></i> Categoria</th>
-                            <th><i class="bi bi-box-seam me-1"></i> Modelo</th>
-                            <th><i class="bi bi-info-circle me-1"></i> Descrição</th>
-                            <th class="text-center"><i class="bi bi-gear me-1"></i> Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for produto in produtos %}
-                        <tr>
-                            <td>{{ produto.nome }}</td>
-                            <td class="text-end">R$ {{ produto.preco|floatformat:2 }}</td>
-                            <td class="text-center">
-                                <span class="badge bg-{% if produto.quantidade > 5 %}success{% elif produto.quantidade > 0 %}warning{% else %}danger{% endif %}">
-                                    {{ produto.quantidade }}
-                                </span>
-                            </td>
-                            <td><span class="text-capitalize">{{ produto.cor|default:"-" }}</span></td>
-                            <td>{{ produto.tamanho|default:"-" }}</td>
-                            <td>{{ produto.marca.nome|default:"-" }}</td>
-                            <td>{{ produto.categoria.nome|default:"-" }}</td>
-                            <td>{{ produto.modelo.nome|default:"-" }}</td>
-                            <td>
-                                <span class="d-inline-block text-truncate" style="max-width: 150px;">
-                                    {{ produto.descricao|default:"-" }}
-                                </span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <a href="{% url 'produtos:editar_produto' produto.pk %}" class="btn btn-outline-primary" title="Editar">
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </a>
-                                    <a href="{% url 'produtos:excluir_produto' produto.pk %}" class="btn btn-outline-danger" title="Excluir">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="10" class="text-center py-4 text-muted">
-                                <i class="bi bi-exclamation-circle-fill me-1"></i> Nenhum produto encontrado.
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+           {% endif %}
+          {% for produto in produtos %}
+          <tr>
+            <td>{{ produto.nome }}</td>
+            <td>{{ produto.fornecedor }}</td>
+            <td><span class="text-capitalize">{{ produto.cor }}</span></td>
+            <td>{{ produto.tamanho }}</td>
+            <td>{{ produto.marca.nome }}</td>
+            <td>{{ produto.categoria.nome }}</td>
+            <td>{{ produto.modelo.nome }}</td>
+            <td>
+              <span class="d-inline-block text-truncate" style="max-width: 200px;">
+                {{ produto.descricao }}
+              </span>
+            </td>
+            <td class="text-center">
+              <div class="btn-group btn-group-sm" role="group">
+                <a href="{% url 'produtos:editar_produto' produto.pk %}" class="btn btn-outline-primary">
+                  <i class="bi bi-pencil-square"></i>
+                </a>
+                <a href="{% url 'produtos:excluir_produto' produto.pk %}" class="btn btn-outline-danger">
+                  <i class="bi bi-trash"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="9" class="text-center text-muted">Nenhum produto cadastrado</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-</div>
-{% endblock %}
+  </div>
+{% endblock content %}

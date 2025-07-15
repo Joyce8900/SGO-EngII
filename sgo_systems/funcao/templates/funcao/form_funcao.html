@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% if funcao %}Editar{% else %}Cadastrar{% endif %} Função</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container py-5">
+        <h2 class="mb-4 text-center">
+            {% if funcao %}Editar{% else %}Cadastrar{% endif %} Função
+        </h2>
+        <form action="{% if funcao %}{% url 'editar_funcao' funcao.id %}{% else %}{% url 'cadastrar_funcao' %}{% endif %}" method="POST">
+            {% csrf_token %}
+            <label>Nome da função:</label>
+            <input type="text" name="nome" class="form-control" placeholder="Digite o nome da função aqui" pattern="[A-Za-zÀ-ÿ\s]+" title="Apenas letras e espaços são permitidos"
+                   value="{{ funcao.nome|default_if_none:'' }}" required>
+            <br>
+            <label>Salário</label>
+            <input type="number" step="0.01" min="0" name="salario" class="form-control"
+                  placeholder="Digite o salário da função aqui"
+                  value="{{ funcao.salario|default_if_none:'' }}" required>
+            <br>
+            <input type="submit" class="btn btn-success" 
+                   value="{% if funcao %}Salvar Alterações{% else %}Cadastrar Função{% endif %}">
+            <a href="{% url 'listar_funcoes' %}" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+  </body>
+</html>

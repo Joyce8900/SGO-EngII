@@ -18,5 +18,6 @@ class Entrada(models.Model):
     verbose_name_plural = 'Entradas'
     ordering = ['data_entrada']
 
+ 
   def __str__(self):
-    return self.data_entrada
+    return f"{self.produto.nome} - {self.data_entrada.strftime('%d/%m/%Y %H:%M')}"

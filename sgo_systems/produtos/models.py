@@ -3,17 +3,12 @@ from django.core.validators import MinValueValidator
 from categorias.models import Categorias
 from modelo.models import Modelo
 from marca.models import Marca
+from fornecedores.models import Fornecedor
   
 class Produtos(models.Model):
   categoria = models.ForeignKey(Categorias, on_delete=models.PROTECT)
   nome = models.CharField(max_length=100, blank=False, null=False, help_text='Este campo é obrigatório')
-  preco = models.FloatField(null=False, 
-                            help_text="Insira o valor do produto",
-                            validators=[MinValueValidator(1.0)])
-  quantidade = models.PositiveIntegerField(null=False,
-                                    blank=False,
-                                    help_text="Insira a quantidade.",
-                                    validators=[MinValueValidator(1)])
+  fornecedor = models.ForeignKey('fornecedores.Fornecedor', on_delete=models.PROTECT, blank=True, null=True)
   cor = models.CharField(max_length=30)
   tamanho = models.FloatField(null=False, validators=[MinValueValidator(0.01)])
   modelo = models.ForeignKey(Modelo, on_delete=models.CASCADE)

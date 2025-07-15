@@ -71,6 +71,15 @@
                 <p>Gerencie o cadastro e histórico de clientes</p>
                 <a href="{% url 'clientes:cliente_list' %}" class="card-link">Acessar</a>
             </div>
+            
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-truck-loading"></i>
+                </div>
+                <h3 class="card-title">Vendas</h3>
+                <p>Controle as saídas de produtos no estoque</p>
+                <a href="{% url 'venda:listar_venda' %}" class="card-link">Acessar</a>
+            </div>
 
             <!-- Entradas -->
             <div class="dashboard-card">

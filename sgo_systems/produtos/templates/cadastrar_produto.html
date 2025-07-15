@@ -2,41 +2,62 @@
 
 {% block content %}
 <body>
-    <div class="form-container">
-        <div class="form-card shadow">
-            <div class="form-card-header">
-                <h2>Cadastrar Produto</h2>
-            </div>
-            <div class="form-card-body">
-                <form method="post">
-                    {% csrf_token %}
-                    
-                    <!-- Loop para campos padrão -->
-                    {% for field in form %}
-                        {% if field.name != 'modelo' %}
-                        <div class="mb-3">
-                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                            {{ field }}
-                            {% if field.errors %}
-                                <div class="form-text-danger">{{ field.errors }}</div>
-                            {% endif %}
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-
-                    <!-- Campo Modelo com botão especial -->
-                    <div class="mb-3">
-                        <label for="{{ form.modelo.id_for_label }}" class="form-label">{{ form.modelo.label }}</label>
-                        {{ form.modelo }}
-                        <div class="mt-2">
-                            <a href="{% url 'modelo:cadastrar_modelo' %}" class="form-btn form-btn-outline">
-                                Deseja cadastrar um novo modelo?
-                            </a>
-                        </div>
-                        {% if form.modelo.errors %}
-                            <div class="form-text-danger">{{ form.modelo.errors }}</div>
-                        {% endif %}
-                    </div>
+  <div class="container mt-5">
+    <h2 class="mb-4">Cadastrar Produto</h2>
+    
+    <form method="post" class="col-md-6">
+      {% csrf_token %}
+        
+      <div class="mb-3">
+        {{ form.nome.label_tag }}
+        <br>
+        {{ form.nome }}
+      </div>
+      <div class="mb-3">
+        {{form.fornecedor.label_tag }}
+        <br>
+        {{ form.fornecedor }}
+      </div>
+      <div class="mb-3">
+        {{ form.cor.label_tag }}
+        <br>
+        {{ form.cor }}
+      </div>
+      <div class="mb-3">
+        {{ form.tamanho.label_tag }}
+        <br>
+        {{ form.tamanho }}
+      </div>
+      <div class="mb-3">
+        {{ form.marca.label_tag }}
+        <br>
+        {{ form.marca }}
+      </div>
+      <div class="mb-3">
+        {{ form.descricao.label_tag }}
+        <br>
+        {{ form.descricao }}
+      </div>
+      <div class="mb-3">
+        {{ form.categoria.label_tag }}
+        <br>
+        {{ form.categoria }}
+      <div>
+      <div class="mb-3">
+        {{ form.modelo.label_tag }}
+        <br>
+        {{ form.modelo }}
+        <a class="btn btn-primary" href="{% url 'cadastrar_modelo' %}">Deseja cadastrar um novo modelo?</a> 
+      </div>
+      
+      <button type="submit" class="btn btn-success">Salvar</button>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
 
                     <!-- Botões -->
                     <div class="d-flex justify-content-between">
