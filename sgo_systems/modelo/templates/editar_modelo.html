@@ -1,27 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<body>
+    <div class="form-container">
+        <div class="form-card shadow">
+            <div class="form-card-header">
+                <h2>{% if form.instance.pk %}Editar{% else %}Novo{% endif %} Modelo</h2>
+            </div>
+            <div class="form-card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Campo NOME (exemplo de campo específico) -->
+                    <div class="mb-3">
+                        <label for="{{ form.nome.id_for_label }}" class="form-label">{{ form.nome.label }}</label>
+                        {{ form.nome }}
+                        {% if form.nome.errors %}
+                            <div class="form-text-danger">{{ form.nome.errors }}</div>
+                        {% endif %}
+                    </div>
 
-<div class="container mt-5">
-  <h2 class="mb-4">Editar Modelo</h2>
+                    <!-- Campo MARCA (exemplo de campo específico) -->
+                    <div class="mb-3">
+                        <label for="{{ form.marca.id_for_label }}" class="form-label">{{ form.marca.label }}</label>
+                        {{ form.marca }}
+                        {% if form.marca.errors %}
+                            <div class="form-text-danger">{{ form.marca.errors }}</div>
+                        {% endif %}
+                    </div>
 
-  <form method="post" class="col-md-6">
-    {% csrf_token %}
-
-    <div class="mb-3">
-      {{ form.nome.label_tag }}
-      {{ form.nome }}
-      <div class="form-text">{{ form.nome.help_text }}</div>
+                    <!-- Botões (padrão igual ao template de Cliente) -->
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'modelo:listar_modelos' %}" class="form-btn form-btn-secondary">Cancelar</a>
+                        <button type="submit" class="form-btn form-btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <div class="mb-3">
-      {{ form.marca.label_tag }}
-      {{ form.marca }}
-    </div>
-
-    <button type="submit" class="btn btn-success">Salvar</button>
-    <a href="{% url 'modelo:listar_modelos' %}" class="btn btn-outline-secondary">Cancelar</a>
-  </form>
-</div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 {% endblock %}
