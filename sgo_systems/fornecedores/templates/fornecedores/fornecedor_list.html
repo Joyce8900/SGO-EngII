@@ -1,81 +1,96 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<style>
-    .truncate-text {
-        display: inline-block;
-        max-width: 200px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .actions-column {
-        white-space: nowrap;
-    }
-</style>
-
-<div class="container mt-4">
+<div class="container py-4">
+    <!-- Cabeçalho com título e botão -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="mb-0">Lista de Fornecedores</h1>
-        <a href="{% url 'fornecedores:fornecedor_create' %}" class="btn btn-primary">
-            <i class="bi bi-plus-lg"></i> Novo Fornecedor
+        <h1 class="h3 mb-0 text-primary">
+            <i class="bi bi-truck me-2"></i>Fornecedores
+        </h1>
+        <a href="{% url 'fornecedores:fornecedor_create' %}" class="btn btn-success">
+            <i class="bi bi-plus-lg me-1"></i> Novo Fornecedor
         </a>
     </div>
 
-    <div class="card mb-4">
+    <!-- Card principal -->
+    <div class="card shadow-sm">
         <div class="card-body">
-            <form method="get" class="row g-3">
-                <div class="col-md-8">
-                    {{ form_filter.as_p }}
-                </div>
-                <div class="col-md-4 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary me-2">
-                        <i class="bi bi-funnel"></i> Filtrar
-                    </button>
-                    <a href="{% url 'fornecedores:fornecedor_list' %}" class="btn btn-outline-secondary">
-                        <i class="bi bi-arrow-counterclockwise"></i> Limpar
-                    </a>
+            <!-- Filtros -->
+            <form method="get" class="mb-4">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-8">
+                        <div class="row g-3">
+                            {% for field in form_filter %}
+                            <div class="col-md-6">
+                                <label for="{{ field.id_for_label }}" class="form-label">
+                                    {% if field.name == 'termo' %}
+                                        <i class="bi bi-search me-1"></i>
+                                    {% elif field.name == 'categoria' %}
+                                        <i class="bi bi-tags me-1"></i>
+                                    {% endif %}
+                                    {{ field.label }}
+                                </label>
+                                {{ field }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary flex-grow-1">
+                                <i class="bi bi-funnel-fill me-1"></i> Filtrar
+                            </button>
+                            <a href="{% url 'fornecedores:fornecedor_list' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i> Limpar
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </form>
+
+            <!-- Tabela de resultados -->
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th><i class="bi bi-building me-1"></i> Nome</th>
+                            <th><i class="bi bi-telephone me-1"></i> Contato</th>
+                            <th><i class="bi bi-geo-alt me-1"></i> Endereço</th>
+                            <th class="text-center"><i class="bi bi-gear me-1"></i> Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fornecedor in fornecedores %}
+                        <tr>
+                            <td>{{ fornecedor.nome }}</td>
+                            <td>{{ fornecedor.contato|default:"-" }}</td>
+                            <td>
+                                <span class="d-inline-block text-truncate" style="max-width: 200px;">
+                                    {{ fornecedor.endereco|default:"-" }}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'fornecedores:fornecedor_update' fornecedor.pk %}" class="btn btn-outline-primary" title="Editar">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <a href="{% url 'fornecedores:fornecedor_delete' fornecedor.pk %}" class="btn btn-outline-danger" title="Excluir">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted">
+                                <i class="bi bi-exclamation-circle-fill me-1"></i> Nenhum fornecedor encontrado
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-
-    <div class="table-responsive">
-        <table class="table table-striped table-hover table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Contato</th>
-                    <th scope="col">Endereço</th>
-                    <th scope="col" class="text-center">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for fornecedor in fornecedores %}
-                    <tr>
-                        <td>{{ fornecedor.nome }}</td>
-                        <td>{{ fornecedor.contato }}</td>
-                        <td><span class="truncate-text">{{ fornecedor.endereco }}</span></td>
-                        <td class="text-center actions-column">
-                            <div class="btn-group btn-group-sm" role="group">
-                                <a href="{% url 'fornecedores:fornecedor_update' fornecedor.pk %}" class="btn btn-outline-primary" title="Editar">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <a href="{% url 'fornecedores:fornecedor_delete' fornecedor.pk %}" class="btn btn-outline-danger" title="Excluir">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="4" class="text-center text-muted">Nenhum fornecedor encontrado.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
 </div>
-
 {% endblock %}
