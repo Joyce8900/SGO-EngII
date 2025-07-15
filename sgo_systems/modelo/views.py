@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 URL_LISTAR_MODELOS = ("listar_modelos.html")
 URL_EDITAR_MODELO = ("editar_modelo.html")
 URL_CADASTRAR_MODELO = ("cadastrar_modelo.html")
-URL_MODELOS = 'modelos:listar_modelos'
+URL_MODELOS = 'modelo:listar_modelos'
 
 
 class CadastrarModelo(View):
