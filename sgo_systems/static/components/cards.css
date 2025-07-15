@@ -1,49 +1,57 @@
-    .dashboard-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 25px;
-    }
-    
-    .dashboard-card {
-        background: white;
-        border-radius: 10px;
-        padding: 25px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        transition: all 0.3s ease;
-        border-top: 4px solid var(--AzulClaro);
-        text-align: center;
-    }
-    
-    .dashboard-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
-    
-    .card-icon {
-        font-size: 2.5rem;
-        color: var(--AzulClaro);
-        margin-bottom: 15px;
-    }
-    
-    .card-title {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-        color: var(--CianoEscuro);
-    }
-    
-    .card-link {
-        display: inline-block;
-        margin-top: 15px;
-        padding: 8px 20px;
-        background: var(--AzulClaro);
-        color: white;
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.3s ease;
-    }
-    
-    .card-link:hover {
-        background: var(--CianoEscuro);
-        transform: translateY(-2px);
-    }
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Cards mais estreitos */
+    gap: 20px; /* Espaçamento reduzido */
+}
+
+.dashboard-card {
+    background: white;
+    border-radius: 8px; /* Bordas menos arredondadas */
+    padding: 18px; /* Padding reduzido */
+    box-shadow: 0 3px 5px rgba(0,0,0,0.05); /* Sombra mais suave */
+    transition: all 0.3s ease;
+    border-top: 3px solid var(--AzulClaro); /* Borda superior mais fina */
+    text-align: center;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px); /* Efeito hover mais sutil */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1); /* Sombra hover menos intensa */
+}
+
+.card-icon {
+    font-size: 2rem; /* Ícone menor */
+    color: var(--AzulClaro);
+    margin-bottom: 12px; /* Espaçamento reduzido */
+}
+
+.card-title {
+    font-size: 1rem; /* Título menor */
+    margin-bottom: 8px; /* Espaçamento reduzido */
+    color: var(--CianoEscuro);
+    font-weight: 600; /* Adicionei peso para melhor legibilidade */
+}
+
+.dashboard-card p {
+    font-size: 0.85rem; /* Texto menor */
+    margin-bottom: 12px; /* Espaçamento ajustado */
+    color: var(--Cinza);
+}
+
+.card-link {
+    display: inline-block;
+    margin-top: 12px; /* Espaçamento reduzido */
+    padding: 6px 16px; /* Botão mais compacto */
+    background: var(--AzulClaro);
+    color: white;
+    border-radius: 20px; /* Bordas menos arredondadas */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.85rem; /* Texto do botão menor */
+    transition: all 0.3s ease;
+}
+
+.card-link:hover {
+    background: var(--CianoEscuro);
+    transform: translateY(-1px); /* Efeito hover mais sutil */
+}
