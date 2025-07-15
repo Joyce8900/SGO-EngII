@@ -7,14 +7,15 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 ## HISTÓRICO DE REVISÕES
 
-| Data       | Versão  | Descrição                          | Autor                          |
-| :--------- | :-----: | :--------------------------------: | :----------------------------- |
-| 03/04/2025 | 0.0.1   | Template e descrição do documento  | Gustavo |
-| 04/04/2025 | 0.0.2   | Adicionando US.01 US.02 US.03 US.04 US.05 US.06 US.07 US.08                 | Gabriel |
-| 05/04/2025 | 0.0.3   | Correções de inconsistências nas descrições, requisitos envolvidos e testes de aceitação | Gabriel |
-| 11/06/2025 | 0.0.4   | Adição da US06 - Manter Quantidade em Estoque e reordenação | Cayo |
-| 11/06/2025 | 0.0.5   | Adição da US11 Dashboard e ajustes na contagem de PF | Cayo |
-| 20/06/2025 | 0.0.6   | Criação da US função | Gabriel |
+| Data       | Versão  | Descrição                          | Autor    |
+| :--------- | :-----: | :--------------------------------: | :-------- |
+| 03/04/2025 | 0.0.1   | Template e descrição do documento  | Gustavo   |
+| 04/04/2025 | 0.0.2   | Adicionando US.01 US.02 US.03 US.04 US.05 US.06 US.07 US.08 | Gabriel   |
+| 05/04/2025 | 0.0.3   | Correções de inconsistências nas descrições, requisitos envolvidos e testes de aceitação | Gabriel   |
+| 11/06/2025 | 0.0.4   | Adição da US06 - Manter Quantidade em Estoque e reordenação | Cayo      |
+| 11/06/2025 | 0.0.5   | Adição da US11 Dashboard e ajustes na contagem de PF | Cayo      |
+| 20/06/2025 | 0.0.6   | Criação da US função               | Gabriel   |
+| 14/07/2025 | 0.0.7   | Adição das US13 - Manter Marca, US14 - Manter Modelo e US15 - Manter Usuário + correções de requisitos funcionais | Gabriel   |
 
 
 ### User Story US01 - Manter Funcionário
@@ -111,10 +112,10 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF02.01          | Inserir Fornecedor |
-| RF02.02          | Listar Fornecedores |
-| RF02.03          | Atualizar Fornecedor |
-| RF02.04          | Deletar Fornecedor |
+| RF03.01          | Inserir Fornecedor |
+| RF03.02          | Listar Fornecedores |
+| RF03.03          | Atualizar Fornecedor |
+| RF03.04          | Deletar Fornecedor |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
@@ -152,10 +153,10 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF03.01          | Inserir Produto |
-| RF03.02          | Listar Produtos |
-| RF03.03          | Atualizar Produto |
-| RF03.04          | Deletar Produto |
+| RF04.01          | Inserir Produto |
+| RF04.02          | Listar Produtos |
+| RF04.03          | Atualizar Produto |
+| RF04.04          | Deletar Produto |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
@@ -192,7 +193,13 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------------------- | -------------------------------------------------- |
-| Não especificado no doc de visão                   | ?                       |
+| RF05.01                   | Selecionar produto para entrada                     |
+| RF05.02                   | Registrar quantidade e data da entrada              |
+| RF05.03                   | Associar entrada ao fornecedor                       |
+| RF05.04                   | Validar dados de entrada (quantidade, produto)      |
+| RF05.05                   | Visualizar histórico de entradas                     |
+| RF05.06                   | Filtrar histórico por produto e data                 |
+| RF05.07                   | Cancelar registro de entrada                          |
 
 
 |                           |                                     |
@@ -224,10 +231,10 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------------------- | -------------------------------------------------- |
-| RF09.01                   | Atualizar estoque na entrada de produtos          |
-| RF09.02                   | Atualizar estoque na venda                        |
-| RF09.03                   | Atualizar estoque no cancelamento                 |
-| RF09.04                   | Ajuste manual de estoque                          |
+| RF06.01                   | Atualizar estoque na entrada de produtos          |
+| RF06.02                   | Atualizar estoque na venda                        |
+| RF06.03                   | Atualizar estoque no cancelamento                 |
+| RF06.04                   | Ajuste manual de estoque                          |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- |
@@ -291,7 +298,11 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------------------- | -------------------------------------------------- |
-| Não especificado no doc de visão                      | ?                        |
+| RF08.01                   | Gerar relatório completo de estoque                |
+| RF08.02                   | Filtrar relatório por critérios selecionados       |
+| RF08.03                   | Exibir mensagem de resultado vazio                 |
+| RF08.04                   | Exportar relatório em diferentes formatos          |
+| RF08.05                   | Cancelar emissão de relatório                      |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- |
@@ -352,7 +363,11 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------------------- | -------------------------------------------------- |
-| Não especificado no doc de visão                      | ?                                 |
+| RF10.01                   | Selecionar forma de pagamento                      |
+| RF10.02                   | Validar dados de pagamento                         |
+| RF10.03                   | Confirmar pagamento e registrar valor total/parcial|
+| RF10.04                   | Gerar comprovante de pagamento                     |
+| RF10.05                   | Cancelar pagamento antes da confirmação            |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- |
@@ -408,7 +423,7 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | **TA11.06** | **Personalização:** O gerente pode reorganizar os atalhos principais conforme necessidade. |
 
 
-### User Story US05 - Manter Função
+### User Story US12 - Manter Função
 
 |               |                                                                |
 | ------------- | :------------------------------------------------------------- |
@@ -416,10 +431,10 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 
 | **Requisitos envolvidos** |                                                    |
 | ------------- | :------------------------------------------------------------- |
-| RF04.01          | Inserir Função |
-| RF04.02          | Listar Funções |
-| RF04.03          | Atualizar Função |
-| RF04.04          | Deletar Função |
+| RF012.01          | Inserir Função |
+| RF12.02          | Listar Funções |
+| RF12.03          | Atualizar Função |
+| RF12.04          | Deletar Função |
 
 |                           |                                     |
 | ------------------------- | ----------------------------------- | 
@@ -445,3 +460,105 @@ Este documento de User Stories descreve os requisitos e funcionalidades essencia
 | **TA04.08** | **Pesquisar Função sem resultados:** O administrador faz uma busca que não encontra funções. O sistema exibe: "Nenhuma função encontrada". |
 | **TA04.09** | **Cancelar Cadastro de Função:** O administrador começa o cadastro, mas decide cancelar antes de salvar. O sistema retorna à tela anterior sem salvar os dados. |
 | **TA04.10** | **Cancelar Edição de Função:** O administrador edita uma função, mas cancela antes de confirmar. O sistema descarta as alterações e retorna à tela anterior. |
+
+### User Story US13 - Manter Marca
+
+|               |                                                                |
+| ------------- | :------------------------------------------------------------- |
+| **Descrição** | O sistema deve permitir ao gerente da ótica cadastrar, editar, visualizar e excluir informações sobre marcas de armações, lentes e outros produtos ópticos. Isso inclui o nome da marca, que deve ser único e obrigatório. |
+
+| **Requisitos envolvidos** |                                                    |
+| ------------- | :------------------------------------------------------------- |
+| RF13.01          | Inserir Marca |
+| RF13.02          | Listar Marcas |
+| RF13.03          | Atualizar Marca |
+| RF13.04          | Deletar Marca |
+
+|                           |                                     |
+| ------------------------- | ----------------------------------- | 
+| **Prioridade**            | Essencial                           | 
+| **Estimativa**            | 3 h                                 | 
+| **Tempo Gasto (real):**   | -                                   | 
+| **Tamanho Funcional**     | 5 PF                                | 
+| **Analista**              | Pessoa 1                            | 
+| **Desenvolvedor**         | Pessoa 2                            | 
+| **Revisor**               | Pessoa 3                            | 
+| **Testador**              | Pessoa 4                            | 
+
+| Testes de Aceitação (TA) |  |
+| ----------- | --------- |
+| **TA13.01** | **Cadastrar Marca com sucesso:** O gerente acessa "Cadastrar Marca", preenche o nome da marca corretamente (ex: Ray-Ban, Hoya) e clica em "Salvar". O sistema exibe: "✔ Marca cadastrada com sucesso!". |
+| **TA13.02** | **Cadastrar Marca com erro:** O gerente tenta cadastrar uma marca sem preencher o nome ou com nome duplicado. O sistema exibe: "Erro: Este campo é obrigatório" ou "Já existe uma marca com este nome". |
+| **TA13.03** | **Editar Marca com sucesso:** O gerente acessa a lista, seleciona uma marca, edita o nome e salva. O sistema exibe: "✔ Marca editada com sucesso!". |
+| **TA13.04** | **Editar Marca com erro:** O gerente tenta editar a marca com um nome já existente. O sistema exibe: "Já existe uma marca com este nome". |
+| **TA13.05** | **Excluir Marca com sucesso:** O gerente acessa a lista de marcas e clica em "Excluir" ao lado de uma marca. O sistema exibe: "Marca excluído com sucesso.". |
+| **TA13.06** | **Listar Marcas:** O gerente acessa a tela de listagem de marcas e visualiza todas as marcas cadastradas no sistema. |
+| **TA13.07** | **Cancelar Cadastro de Marca:** O gerente inicia o cadastro de uma marca, mas clica em "Cancelar". O sistema retorna à tela anterior sem salvar nada. |
+| **TA13.08** | **Cancelar Edição de Marca:** O gerente inicia a edição de uma marca, mas clica em "Cancelar". O sistema volta à listagem sem aplicar mudanças. |
+
+### User Story US14 - Manter Modelo
+
+|               |                                                                                      |
+| ------------- | :----------------------------------------------------------------------------------- |
+| **Descrição** | O sistema deve permitir ao gerente da ótica cadastrar, editar, visualizar e excluir modelos de armações ou lentes, associando cada modelo a uma marca. |
+
+| **Requisitos envolvidos** |                |
+| ------------------------- | :------------- |
+| RF14.01                   | Inserir Modelo |
+| RF14.02                   | Listar Modelos |
+| RF14.03                   | Atualizar Modelo |
+| RF14.04                   | Deletar Modelo |
+
+|                           |                                     |
+| ------------------------- | ----------------------------------- |
+| **Prioridade**            | Essencial                           |
+| **Estimativa**            | 3 h                                 |
+| **Tempo Gasto (real):**   | -                                   |
+| **Tamanho Funcional**     | 5 PF                                |
+| **Analista**              | Pessoa 1                            |
+| **Desenvolvedor**         | Pessoa 2                            |
+| **Revisor**               | Pessoa 3                            |
+| **Testador**              | Pessoa 4                            |
+
+| Testes de Aceitação (TA) |  |
+| ----------- | --------- |
+| **TA14.01** | **Cadastrar Modelo com sucesso:** O gerente preenche nome e marca e clica em "Salvar". O sistema exibe: "✔ Modelo cadastrado com sucesso!". |
+| **TA14.02** | **Cadastrar Modelo com erro:** Nome em branco ou repetido. O sistema exibe mensagem de erro correspondente. |
+| **TA14.03** | **Editar Modelo com sucesso:** O gerente altera nome ou marca e salva. O sistema exibe: "✔ Modelo editado com sucesso!". |
+| **TA14.04** | **Editar Modelo com erro:** Nome duplicado. O sistema exibe: "Já existe um modelo com este nome". |
+| **TA14.05** | **Excluir Modelo com sucesso:** O gerente clica em "Excluir". O sistema exibe: "Modelo excluído com sucesso.". |
+| **TA14.06** | **Listar Modelos:** O gerente acessa a lista de modelos com nome e marca exibidos. |
+| **TA14.07** | **Cancelar Cadastro de Modelo:** O gerente clica em "Cancelar". O sistema retorna sem salvar. |
+| **TA14.08** | **Cancelar Edição de Modelo:** O gerente clica em "Cancelar". O sistema volta sem aplicar mudanças. |
+
+### User Story US15 - Manter Usuário
+
+|               |                                                                                     |
+| ------------- | :---------------------------------------------------------------------------------- |
+| **Descrição** | O sistema deve permitir o cadastro e autenticação de usuários para acesso à plataforma da ótica, garantindo segurança e controle de acesso às funcionalidades do sistema. |
+
+| **Requisitos envolvidos** |                |
+| ------------------------- | :------------- |
+| RF15.01                   | Cadastrar Usuário |
+| RF15.02                   | Autenticar Usuário (Login) |
+| RF15.03                   | Restringir Acesso à Plataforma para usuários autenticados |
+
+|                           |                                     |
+| ------------------------- | ----------------------------------- |
+| **Prioridade**            | Essencial                           |
+| **Estimativa**            | 4 h                                 |
+| **Tempo Gasto (real):**   | -                                   |
+| **Tamanho Funcional**     | 6 PF                                |
+| **Analista**              | Pessoa 1                            |
+| **Desenvolvedor**         | Pessoa 2                            |
+| **Revisor**               | Pessoa 3                            |
+| **Testador**              | Pessoa 4                            |
+
+| Testes de Aceitação (TA) |  |
+| ----------- | --------- |
+| **TA15.01** | **Cadastrar Usuário com sucesso:** O usuário preenche nome, e-mail e senha e clica em "Cadastrar". O sistema redireciona para a tela de login com sucesso. |
+| **TA15.02** | **Cadastro com erro (username já existe):** O usuário tenta cadastrar com um nome de usuário já utilizado. O sistema exibe: "Já existe um usuário com esse username". |
+| **TA15.03** | **Login com sucesso:** O usuário digita usuário e senha corretos e é redirecionado à plataforma. |
+| **TA15.04** | **Login com erro:** O usuário informa dados inválidos. O sistema exibe: "usuário ou senha inválidos". |
+| **TA15.05** | **Restringir acesso:** O usuário tenta acessar a plataforma sem login. O sistema redireciona para a tela de login. |
+| **TA15.06** | **Campos obrigatórios:** Ao deixar algum campo vazio no cadastro ou login, o sistema impede o envio e exibe mensagem de erro. |
