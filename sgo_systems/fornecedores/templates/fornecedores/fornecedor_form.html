@@ -1,29 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<style>
-    .form-container {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-    .form-actions {
-        border-top: 1px solid #dee2e6;
-        padding-top: 1.5rem;
-        margin-top: 1rem;
-    }
-</style>
 
-<div class="container py-5">
+<body>
     <div class="form-container">
-        <div class="card shadow">
-            <div class="card-header bg-primary text-white">
+        <div class="form-card shadow">
+            <div class="form-card-header bg-primary text-white">
                 <h2 class="mb-0">
                     <i class="bi bi-{% if object %}pencil-square{% else %}plus-lg{% endif %}"></i>
                     {% if object %}Editar{% else %}Novo{% endif %} Fornecedor
                 </h2>
             </div>
 
-            <div class="card-body">
+            <div class="form-card-body">
                 <form method="post">
                     {% csrf_token %}
 
@@ -49,7 +38,7 @@
                             {% endif %}
 
                             {% if field.errors %}
-                                <div class="invalid-feedback d-block">
+                                <div class="form-text-danger">
                                     {{ field.errors }}
                                 </div>
                             {% endif %}
@@ -57,38 +46,37 @@
                     {% endfor %}
 
                     <div class="form-actions d-flex justify-content-between">
-                        <a href="{% url 'fornecedores:fornecedores:fornecedor_list' %}" class="btn btn-outline-secondary">
-                            <i class="bi bi-x-lg"></i> Cancelar
+                        <a href="{% url 'fornecedores:fornecedor_list' %}" class="form-btn form-btn-secondary">
+                            <i></i> Cancelar
                         </a>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-check-lg"></i> Salvar
+                        <button type="submit" class="form-btn form-btn-primary">
+                            <i></i> Salvar
                         </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const inputs = document.querySelectorAll('input, textarea, select');
-        inputs.forEach(input => {
-            input.classList.add('form-control');
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.classList.add('form-control');
 
-            if (input.type === 'checkbox') {
-                input.classList.remove('form-control');
-                input.classList.add('form-check-input');
-                input.parentElement.classList.add('form-check');
-                input.previousElementSibling?.classList.add('form-check-label');
-            }
+                if (input.type === 'checkbox') {
+                    input.classList.remove('form-control');
+                    input.classList.add('form-check-input');
+                    input.parentElement.classList.add('form-check');
+                    input.previousElementSibling?.classList.add('form-check-label');
+                }
+            });
+
+            const errorFields = document.querySelectorAll('.errorlist');
+            errorFields.forEach(field => {
+                field.parentElement.querySelector('input, select, textarea')?.classList.add('is-invalid');
+            });
         });
-
-        const errorFields = document.querySelectorAll('.errorlist');
-        errorFields.forEach(field => {
-            field.parentElement.querySelector('input, select, textarea')?.classList.add('is-invalid');
-        });
-    });
-</script>
-
+    </script>
+</body>
 {% endblock %}
