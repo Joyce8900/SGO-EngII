@@ -1,65 +1,63 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<body>
+    <div class="form-container">
+        <div class="form-card shadow">
+            <div class="form-card-header">
+                <h2>Editar Produto</h2>
+            </div>
+            <div class="form-card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Loop para campos padrão -->
+                    {% for field in form %}
+                        {% if field.name != 'modelo' %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="form-text-danger">{{ field.errors }}</div>
+                            {% endif %}
+                            {% if field.help_text %}
+                                <div class="form-text">{{ field.help_text }}</div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
 
-<div class="container mt-5">
-  <h2 class="mb-4">Editar Produto</h2>
+                    <!-- Campo Modelo com botão especial -->
+                    <div class="mb-3">
+                        <label for="{{ form.modelo.id_for_label }}" class="form-label">{{ form.modelo.label }}</label>
+                        {{ form.modelo }}
+                        <div class="mt-2">
+                            <a href="{% url 'modelo:cadastrar_modelo' %}" class="form-btn form-btn-outline">
+                                Deseja cadastrar um novo modelo?
+                            </a>
+                        </div>
+                        {% if form.modelo.errors %}
+                            <div class="form-text-danger">{{ form.modelo.errors }}</div>
+                        {% endif %}
+                    </div>
 
-  <form method="post" class="col-md-6">
-    {% csrf_token %}
+                    <!-- Botões -->
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'produtos:listar_produtos' %}" class="form-btn form-btn-secondary">Cancelar</a>
+                        <button type="submit" class="form-btn form-btn-primary">Salvar Alterações</button>
+                    </div>
 
-    <div class="mb-3">
-      {{ form.nome.label_tag }}
-      {{ form.nome }}
-      <div class="form-text">{{ form.nome.help_text }}</div>
+                    <!-- Mensagens -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} mt-3" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
     </div>
-
-    <div class="mb-3">
-      {{ form.preco.label_tag }}
-      {{ form.preco }}
-      {{ form.preco.errors }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.quantidade.label_tag }}
-      {{ form.quantidade }}
-      {{ form.quantidade.errors }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.cor.label_tag }}
-      {{ form.cor }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.tamanho.label_tag }}
-      {{ form.tamanho }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.marca.label_tag }}
-      {{ form.marca }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.categoria.label_tag }}
-      {{ form.categoria }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.descricao.label_tag }}
-      {{ form.descricao }}
-    </div>
-
-    <div class="mb-3">
-      {{ form.modelo.label_tag }}
-      {{ form.modelo }}
-    </div>
-
-    <button type="submit" class="btn btn-success">Salvar</button>
-    <a href="{% url 'produtos:listar_produtos' %}" class="btn btn-outline-secondary">Cancelar</a>
-
-  </form>
-</div>
-
+</body>
 {% endblock %}
