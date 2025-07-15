@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class="container mt-4">
-    <div class="d-flex justify-content-between mb-3">
-        <h1>Marcas</h1>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-primary">
+            <i class="bi bi-tag me-2"></i>Marcas
+        </h1>
         <a href="{% url 'marca:cadastrar_marca' %}" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i> Nova Marca
+            <i class="bi bi-plus-lg me-1"></i> Nova Marca
         </a>
     </div>
 
     {% if messages %}
-        <div class="alert-container">
+        <div class="alert-container mb-4">
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                     {{ message }}
@@ -21,35 +22,44 @@
         </div>
     {% endif %}
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>Nome</th>
-                <th class="text-center">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for marca in marcas %}
-            <tr>
-                <td>{{ marca.nome }}</td>
-                <td class="text-center">
-                    <a href="{% url 'marca:editar_marca' marca.pk %}" class="btn btn-sm btn-primary">
-                        <i class="bi bi-pencil-square"></i> Editar
-                    </a>
-                    <a href="{% url 'marca:deletar_marca' marca.pk %}" class="btn btn-sm btn-danger">
-                        <i class="bi bi-trash"></i> Excluir
-                    </a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="2" class="text-center text-muted">
-                    Nenhuma marca cadastrada. <a href="{% url 'marca:cadastrar_marca' %}">Cadastre a primeira marca</a>.
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            {# Removed Filter section as it was not present in original Marcas template #}
 
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th><i class="bi bi-bookmark me-1"></i> Nome</th>
+                            <th class="text-center"><i class="bi bi-gear me-1"></i> Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for marca in marcas %}
+                        <tr>
+                            <td>{{ marca.nome }}</td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'marca:editar_marca' marca.pk %}" class="btn btn-outline-primary" title="Editar">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <a href="{% url 'marca:deletar_marca' marca.pk %}" class="btn btn-outline-danger" title="Excluir">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2" class="text-center py-4 text-muted">
+                                <i class="bi bi-exclamation-circle-fill me-1"></i> Nenhuma marca encontrada.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
