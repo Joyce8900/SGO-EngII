@@ -1,61 +1,82 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class="container py-5">
-  <div class="row mb-4">
-    <div class="col-12">
-      <h2 class="text-center">Lista de Funcionários</h2>
-
-      <form action="{% url 'funcionarios:listar_funcionario' %}" method="GET" class="d-flex mb-3">
-        <input type="text" name="filtro_nome" class="form-control me-2" placeholder="Filtrar por nome"
-          value="{{ request.GET.filtro_nome }}">
-        <button type="submit" class="btn btn-primary">Filtrar</button>
-      </form>
-
-      <div class="d-flex justify-content-end mb-3">
-        <a href="{% url 'funcionarios:cadastrar_funcionario' %}" class="btn btn-success">Novo Funcionário</a>
-      </div>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-primary">
+            <i class="bi bi-person-badge me-2"></i>Funcionários
+        </h1>
+        <a href="{% url 'funcionarios:cadastrar_funcionario' %}" class="btn btn-success">
+            <i class="bi bi-plus-lg me-1"></i> Novo Funcionário
+        </a>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-12">
-      <div class="table-responsive shadow-sm">
-        <table class="table table-bordered table-hover table-striped">
-          <thead class="table-dark">
-            <tr>
-              <th>Nome</th>
-              <th>Cargo</th>
-              <th>Telefone</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for funcionario in funcionarios %}
-              <tr>
-                <td>{{ funcionario.nome }}</td>
-                <td>{{ funcionario.cargo }}</td>
-                <td>{{ funcionario.telefone }}</td>
-                <td>
-                  <a href="{% url 'funcionarios:editar_funcionario' funcionario.id %}" class="btn btn-sm btn-primary">
-                    Editar
-                  </a>
-                  <a href="{% url 'funcionarios:deletar_funcionario' funcionario.id %}" class="btn btn-sm btn-danger">
-                    Excluir
-                  </a>
-                </td>
-              </tr>
-            {% empty %}
-              <tr>
-                <td colspan="4" class="text-center">Nenhum funcionário cadastrado.</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="get" class="mb-4">
+                <div class="row g-3 align-items-end"> {# Consistent g-3 gap #}
+                    <div class="col-md-8">
+                        <div class="row g-3"> {# Consistent g-3 gap #}
+                            {# Assuming 'filtro_nome' is the filter field for Funcionários #}
+                            <div class="col-md-6"> {# Using col-md-6 for filter field #}
+                                <label for="id_filtro_nome" class="form-label">
+                                    <i class="bi bi-search me-1"></i> Filtrar por Nome
+                                </label>
+                                <input type="text" name="filtro_nome" id="id_filtro_nome" class="form-control" placeholder="Filtrar por nome" value="{{ request.GET.filtro_nome }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary flex-grow-1">
+                                <i class="bi bi-funnel-fill me-1"></i> Filtrar
+                            </button>
+                            <a href="{% url 'funcionarios:listar_funcionario' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i> Limpar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th><i class="bi bi-person me-1"></i> Nome</th>
+                            <th><i class="bi bi-briefcase me-1"></i> Cargo</th>
+                            <th><i class="bi bi-telephone me-1"></i> Telefone</th>
+                            <th class="text-center"><i class="bi bi-gear me-1"></i> Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for funcionario in funcionarios %}
+                        <tr>
+                            <td>{{ funcionario.nome }}</td>
+                            <td>{{ funcionario.cargo|default:"-" }}</td>
+                            <td>{{ funcionario.telefone|default:"-" }}</td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'funcionarios:editar_funcionario' funcionario.id %}" class="btn btn-outline-primary" title="Editar">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <a href="{% url 'funcionarios:deletar_funcionario' funcionario.id %}" class="btn btn-outline-danger" title="Excluir">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted">
+                                <i class="bi bi-exclamation-circle-fill me-1"></i> Nenhum funcionário encontrado.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-
 {% endblock %}
