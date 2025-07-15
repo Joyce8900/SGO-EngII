@@ -1,22 +1,215 @@
-<html>
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'constants/colors.css' %}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
 
-    <head>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--Branco);
+        }
 
-    </head>
+        .form-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
 
-    <body>
-        <form action="{% url 'login' %}" method="POST">{% csrf_token %}
-            <input type="text" placeholder="Username..." name="username">
-            <br>
-            <br>
-            <input type="password" placeholder="Senha..." name="senha">
-            <br>
-            <br>
-            <input type="submit" value="Logar">
-            <br>
-        
+        .form-box .title {
+            font-size: 24px;
+            color: var(--Cinza);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-box .title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--AzulEscuro);
+        }
+
+        .alert {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-success {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+        }
+
+        .input-box {
+            position: relative;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--CinzaClaro);
+            border-radius: 5px;
+            outline: none;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .input-box input:focus {
+            border-color: var(--AzulEscuro);
+        }
+
+        .input-box label {
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            color: var(--CinzaClaro);
+            font-size: 16px;
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+
+        .input-box input:focus ~ label,
+        .input-box input:valid ~ label {
+            top: -10px;
+            left: 10px;
+            font-size: 12px;
+            background: #fff;
+            padding: 0 5px;
+            color: var(--AzulEscuro);
+        }
+
+        .input-box i {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            color: var(--CinzaClaro);
+            font-size: 18px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--AzulEscuro);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--CianoEscuro);
+        }
+
+        .forgot-password {
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        .forgot-password a {
+            font-size: 13px;
+            color: var(--AzulEscuro);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .forgot-password a:hover {
+            color: var(--CianoEscuro);
+            text-decoration: underline;
+        }
+
+        .register-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--Cinza);
+        }
+
+        .register-link a {
+            color: var(--AzulEscuro);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .register-link a:hover {
+            color: var(--CianoEscuro);
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-box login">
+        <h2 class="title">Login</h2>
+
+        <!-- MENSAGENS -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            <div class="input-box">
+                <input type="text" name="username" required value="{{ username|default:'' }}">
+                <label>Username</label>
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" name="senha" required>
+                <label>Senha</label>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+
+            <button type="submit" class="btn">Entrar</button>
+
+            <div class="forgot-password">
+                <a href="#">Esqueceu a senha?</a>
+            </div>
+
+            <div class="register-link">
+                <p>Não tem uma conta? <a href="{% url 'cadastro' %}">Cadastre-se</a></p>
+            </div>
         </form>
-
-    </body>
-
+    </div>
+</body>
 </html>

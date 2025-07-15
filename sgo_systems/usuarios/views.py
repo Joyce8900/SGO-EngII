@@ -1,11 +1,11 @@
 from django.shortcuts import redirect, render
-from django.http import HttpResponse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
-from django.contrib.auth import login as login_django
+from django.contrib.auth import authenticate, login as login_django
 from django.contrib.auth.decorators import login_required
 from django.views.generic import View
 from django.utils.decorators import method_decorator
+from django.contrib import messages
+
 
 class Cadastro(View):
     def get(self, request):
@@ -18,27 +18,35 @@ class Cadastro(View):
         
         user = User.objects.filter(username=username).first()
         if user:
-            return HttpResponse('Já existe um usuário com esse username')
-        user = User.objects.create_user(username= username, email=email, password=senha)
+            messages.error(request, 'Já existe um usuário com esse username.')
+            return render(request, 'cadastro.html')
+        
+        user = User.objects.create_user(username=username, email=email, password=senha)
         user.save()
+        messages.success(request, 'Cadastro realizado com sucesso! Faça login.')
         return redirect('login')
 
 
 class Login(View):
     def post(self, request):    
-        username= request.POST.get('username')
-        senha= request.POST.get('senha')
+        username = request.POST.get('username')
+        senha = request.POST.get('senha')
 
         user = authenticate(username=username, password=senha)
         if user:
             login_django(request, user)
-            return redirect('plataforma')
+            return redirect('home')
         else:
-            return HttpResponse('usuario ou senha inválidos')
+            messages.error(request, 'Usuário ou senha inválidos.')
+            return render(request, 'login.html', {
+                'username': username  # Mantém o username digitado
+            })
     
     def get(self, request):
         return render(request, 'login.html')
+
+
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
-class Plataforma(View):
+class Home(View):
     def get(self, request):
-        return HttpResponse('Plataforma')
+        return render(request, 'home/home.html')
