@@ -7,8 +7,56 @@
     
     <nav class="sidebar-menu">
         <ul>
-            <li><a href="/"><i class="fas fa-home"></i> Dashboard</a></li>
-            <!-- Adicione outros itens conforme necessário -->
+            <li><a href="{% url 'home:home' %}"><i class="fas fa-home"></i> Dashboard</a></li>
+            
+            <!-- Fornecedores -->
+            <li>
+                <a href="{% url 'fornecedores:fornecedor_list' %}">
+                    <i class="fas fa-truck"></i> Fornecedores
+                </a>
+            </li>
+            
+            <!-- Produtos -->
+            <li>
+                <a href="{% url 'produtos:listar_produtos' %}">
+                    <i class="fas fa-glasses"></i> Produtos
+                </a>
+            </li>
+            
+            <!-- Modelos -->
+            <li>
+                <a href="{% url 'modelo:listar_modelos' %}">
+                    <i class="fas fa-shapes"></i> Modelos
+                </a>
+            </li>
+            
+            <!-- Marcas -->
+            <li>
+                <a href="{% url 'marca:listar_marcas' %}">
+                    <i class="fas fa-tags"></i> Marcas
+                </a>
+            </li>
+            
+            <!-- Funcionários -->
+            <li>
+                <a href="{% url 'funcionarios:listar_funcionario' %}">
+                    <i class="fas fa-user-tie"></i> Funcionários
+                </a>
+            </li>
+            
+            <!-- Clientes -->
+            <li>
+                <a href="{% url 'clientes:cliente_list' %}">
+                    <i class="fas fa-users"></i> Clientes
+                </a>
+            </li>
+            
+            <!-- Entradas -->
+            <li>
+                <a href="{% url 'entrada:listar_entrada' %}">
+                    <i class="fas fa-arrow-down"></i> Entradas
+                </a>
+            </li>
         </ul>
     </nav>
 </div>
