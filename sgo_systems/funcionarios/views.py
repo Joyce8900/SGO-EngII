@@ -1,9 +1,7 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views import View
-from django.db.models import Q
+from django.shortcuts import render, redirect
 from .models import Funcionario
-from funcao.models import Funcao
+from django.shortcuts import get_object_or_404
 
 URL_FUNCIONARIOS = 'funcionarios:listar_funcionario'
 
@@ -16,6 +14,7 @@ class CadastrarFuncionarioView(View):
 
     def post(self, request, *args, **kwargs):
         nome = request.POST.get('nome')
+        cargo = request.POST.get('cargo')
         telefone = request.POST.get('telefone')
         funcao_id = request.POST.get('funcao')
 
@@ -48,8 +47,6 @@ class CadastrarFuncionarioView(View):
         messages.success(request, "Funcionário cadastrado com sucesso!")
         return redirect(URL_FUNCIONARIOS)
 
-class ListarFuncionarioView(View):
-    template_name = 'funcionario/listar_funcionario.html'
 
     def get(self, request, *args, **kwargs):
         filtro = request.GET.get('filtro', '')
@@ -61,8 +58,6 @@ class ListarFuncionarioView(View):
             funcionarios = Funcionario.objects.all()
         return render(request, self.template_name, {'funcionarios': funcionarios})
 
-class EditarFuncionarioView(View):
-    template_name = 'funcionario/form_funcionario.html'
 
     def get(self, request, *args, **kwargs):
         funcionario = get_object_or_404(Funcionario, id=kwargs['pk'])

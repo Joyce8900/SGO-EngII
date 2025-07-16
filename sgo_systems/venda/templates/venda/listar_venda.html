@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2><i class="bi bi-receipt-cutoff me-2"></i>Lista de Vendas</h2>
+      <a href="{% url 'venda:cadastrar_venda' %}" class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Nova Venda
+      </a>
+    </div>
+
+    {% if messages %}
+    <div class="mb-4">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+          <i class="bi {% if message.tags == 'success' %}bi-check-circle-fill{% else %}bi-exclamation-triangle-fill{% endif %} me-2"></i>
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="table-responsive">
+      <table class="table table-striped table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Data</th>
+            <th>Funcionário</th>
+            <th>Cliente</th>
+            <th>Entrada</th>
+            <th>Preco</th>
+            <th class="text-end actions-column">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for venda in vendas %}
+          <tr>
+            <td>{{ venda.data|date:"d/m/Y" }}</td>
+            <td>{{ venda.funcionario.nome }}</td>
+            <td>{{ venda.cliente.nome }}</td>
+            <td>{{ venda.entrada.produto.nome }}</td>
+            <td >{{venda.preco}} </td>
+            <td class="text-end actions-column">
+              
+              
+              <a href="{% url 'venda:excluir_venda' venda.pk %}" class="btn btn-sm btn-outline-danger">
+                <i class="bi bi-trash"></i>
+              </a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="text-center empty-table-message">
+              <i class="bi bi-info-circle-fill me-2"></i>Nenhuma venda cadastrada
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}

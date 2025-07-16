@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+  <div class="container py-4">
+    <h2 class="mb-4">Excluir Venda</h2>
+    
+    <p>Tem certeza de que deseja excluir a venda "{{ object.data }}"?</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Excluir</button>
+      <a href="{% url 'venda:listar_venda' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}
