@@ -11,6 +11,7 @@
         </a>
     </div>
 
+    {# Exibe as mensagens do Django #}
     {% if messages %}
         <div class="alert-container mb-4">
             {% for message in messages %}
@@ -24,8 +25,6 @@
 
     <div class="card shadow-sm">
         <div class="card-body">
-            {# Removed Filter section as it was not present in original Modelos template #}
-
             <div class="table-responsive">
                 <table class="table table-hover table-bordered">
                     <thead class="table-light">
@@ -39,12 +38,14 @@
                         {% for modelo in modelos %}
                         <tr>
                             <td>{{ modelo.nome }}</td>
+                            {# Assumindo que 'marca' é um campo direto ou tem um __str__ definido #}
                             <td>{{ modelo.marca|default:"-" }}</td>
                             <td class="text-center">
                                 <div class="btn-group btn-group-sm" role="group">
                                     <a href="{% url 'modelo:editar_modelo' modelo.pk %}" class="btn btn-outline-primary" title="Editar">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
+                                    {# Formulário para exclusão via POST #}
                                     <form action="{% url 'modelo:deletar_modelo' modelo.pk %}" method="post" class="d-inline"
                                           onsubmit="return confirm('Deseja realmente excluir o modelo {{ modelo.nome }}?');">
                                         {% csrf_token %}

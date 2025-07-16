@@ -53,12 +53,12 @@ class DeletarModelo(View):
     modelo = get_object_or_404(Modelo, pk=pk)
     modelo.delete()
     messages.success(request, "Modelo excluído com sucesso.")
-    return redirect('listar_modelos')
+    return redirect(URL_MODELOS)
   
   def get(self, request, pk):
     modelo = get_object_or_404(Modelo, pk=pk)
     modelo.delete()
-    return redirect('listar_modelos')
+    return redirect(URL_MODELOS)
 
   
 

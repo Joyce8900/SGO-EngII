@@ -14,10 +14,13 @@
                 <form method="post">
                     {% csrf_token %}
 
-                    {% if error %}
-                        <div class="alert alert-danger">
-                            {{ error }}
-                        </div>
+                    {# Display messages from Django's messages framework #}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} mb-3" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
                     {% endif %}
 
                     <!-- Nome Field -->
@@ -26,7 +29,7 @@
                             Nome do Funcionário
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="text" id="nome" name="nome" class="form-control" 
+                        <input type="text" id="nome" name="nome" class="form-control"
                                value="{{ funcionario.nome|default_if_none:'' }}" required>
                     </div>
 
@@ -39,7 +42,7 @@
                         <select id="funcao" name="funcao" class="form-control" required>
                             <option value="">-- Selecione uma função --</option>
                             {% for f in funcoes %}
-                            <option value="{{ f.id }}" 
+                            <option value="{{ f.id }}"
                                     {% if funcionario.funcao.id == f.id %}selected{% endif %}>
                                 {{ f.nome }}
                             </option>
@@ -53,7 +56,7 @@
                             Telefone
                             <span class="text-danger">*</span>
                         </label>
-                        <input type="tel" id="telefone" name="telefone" class="form-control" 
+                        <input type="tel" id="telefone" name="telefone" class="form-control"
                                pattern="\d{11}" title="Digite 11 números, incluindo o DDD"
                                value="{{ funcionario.telefone|default_if_none:'' }}" required>
                     </div>
@@ -78,6 +81,8 @@
                 input.classList.add('form-control');
             });
 
+            // This part might be for Django form errors, but messages framework is used for general errors.
+            // If you're using Django forms, this helps style their error lists.
             const errorFields = document.querySelectorAll('.errorlist');
             errorFields.forEach(field => {
                 field.parentElement.querySelector('input, select')?.classList.add('is-invalid');
