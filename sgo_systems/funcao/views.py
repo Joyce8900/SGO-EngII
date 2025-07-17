@@ -9,7 +9,6 @@ from django.db.models.deletion import ProtectedError
 class CadastrarFuncaoView(View):
     template_name = 'funcao/form_funcao.html'
 
-
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
     
@@ -20,7 +19,7 @@ class CadastrarFuncaoView(View):
         funcao = Funcao(nome=nome, salario=salario)
         funcao.save()
 
-        return redirect('listar_funcoes')
+        return redirect('funcao:listar_funcoes') # CORRIGIDO AQUI
     
 
 class ListarFuncaoView(View):
@@ -48,7 +47,7 @@ class EditarFuncaoView(View):
         funcao.nome = request.POST.get('nome')
         funcao.salario = request.POST.get('salario')
         funcao.save()
-        return redirect('listar_funcoes')
+        return redirect('funcao:listar_funcoes') # CORRIGIDO AQUI
 
 class DeletarFuncaoView(View):
     def post(self, request, *args, **kwargs):
@@ -58,4 +57,4 @@ class DeletarFuncaoView(View):
             messages.success(request, "Função deletada com sucesso!")
         except ProtectedError:
             messages.error(request, "Não é possível deletar esta função porque há funcionários associados a ela.")
-        return redirect('listar_funcoes')
+        return redirect('funcao:listar_funcoes') # CORRIGIDO AQUI

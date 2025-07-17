@@ -7,11 +7,17 @@ from marca.models import Marca
 from funcionarios.models import Funcionario, Funcao
 from fornecedores.models import Fornecedor
 from entrada.models import Entrada
+from django.contrib.auth.models import User # Adicione esta importação
 
 
-class EditarEntradaViewTests(TestCase):
+class EditarEntradaViewTests(TestCase): # O nome da classe é "EditarEntradaViewTests", mas o arquivo é "test_cadastrar.py".
+                                     # Isso pode ser um pouco confuso, mas as correções abaixo são para o conteúdo fornecido.
     def setUp(self):
         self.client = Client()
+        # Crie um usuário de teste e faça login com ele
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+
         self.categoria = Categorias.objects.create(nome="Eletrônicos Edit")
         self.marca = Marca.objects.create(nome="Marca Edit")
         self.modelo = Modelo.objects.create(nome="Modelo Edit", marca=self.marca)
@@ -32,13 +38,14 @@ class EditarEntradaViewTests(TestCase):
 
         self.produto_para_editar = Produtos.objects.create(
             nome="Produto Teste para Editar Entrada",
-            fornecedor=self.fornecedor_edit,
+            # fornecedor=self.fornecedor_edit, # Removido anteriormente, mantenha assim
             cor="Preto",
             tamanho=8.0,
             modelo=self.modelo,
             marca=self.marca,
             descricao="Um produto para testes de edição de entrada.",
-            categoria=self.categoria
+            categoria=self.categoria,
+            quantidade=100, # CORRIGIDO AQUI: Adicione uma quantidade inicial alta
         )
 
         self.entrada_para_editar = Entrada.objects.create(
@@ -59,12 +66,11 @@ class EditarEntradaViewTests(TestCase):
             "funcionario": self.funcionario_edit.id
         }
         response = self.client.post(
-            reverse("editar_entrada", args=[self.entrada_para_editar.id]),
+            reverse("entrada:editar_entrada", args=[self.entrada_para_editar.id]), # CORRIGIDO AQUI
             data=data_atualizada
         )
         self.assertEqual(response.status_code, 302)
 
-        # Verificar se os dados foram atualizados corretamente
         self.entrada_para_editar.refresh_from_db()
         self.assertEqual(self.entrada_para_editar.quantidade, 10)
         self.assertEqual(self.entrada_para_editar.valor, 2500.00)
@@ -78,7 +84,7 @@ class EditarEntradaViewTests(TestCase):
             "quantidade": 0  # inválido
         }
         response = self.client.post(
-            reverse("editar_entrada", args=[self.entrada_para_editar.id]),
+            reverse("entrada:editar_entrada", args=[self.entrada_para_editar.id]), # CORRIGIDO AQUI
             data
         )
         self.assertEqual(response.status_code, 200)

@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client # Garanta Client importado
 from django.urls import reverse
 from produtos.models import Produtos
 from categorias.models import Categorias
@@ -6,9 +6,16 @@ from modelo.models import Modelo
 from marca.models import Marca
 from fornecedores.models import Fornecedor
 import uuid
+from django.contrib.auth.models import User # Adicione esta importação
+
 
 class ListarProdutoViewTests(TestCase):
     def setUp(self):
+        self.client = Client() # Adicione esta linha
+        # Crie um usuário de teste e faça login com ele
+        self.user = User.objects.create_user(username='testuser', password='testpassword') # Adicione esta linha
+        self.client.login(username='testuser', password='testpassword') # Adicione esta linha
+
         self.categoria = Categorias.objects.create(nome='Categoria Teste')
         self.marca = Marca.objects.create(nome='Marca Teste')
         self.fornecedor = Fornecedor.objects.create(
@@ -16,12 +23,13 @@ class ListarProdutoViewTests(TestCase):
             contato='Contato Teste',
             endereco='Endereco Teste',
         )
-      
+        self.modelo = Modelo.objects.create(nome='Modelo Padrão', marca=self.marca) # Adicionado para garantir que produtos sejam criados com modelo válido
+    
     def test_listar_produtos_view(self):
         print("test_listar_produtos_view")
-        response = self.client.get(reverse("listar_produtos"))
+        response = self.client.get(reverse("produtos:listar_produtos")) # CORRIGIDO AQUI
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "listar_produtos.html")
+        self.assertTemplateUsed(response, "listar_produtos.html") # CORRIGIDO CAMINHO DO TEMPLATE
         self.assertQuerySetEqual(
             response.context["produtos"],
             Produtos.objects.all().order_by("nome"),
@@ -41,24 +49,28 @@ class ListarProdutoViewTests(TestCase):
         )
         Produtos.objects.create(
             nome='Produto A',
-            fornecedor=fornecedor,
+            # REMOVIDO: fornecedor=fornecedor, # <--- Removido este argumento
             categoria=categoria,
             marca=marca,
             descricao='Descrição A',
             tamanho=0.5,
             modelo=modelo,
+            quantidade=10, # Adicione quantidade
+            preco=10.00, # Adicione preco
         )
         Produtos.objects.create(
             nome='Produto B',
-            fornecedor=fornecedor,
+            # REMOVIDO: fornecedor=fornecedor, # <--- Removido este argumento
             categoria=categoria,
             marca=marca,
             descricao='Descrição B',
             tamanho=0.5,
             modelo=modelo,
+            quantidade=10, # Adicione quantidade
+            preco=10.00, # Adicione preco
         )
 
-        response = self.client.get(reverse('listar_produtos') + '?termo=Produto A')
+        response = self.client.get(reverse('produtos:listar_produtos') + '?termo=Produto A') # CORRIGIDO AQUI
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Produto A')
         self.assertNotContains(response, 'Produto B')
@@ -78,24 +90,28 @@ class ListarProdutoViewTests(TestCase):
 
         Produtos.objects.create(
             nome='Produto A',
-            fornecedor=fornecedor,
+            # REMOVIDO: fornecedor=fornecedor, # <--- Removido este argumento
             categoria=categoria1,
             marca=marca,
             descricao='Descrição A',
             tamanho=0.5,
             modelo=modelo,
+            quantidade=10, # Adicione quantidade
+            preco=10.00, # Adicione preco
         )
         Produtos.objects.create(
             nome='Produto B',
-            fornecedor=fornecedor,
+            # REMOVIDO: fornecedor=fornecedor, # <--- Removido este argumento
             categoria=categoria2,
             marca=marca,
             descricao='Descrição B',
             tamanho=0.5,
             modelo=modelo,
+            quantidade=10, # Adicione quantidade
+            preco=10.00, # Adicione preco
         )
 
-        url = reverse('listar_produtos') + f'?categoria={categoria1.id}'
+        url = reverse('produtos:listar_produtos') + f'?categoria={categoria1.id}' # CORRIGIDO AQUI
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 200)
@@ -105,6 +121,6 @@ class ListarProdutoViewTests(TestCase):
     def test_listar_produtos_sem_produtos(self):
         print("test_listar_produtos_sem_produtos")
         Produtos.objects.all().delete()
-        response = self.client.get(reverse('listar_produtos'))
+        response = self.client.get(reverse('produtos:listar_produtos')) # CORRIGIDO AQUI
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Nenhum produto cadastrado")
+        self.assertContains(response, "Nenhum produto encontrado.") # CORRIGIDO AQUI: Mensagem no template

@@ -1,10 +1,14 @@
 from django.test import TestCase
 from django.urls import reverse
 from cliente.models import Cliente
-reverse("clientes:cliente_novo")
+from django.contrib.auth.models import User # <--- Adicione esta importação
 
 class ClienteViewsTests(TestCase):
     def setUp(self):
+        # Cria um usuário de teste e faz login
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword') # <--- Adicione esta linha
+
         self.cliente = Cliente.objects.create(
             nome="Cliente Teste",
             cpf="12345678900",

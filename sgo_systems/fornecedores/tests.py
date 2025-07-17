@@ -1,9 +1,14 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.urls import reverse
 from fornecedores.models import Fornecedor
+from django.contrib.auth.models import User # Adicione esta importação
 
 class FornecedorViewsTests(TestCase):
     def setUp(self):
+        # Crie um usuário de teste e faça login com ele
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+
         self.fornecedor = Fornecedor.objects.create(
             nome="Fornecedor Teste",
             endereco="Rua Central, 123",
@@ -25,7 +30,7 @@ class FornecedorViewsTests(TestCase):
             "descricao": "Fornecedor de testes",
         }
         response = self.client.post(reverse("fornecedores:fornecedor_create"), data)
-        self.assertEqual(response.status_code, 302) 
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(Fornecedor.objects.count(), 2)
         novo_fornecedor = Fornecedor.objects.get(nome="Fornecedor Novo")
         self.assertEqual(novo_fornecedor.nome, "Fornecedor Novo")

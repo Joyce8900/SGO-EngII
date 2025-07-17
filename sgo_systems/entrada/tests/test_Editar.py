@@ -7,11 +7,16 @@ from marca.models import Marca
 from funcionarios.models import Funcionario, Funcao
 from fornecedores.models import Fornecedor
 from entrada.models import Entrada
+from django.contrib.auth.models import User # Adicione esta importação
 
 
 class EditarEntradaViewTests(TestCase):
     def setUp(self):
         self.client = Client()
+        # Crie um usuário de teste e faça login com ele
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+
         self.categoria = Categorias.objects.create(nome="Eletrônicos Edit")
         self.marca = Marca.objects.create(nome="Marca Edit")
         self.modelo = Modelo.objects.create(nome="Modelo Edit", marca=self.marca)
@@ -30,13 +35,13 @@ class EditarEntradaViewTests(TestCase):
 
         self.produto_para_editar = Produtos.objects.create(
             nome="Produto Teste para Editar Entrada",
-            fornecedor=self.fornecedor,
             cor="Preto",
             tamanho=8.0,
             modelo=self.modelo,
             marca=self.marca,
             descricao="Um produto para testes de edição de entrada.",
-            categoria=self.categoria
+            categoria=self.categoria,
+            quantidade=100, # CORRIGIDO AQUI: Adicione uma quantidade inicial alta
         )
 
         self.funcao_edit = Funcao.objects.create(nome="Cargo Edit Teste", salario=1500.0)
@@ -69,7 +74,7 @@ class EditarEntradaViewTests(TestCase):
         }
 
         response = self.client.post(
-            reverse("editar_entrada", args=[self.entrada_para_editar.id]),
+            reverse("entrada:editar_entrada", args=[self.entrada_para_editar.id]), # CORRIGIDO AQUI
             data=data_atualizada
         )
 
@@ -91,7 +96,7 @@ class EditarEntradaViewTests(TestCase):
         }
 
         response = self.client.post(
-            reverse("editar_entrada", args=[self.entrada_para_editar.id]),
+            reverse("entrada:editar_entrada", args=[self.entrada_para_editar.id]), # CORRIGIDO AQUI
             data
         )
 

@@ -8,7 +8,7 @@ from django.contrib import messages
 URL_ENTRADA = 'entrada:listar_entrada'
 
 class CadastrarEntradaView(View):
-    template_name = 'cadastrar_entrada.html'
+    template_name = 'cadastrar_entrada.html' # CORRIGIDO AQUI (removido 'entrada/')
 
     def get(self, request):
         form = EntradaForm()
@@ -19,17 +19,24 @@ class CadastrarEntradaView(View):
         if form.is_valid():
             entrada = form.save(commit=False)
             produto = entrada.produto
-            produto.quantidade += entrada.quantidade
+            
+            nova_quantidade_produto = produto.quantidade + entrada.quantidade
+            if nova_quantidade_produto < 1:
+                messages.error(request, "A quantidade resultante para o produto seria inválida.")
+                return render(request, self.template_name, {'form': form})
+            
+            produto.quantidade = nova_quantidade_produto
             produto.save()
             entrada.save()
             messages.success(request, "Entrada cadastrada e estoque atualizado com sucesso!")
             return redirect(URL_ENTRADA)
+        
         messages.error(request, "Ocorreu um erro ao cadastrar a entrada. Verifique os dados.")
         return render(request, self.template_name, {'form': form})
 
 
 class EditarEntradaView(View):
-    template_name = "editar_entrada.html"
+    template_name = "editar_entrada.html" # CORRIGIDO AQUI (removido 'entrada/')
 
     def get(self, request, pk):
         entrada = get_object_or_404(Entrada, pk=pk)
@@ -48,14 +55,28 @@ class EditarEntradaView(View):
             produto_atualizado = nova_entrada.produto
 
             if produto_original.pk != produto_atualizado.pk:
-                produto_original.quantidade -= quantidade_antiga
+                nova_quantidade_original_produto = produto_original.quantidade - quantidade_antiga
+                if nova_quantidade_original_produto < 1:
+                    messages.error(request, f"Não é possível subtrair {quantidade_antiga} do produto '{produto_original.nome}'. A quantidade resultante seria inválida.")
+                    return render(request, self.template_name, {"form": form})
+                produto_original.quantidade = nova_quantidade_original_produto
                 produto_original.save()
-                produto_atualizado.quantidade += nova_entrada.quantidade
+
+                nova_quantidade_atualizado_produto = produto_atualizado.quantidade + nova_entrada.quantidade
+                if nova_quantidade_atualizado_produto < 1:
+                    messages.error(request, f"Não é possível adicionar {nova_entrada.quantidade} ao produto '{produto_atualizado.nome}'. A quantidade resultante seria inválida.")
+                    return render(request, self.template_name, {"form": form})
+                produto_atualizado.quantidade = nova_quantidade_atualizado_produto
             else:
                 diferenca = nova_entrada.quantidade - quantidade_antiga
-                produto_atualizado.quantidade += diferenca
+                nova_quantidade_atualizado_produto = produto_atualizado.quantidade + diferenca
+                if nova_quantidade_atualizado_produto < 1:
+                    messages.error(request, f"A alteração da quantidade do produto '{produto_atualizado.nome}' resultaria em um valor inválido no estoque.")
+                    return render(request, self.template_name, {"form": form})
+                produto_atualizado.quantidade = nova_quantidade_atualizado_produto
             
-            produto_atualizado.preco = nova_entrada.valor
+            # produto_atualizado.preco = nova_entrada.valor # <--- Mantenha ou remova, dependendo da sua lógica de negócio
+
             produto_atualizado.save()
 
             nova_entrada.save()
@@ -72,7 +93,13 @@ class ExcluirEntradaView(View):
         entrada = get_object_or_404(Entrada, pk=pk)
         
         produto = entrada.produto
-        produto.quantidade -= entrada.quantidade
+        
+        nova_quantidade_produto = produto.quantidade - entrada.quantidade
+        if nova_quantidade_produto < 1:
+            messages.error(request, f"Não é possível excluir esta entrada. A quantidade do produto '{produto.nome}' no estoque ficaria inválida.")
+            return redirect(URL_ENTRADA)
+        
+        produto.quantidade = nova_quantidade_produto
         produto.save()
 
         entrada.delete()
@@ -85,7 +112,7 @@ class ExcluirEntradaView(View):
 
 
 class ListarEntradaView(View):
-    template_name = 'listar_entrada.html'
+    template_name = 'listar_entrada.html' # CORRIGIDO AQUI (removido 'entrada/')
 
     def get(self, request):
         form = PesquisaEntradaForm(request.GET or None)

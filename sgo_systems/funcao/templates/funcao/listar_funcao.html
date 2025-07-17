@@ -10,7 +10,6 @@
 
     <div class="container py-5">
 
-      <!-- Mensagens -->
       {% if messages %}
         <div class="mb-4">
           {% for message in messages %}
@@ -25,11 +24,9 @@
       <div class="row mb-4">
         <div class="col-12">
           <div class="d-flex justify-content-end mb-3">
-            <a href="{% url 'cadastrar_funcao' %}" class="btn btn-success">Nova Função</a>
-          </div>
+            <a href="{% url 'funcao:cadastrar_funcao' %}" class="btn btn-success">Nova Função</a> </div>
           <h2 class="text-center">Lista de Funções</h2>
-          <form action="{% url 'listar_funcoes' %}" method="GET" class="d-flex mb-3">
-            <input type="text" name="filtro_nome" class="form-control me-2" placeholder="Filtrar por nome" value="{{ request.GET.filtro_nome }}">
+          <form action="{% url 'funcao:listar_funcoes' %}" method="GET" class="d-flex mb-3"> <input type="text" name="filtro_nome" class="form-control me-2" placeholder="Filtrar por nome" value="{{ request.GET.filtro_nome }}">
             <button type="submit" class="btn btn-primary">Filtrar</button>
           </form>
         </div>
@@ -52,9 +49,7 @@
                     <td>{{ funcao.nome }}</td>
                     <td>{{ funcao.salario|floatformat:2 }}</td>
                     <td>
-                      <a href="{% url 'editar_funcao' funcao.id %}" class="btn btn-sm btn-primary">Editar</a>
-                      <form action="{% url 'deletar_funcao' funcao.id %}" method="post" style="display:inline;">
-                        {% csrf_token %}
+                      <a href="{% url 'funcao:editar_funcao' funcao.id %}" class="btn btn-sm btn-primary">Editar</a> <form action="{% url 'funcao:deletar_funcao' funcao.id %}" method="post" style="display:inline;"> {% csrf_token %}
                         <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
                       </form>
                     </td>
