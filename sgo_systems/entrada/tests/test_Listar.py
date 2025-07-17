@@ -7,12 +7,17 @@ from marca.models import Marca
 from funcionarios.models import Funcionario, Funcao
 from fornecedores.models import Fornecedor
 from entrada.models import Entrada
+from django.contrib.auth.models import User # Adicione esta importação
 
 
 class ListarEntradaViewTests(TestCase):
 
     def setUp(self):
         self.client = Client()
+        # Crie um usuário de teste e faça login com ele
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+
         self.categoria = Categorias.objects.create(nome='Categoria Teste')
         self.marca = Marca.objects.create(nome='Marca Teste')
         self.modelo = Modelo.objects.create(nome='Modelo Teste', marca=self.marca)
@@ -30,11 +35,11 @@ class ListarEntradaViewTests(TestCase):
 
     def test_listar_entrada_view(self):
         print("test_listar_entrada_view")
-        response = self.client.get(reverse("listar_entrada"))
+        response = self.client.get(reverse("entrada:listar_entrada"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "listar_entrada.html")
         self.assertQuerySetEqual(
-            response.context["entrada"],
+            response.context["entradas"], # CORRIGIDO AQUI: 'entrada' para 'entradas'
             Entrada.objects.all().order_by("data_entrada"),
             transform=lambda p: p
         )
@@ -44,7 +49,7 @@ class ListarEntradaViewTests(TestCase):
 
         produto_a = Produtos.objects.create(
             nome='Produtos A',
-            fornecedor=self.fornecedor,
+            # REMOVIDO: fornecedor=self.fornecedor, # <--- Removido este argumento
             categoria=self.categoria,
             marca=self.marca,
             descricao='Descrição A',
@@ -54,7 +59,7 @@ class ListarEntradaViewTests(TestCase):
 
         produto_b = Produtos.objects.create(
             nome='Produtos B',
-            fornecedor=self.fornecedor,
+            # REMOVIDO: fornecedor=self.fornecedor, # <--- Removido este argumento
             categoria=self.categoria,
             marca=self.marca,
             descricao='Descrição B',
@@ -78,13 +83,14 @@ class ListarEntradaViewTests(TestCase):
             valor=100.0,
         )
 
-        response = self.client.get(reverse('listar_entrada') + '?termo=Produtos A')
+        response = self.client.get(reverse('entrada:listar_entrada') + '?termo=Produtos A') # CORRIGIDO AQUI
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Produtos A')
         self.assertNotContains(response, 'Produtos B')
 
     def test_listar_entrada_sem_produtos(self):
         print("test_listar_entrada_sem_produtos")
-        response = self.client.get(reverse('listar_entrada'))
+        response = self.client.get(reverse('entrada:listar_entrada')) # CORRIGIDO AQUI
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Nenhuma entrada cadastrada")
+        # Verifique a mensagem exata no seu template para esta assert
+        self.assertContains(response, "Nenhuma entrada cadastrada") # Mantenha ou ajuste se sua template tiver "Nenhuma entrada encontrada"
