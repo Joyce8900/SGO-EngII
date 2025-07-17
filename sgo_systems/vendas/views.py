@@ -4,15 +4,16 @@ from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.db.models import Q # Import Q for complex lookups
-
 from .models import Venda
 from .forms import VendaForm
+
+URL_VENDAS = 'venda:listar_vendas'
 
 class VendaCreateView(CreateView):
     model = Venda
     form_class = VendaForm
     template_name = 'vendas/cadastrar_venda.html'
-    success_url = reverse_lazy('venda:listar_vendas')
+    success_url = reverse_lazy(URL_VENDAS)
 
     def form_valid(self, form):
         messages.success(self.request, '✔ Venda cadastrada com sucesso!')
@@ -53,7 +54,7 @@ class VendaUpdateView(UpdateView):
     model = Venda
     form_class = VendaForm
     template_name = 'vendas/cadastrar_venda.html'
-    success_url = reverse_lazy('venda:listar_vendas')
+    success_url = reverse_lazy(URL_VENDAS)
 
     def form_valid(self, form):
         messages.success(self.request, '✔ Venda editada com sucesso!')
@@ -67,7 +68,7 @@ class VendaUpdateView(UpdateView):
 class VendaDeleteView(DeleteView):
     model = Venda
     template_name = 'vendas/deletar_venda.html'
-    success_url = reverse_lazy('venda:listar_vendas')
+    success_url = reverse_lazy(URL_VENDAS)
     context_object_name = 'venda'
 
     def form_valid(self, form):
