@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views import View
 from .models import Funcao
-from django.shortcuts import get_object_or_404
 from django.db.models.deletion import ProtectedError
 
-# Create your views here.
+# Define uma constante para a URL de listagem de funções
+URL_LISTAR_FUNCOES = 'funcao:listar_funcoes' # <--- ADICIONADO AQUI
+
 class CadastrarFuncaoView(View):
     template_name = 'funcao/form_funcao.html'
 
@@ -19,7 +20,7 @@ class CadastrarFuncaoView(View):
         funcao = Funcao(nome=nome, salario=salario)
         funcao.save()
 
-        return redirect('funcao:listar_funcoes') # CORRIGIDO AQUI
+        return redirect(URL_LISTAR_FUNCOES) # <--- USANDO A CONSTANTE
     
 
 class ListarFuncaoView(View):
@@ -47,7 +48,7 @@ class EditarFuncaoView(View):
         funcao.nome = request.POST.get('nome')
         funcao.salario = request.POST.get('salario')
         funcao.save()
-        return redirect('funcao:listar_funcoes') # CORRIGIDO AQUI
+        return redirect(URL_LISTAR_FUNCOES) # <--- USANDO A CONSTANTE
 
 class DeletarFuncaoView(View):
     def post(self, request, *args, **kwargs):
@@ -57,4 +58,4 @@ class DeletarFuncaoView(View):
             messages.success(request, "Função deletada com sucesso!")
         except ProtectedError:
             messages.error(request, "Não é possível deletar esta função porque há funcionários associados a ela.")
-        return redirect('funcao:listar_funcoes') # CORRIGIDO AQUI
+        return redirect(URL_LISTAR_FUNCOES) # <--- USANDO A CONSTANTE

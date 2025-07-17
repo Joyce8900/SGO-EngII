@@ -75,8 +75,6 @@ class EditarEntradaView(View):
                     return render(request, self.template_name, {"form": form})
                 produto_atualizado.quantidade = nova_quantidade_atualizado_produto
             
-            # produto_atualizado.preco = nova_entrada.valor # <--- Mantenha ou remova, dependendo da sua lógica de negócio
-
             produto_atualizado.save()
 
             nova_entrada.save()
