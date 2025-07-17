@@ -9,7 +9,7 @@ from django.contrib import messages
 URL_PRODUTOS = 'produtos:listar_produtos'
 
 class CadastrarProdutos(View):
-    template = "cadastrar_produto.html"
+    template = "cadastrar_produto.html" # Confere com correção anterior
     def get(self, request):
         form = ProdutoForm()
         return render(request, self.template, {"form": form})
@@ -23,7 +23,7 @@ class CadastrarProdutos(View):
 
 
 class ListarProdutos(View):
-    template = "listar_produtos.html"
+    template = "listar_produtos.html" # Confere com correção anterior
     def get(self, request):
         form = PesquisaProdutoForm(request.GET or None)
         produtos = Produtos.objects.all().order_by('nome')
@@ -33,8 +33,8 @@ class ListarProdutos(View):
         if termo:
             produtos = produtos.filter(
                 Q(nome__icontains=termo) |
-                Q(marca__nome__icontains=termo) |
-                Q(fornecedor__nome__icontains=termo)
+                Q(marca__nome__icontains=termo) # REMOVIDO: Q(fornecedor__nome__icontains=termo)
+                # O filtro por fornecedor foi removido pois o campo não existe mais diretamente no modelo Produtos
             )
 
         if categoria:
@@ -50,7 +50,7 @@ class ListarProdutos(View):
 
 
 class EditarProduto(View):
-    template = "editar_produto.html"
+    template = "editar_produto.html" # Confere com correção anterior
 
     def get(self, request, pk):
         produto = get_object_or_404(Produtos, pk=pk)
@@ -73,8 +73,8 @@ class ExcluirProduto(View):
         produto.delete()
         messages.success(request, "Produto excluído com sucesso.")
         return redirect(URL_PRODUTOS)
-  
+    
     def get(self, request, pk):
         produto = get_object_or_404(Produtos, pk=pk)
-        produto.delete()
+        produto.delete() # Verifique se a exclusão GET é intencional. Normalmente, é feito via POST para segurança.
         return redirect(URL_PRODUTOS)
