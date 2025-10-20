@@ -21,7 +21,9 @@ class Produtos(models.Model):
   marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
   descricao = models.CharField(max_length=1000)
   def __str__(self):
-    return f'{self.nome} , {self.categoria.nome}'
+
+    
+    return f'{self.nome} , {self.categoria.nome}, {self.preco}'
   
   class Meta:
         verbose_name = 'Produto'

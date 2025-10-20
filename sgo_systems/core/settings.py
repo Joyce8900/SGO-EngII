@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'home',
     'funcao',
     'vendas',
+    'django_select2',
 ]
 
 MIDDLEWARE = [

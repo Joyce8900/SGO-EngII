@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path("select2/", include("django_select2.urls")),
     path('home/', include(('home.urls', 'home'), namespace='home')),
     path('fornecedores/', include(('fornecedores.urls', 'fornecedores'), namespace='fornecedores')),
     path('admin/', admin.site.urls),
