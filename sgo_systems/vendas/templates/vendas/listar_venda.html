@@ -63,19 +63,24 @@
                     <tbody>
                         {% for venda in vendas %}
                         <tr>
-                            <td>{{ venda.data|date:"d/m/Y" }}</td>
+                            <td>{{ venda.data|date:"d/m/Y H:i:s" }}</td>
                             <td>{{ venda.funcionario.nome|default:"-" }}</td>
                             <td>{{ venda.cliente.nome|default:"-" }}</td>
                             <td>{{ venda.produto.nome|default:"-" }}</td>
                             <td class="text-end">R$ {{ venda.valor_total|floatformat:2 }}</td>
                             <td class="text-center">
                                 <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'venda:detalhe_venda' venda.pk %}" class="btn btn-outline-info" title="Ver Detalhes">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>
                                     <a href="{% url 'venda:editar_venda' venda.pk %}" class="btn btn-outline-primary" title="Editar">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
                                     <a href="{% url 'venda:deletar_venda' venda.pk %}" class="btn btn-outline-danger" title="Excluir">
                                         <i class="bi bi-trash-fill"></i>
                                     </a>
+                                    
+                                    
                                 </div>
                             </td>
                         </tr>

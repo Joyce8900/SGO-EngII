@@ -9,7 +9,7 @@ class Venda(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='vendas_cliente')
     funcionario = models.ForeignKey(Funcionario, on_delete=models.SET_NULL, null=True, blank=True, related_name='vendas_funcionario')
     valor_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
-    data = models.DateField(auto_now_add=True)
+    data = models.DateTimeField(auto_now_add=True)
     
 
     def __str__(self):

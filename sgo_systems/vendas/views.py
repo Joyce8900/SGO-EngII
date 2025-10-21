@@ -1,6 +1,6 @@
 # vendas/views.py
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView, DetailView
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.db.models import Q
@@ -8,6 +8,7 @@ from django.db import transaction
 from .models import Venda, ItemVenda
 from .forms import VendaForm, ItemVendaFormSet 
 from produtos.models import Produtos
+from django.utils import timezone
 
 URL_VENDAS = 'venda:listar_vendas'
 
@@ -119,6 +120,38 @@ class VendaListView(ListView):
         context['query'] = self.request.GET.get('q', '')
         return context
 
+
+
+# Adicione esta view no seu views.py
+
+from django.views.generic import DetailView
+from django.db.models import Sum
+
+class VendaDetailView(DetailView):
+    model = Venda
+    template_name = 'vendas/detalhe_venda.html'
+    context_object_name = 'venda'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        # Pega todos os itens relacionados à venda
+        itens = self.object.itens_venda.select_related('produto', 'produto__categoria').all()
+        context['itens'] = itens
+        
+        # Calcula a quantidade total de produtos
+        quantidade_total = self.object.itens_venda.aggregate(
+            total=Sum('quantidade')
+        )['total'] or 0
+        
+        context['quantidade_total'] = quantidade_total
+        
+        print(f"=== DEBUG ===")
+        print(f"Tipos de itens: {itens.count()}")
+        print(f"Quantidade total: {quantidade_total}")
+        
+        return context
+    
 
 class VendaUpdateView(UpdateView):
     model = Venda

@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Cabeçalho -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-primary">
+            <i class="bi bi-receipt-cutoff me-2"></i>Detalhes da Venda #{{ venda.pk }}
+        </h1>
+        <div class="btn-group" role="group">
+            <a href="{% url 'venda:listar_vendas' %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i> Voltar
+            </a>
+            <a href="{% url 'venda:editar_venda' venda.pk %}" class="btn btn-outline-primary">
+                <i class="bi bi-pencil-fill me-1"></i> Editar
+            </a>
+            <a href="{% url 'venda:deletar_venda' venda.pk %}" class="btn btn-outline-danger">
+                <i class="bi bi-trash-fill me-1"></i> Excluir
+            </a>
+        </div>
+    </div>
+
+    {% if messages %}
+        <div class="alert-container mb-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    <i class="bi {% if message.tags == 'success' %}bi-check-circle-fill{% elif message.tags == 'warning' %}bi-exclamation-triangle-fill{% elif message.tags == 'danger' %}bi-x-circle-fill{% else %}bi-info-circle-fill{% endif %} me-2"></i>
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <!-- Informações da Venda -->
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-info-circle me-2"></i>Informações Gerais
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="text-muted small mb-1">
+                            <i class="bi bi-calendar me-1"></i>Data da Venda
+                        </label>
+                        <div class="fw-bold">{{ venda.data|date:"d/m/Y - H:i" }}</div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <label class="text-muted small mb-1">
+                            <i class="bi bi-person me-1"></i>Cliente
+                        </label>
+                        <div class="fw-bold">{{ venda.cliente.nome }}</div>
+                        {% if venda.cliente.cpf %}
+                        <div class="small text-muted">CPF: {{ venda.cliente.cpf }}</div>
+                        {% endif %}
+                        {% if venda.cliente.telefone %}
+                        <div class="small text-muted">
+                            <i class="bi bi-telephone me-1"></i>{{ venda.cliente.telefone }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <label class="text-muted small mb-1">
+                            <i class="bi bi-person-badge me-1"></i>Funcionário Responsável
+                        </label>
+                        <div class="fw-bold">
+                            {% if venda.funcionario %}
+                                {{ venda.funcionario.nome }}
+                            {% else %}
+                                <span class="text-muted">Não informado</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-0">
+                        <label class="text-muted small mb-1">
+                            <i class="bi bi-hash me-1"></i>ID da Venda
+                        </label>
+                        <div class="fw-bold">#{{ venda.pk }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Itens da Venda -->
+        <div class="col-lg-8 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-cart-fill me-2"></i>Itens da Venda
+                        <span class="badge bg-light text-dark ms-2">{{ venda.itens_venda.count }} item{{ venda.itens_venda.count|pluralize:"s" }}</span>
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-center" style="width: 60px;">#</th>
+                                    <th><i class="bi bi-box me-1"></i>Produto</th>
+                                    <th class="text-center" style="width: 120px;">
+                                        <i class="bi bi-calculator me-1"></i>Quantidade
+                                    </th>
+                                    <th class="text-end" style="width: 150px;">
+                                        <i class="bi bi-tag me-1"></i>Preço Unit.
+                                    </th>
+                                    <th class="text-end" style="width: 150px;">
+                                        <i class="bi bi-currency-dollar me-1"></i>Subtotal
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if venda.itens_venda.all %}
+                                    {% for item in venda.itens_venda.all %}
+                                    <tr>
+                                        <td class="text-center text-muted">{{ forloop.counter }}</td>
+                                        <td>
+                                            <div class="fw-bold">{{ item.produto.nome }}</div>
+                                            {% if item.produto.categoria %}
+                                            <small class="text-muted">
+                                                <i class="bi bi-tag-fill me-1"></i>{{ item.produto.categoria.nome }}
+                                            </small>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-secondary">{{ item.quantidade }}</span>
+                                        </td>
+                                        <td class="text-end">R$ {{ item.produto.preco|floatformat:2 }}</td>
+                                        <td class="text-end fw-bold">R$ {{ item.subtotal|floatformat:2 }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center py-4 text-muted">
+                                        <i class="bi bi-exclamation-circle me-1"></i>Nenhum item encontrado
+                                        <br><small>Debug: Venda #{{ venda.pk }} - Itens: {{ venda.itens_venda.count }}</small>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                            <tfoot class="table-light">
+                                <tr>
+                                    <td colspan="4" class="text-end fw-bold">
+                                        <i class="bi bi-calculator me-2"></i>VALOR TOTAL:
+                                    </td>
+                                    <td class="text-end">
+                                        <span class="fs-5 fw-bold text-success">
+                                            R$ {{ venda.valor_total|floatformat:2 }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card de Resumo (opcional) -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm border-success">
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <div class="text-muted small mb-1">
+                                <i class="bi bi-box-seam me-1"></i>Tipos de Produtos
+                            </div>
+                            <div class="fs-4 fw-bold text-primary">
+                                {{ venda.itens_venda.count }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-muted small mb-1">
+                                <i class="bi bi-calculator me-1"></i>Quantidade Total
+                            </div>
+                            <div class="fs-4 fw-bold text-info">
+                                {{ quantidade_total }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-muted small mb-1">
+                                <i class="bi bi-calendar-check me-1"></i>Data
+                            </div>
+                            <div class="fs-4 fw-bold text-secondary">
+                                {{ venda.data|date:"d/m/Y - H:i" }}
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-muted small mb-1">
+                                <i class="bi bi-currency-dollar me-1"></i>Valor Total
+                            </div>
+                            <div class="fs-4 fw-bold text-success">
+                                R$ {{ venda.valor_total|floatformat:2 }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 10px;
+        transition: transform 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px);
+    }
+    
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
+    
+    .table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .badge {
+        padding: 0.5em 0.8em;
+    }
+</style>
+{% endblock %}
