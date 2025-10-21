@@ -1,43 +1,193 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- CSS do formulário (incluindo Select2) -->
-{{ form.media.css }}
-
-<div class="form-container">
-    <div class="form-card shadow">
-        <div class="form-card-header">
-            <h2>{% if form.instance.pk %}Editar{% else %}Cadastrar{% endif %} Venda</h2>
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h2>Cadastrar Venda</h2>
         </div>
-        <div class="form-card-body">
-            <form method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            <form method="post" id="form-venda">
                 {% csrf_token %}
-                {% for field in form %}
-                <div class="mb-3">
-                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                    {{ field }}
-                    {% if field.help_text %}
-                        <div class="form-text">{{ field.help_text }}</div>
-                    {% endif %}
-                    {% if field.errors %}
-                        <div class="form-text-danger">{{ field.errors }}</div>
-                    {% endif %}
+
+                <!-- Cliente e Funcionário -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Cliente *</label>
+                        {{ form.cliente }}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Funcionário</label>
+                        {{ form.funcionario }}
+                    </div>
                 </div>
-                {% endfor %}
+
+                <hr>
+
+                <!-- Adicionar Produtos -->
+                <h4>Adicionar Produtos</h4>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Produto</label>
+                        <select id="produto" class="form-control">
+                            <option value="">Selecione...</option>
+                            {% for produto in produtos %}
+                            <option value="{{ produto.id }}" data-preco="{{ produto.preco }}"
+                                data-nome="{{ produto.nome }}">
+                                {{ produto.nome }} - R$ {{ produto.preco }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Quantidade</label>
+                        <input type="number" id="quantidade" class="form-control" value="1" min="1">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">&nbsp;</label>
+                        <button type="button" id="btnAdicionar" class="btn btn-primary w-100">Adicionar</button>
+                    </div>
+                </div>
+
+                <!-- Carrinho -->
+                <h4>Carrinho (<span id="totalItens">0</span> itens)</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Preço</th>
+                            <th>Quantidade</th>
+                            <th>Subtotal</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="carrinho">
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">Carrinho vazio</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end"><strong>TOTAL:</strong></td>
+                            <td><strong id="valorTotal">R$ 0,00</strong></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <!-- Formset Hidden -->
+                {{ formset.management_form }}
+                <div id="formsetContainer"></div>
+
+                <!-- Botões -->
                 <div class="d-flex justify-content-between">
-                    <a href="{% url 'venda:listar_vendas' %}" class="form-btn form-btn-secondary">Cancelar</a>
-                    <button type="submit" class="form-btn form-btn-primary">Salvar</button>
+                    <a href="{% url 'venda:listar_vendas' %}" class="btn btn-secondary">Cancelar</a>
+                    <button type="button" id="btnLimpar" class="btn btn-warning">Limpar Carrinho</button>
+                    <button type="submit" id="btnSalvar" class="btn btn-success" disabled>Salvar Venda</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- jQuery DEVE vir ANTES do form.media.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    let carrinho = [];
 
-<!-- JavaScript do formulário (incluindo Select2) -->
-{{ form.media.js }}
+    function adicionar() {
+        const sel = document.getElementById('produto');
+        const qtd = parseInt(document.getElementById('quantidade').value);
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        if (!sel.value || qtd < 1) {
+            alert('Selecione um produto e quantidade válida!');
+            return;
+        }
+
+        const opt = sel.options[sel.selectedIndex];
+        const item = {
+            id: sel.value,
+            nome: opt.dataset.nome,
+            preco: parseFloat(opt.dataset.preco),
+            quantidade: qtd
+        };
+
+        carrinho.push(item);
+        atualizar();
+
+        sel.value = '';
+        document.getElementById('quantidade').value = 1;
+    }
+
+    function remover(index) {
+        carrinho.splice(index, 1);
+        atualizar();
+    }
+
+    function limpar() {
+        if (confirm('Limpar carrinho?')) {
+            carrinho = [];
+            atualizar();
+        }
+    }
+
+    function atualizar() {
+        const tbody = document.getElementById('carrinho');
+        tbody.innerHTML = '';
+
+        let total = 0;
+
+        if (carrinho.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">Carrinho vazio</td></tr>';
+            document.getElementById('btnSalvar').disabled = true;
+        } else {
+            carrinho.forEach((item, i) => {
+                const subtotal = item.preco * item.quantidade;
+                total += subtotal;
+
+                tbody.innerHTML += `
+                <tr>
+                    <td>${item.nome}</td>
+                    <td>R$ ${item.preco.toFixed(2)}</td>
+                    <td>${item.quantidade}</td>
+                    <td>R$ ${subtotal.toFixed(2)}</td>
+                    <td><button type="button" class="btn btn-sm btn-danger" onclick="remover(${i})">X</button></td>
+                </tr>
+            `;
+            });
+            document.getElementById('btnSalvar').disabled = false;
+        }
+
+        document.getElementById('valorTotal').textContent = 'R$ ' + total.toFixed(2);
+        document.getElementById('totalItens').textContent = carrinho.length;
+
+        // Atualiza formset
+        const container = document.getElementById('formsetContainer');
+        container.innerHTML = '';
+
+        carrinho.forEach((item, i) => {
+            container.innerHTML += `
+            <input type="hidden" name="itens_venda-${i}-produto" value="${item.id}">
+            <input type="hidden" name="itens_venda-${i}-quantidade" value="${item.quantidade}">
+            <input type="hidden" name="itens_venda-${i}-id" value="">
+        `;
+        });
+
+        document.querySelector('[name="itens_venda-TOTAL_FORMS"]').value = carrinho.length;
+    }
+
+    document.getElementById('btnAdicionar').onclick = adicionar;
+    document.getElementById('btnLimpar').onclick = limpar;
+
+    document.getElementById('form-venda').onsubmit = function (e) {
+        if (carrinho.length === 0) {
+            e.preventDefault();
+            alert('Adicione produtos ao carrinho!');
+            return false;
+        }
+        if (!document.querySelector('[name="cliente"]').value) {
+            e.preventDefault();
+            alert('Selecione um cliente!');
+            return false;
+        }
+    };
+</script>
 {% endblock %}

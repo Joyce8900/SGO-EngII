@@ -3,9 +3,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 from django.contrib import messages
 from django.urls import reverse_lazy
-from django.db.models import Q # Import Q for complex lookups
-from .models import Venda
-from .forms import VendaForm
+from django.db.models import Q
+from django.db import transaction
+from .models import Venda, ItemVenda
+from .forms import VendaForm, ItemVendaFormSet 
+from produtos.models import Produtos
 
 URL_VENDAS = 'venda:listar_vendas'
 
@@ -13,42 +15,110 @@ class VendaCreateView(CreateView):
     model = Venda
     form_class = VendaForm
     template_name = 'vendas/cadastrar_venda.html'
-    success_url = reverse_lazy(URL_VENDAS)
-
-    def form_valid(self, form):
-        messages.success(self.request, '✔ Venda cadastrada com sucesso!')
-        return super().form_valid(form)
+    success_url = reverse_lazy(URL_VENDAS) 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            print("=== POST Data ===")
+            for key, value in self.request.POST.items():
+                print(f"{key}: {value}")
+            context['formset'] = ItemVendaFormSet(self.request.POST)
+        else:
+            context['formset'] = ItemVendaFormSet()
+        
+        # Adiciona lista de produtos para o select
+        context['produtos'] = Produtos.objects.select_related('categoria').all()
         context['title'] = 'Cadastrar Venda'
         return context
+
+    @transaction.atomic
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['formset']
+
+        # Debug - veja o que está vindo no POST
+        print("POST data:", self.request.POST)
+        print("Formset é válido?", formset.is_valid())
+        print("Formset errors:", formset.errors)
+
+        if formset.is_valid():
+            # Salva a venda
+            self.object = form.save(commit=False)
+            self.object.valor_total = 0
+            self.object.save()
+
+            # Salva os itens vinculando à venda
+            formset.instance = self.object
+            itens = formset.save(commit=False)
+            
+            print("Quantidade de itens:", len(itens))
+            
+            if not itens:
+                messages.error(self.request, '❌ Adicione pelo menos um produto ao carrinho!')
+                self.object.delete()
+                return self.form_invalid(form)
+            
+            valor_total = 0
+            for item in itens:
+                # Verifica estoque (se seu modelo tiver esse campo)
+                if hasattr(item.produto, 'estoque') and item.produto.estoque < item.quantidade:
+                    messages.error(
+                        self.request, 
+                        f'❌ Estoque insuficiente para {item.produto.nome}. Disponível: {item.produto.estoque}'
+                    )
+                    self.object.delete()
+                    return self.form_invalid(form)
+                
+                item.venda = self.object  # Garante que o item está vinculado à venda
+                item.save()
+                valor_total += item.produto.preco * item.quantidade
+                
+                # Atualiza estoque (se aplicável)
+                if hasattr(item.produto, 'estoque'):
+                    item.produto.estoque -= item.quantidade
+                    item.produto.save()
+
+            self.object.valor_total = valor_total
+            self.object.save()
+
+            messages.success(
+                self.request, 
+                f'✅ Venda #{self.object.pk} cadastrada com sucesso! Total: R$ {valor_total:.2f}'
+            )
+            return redirect(self.success_url)
+        else:
+            messages.error(self.request, '❌ Erro ao processar a venda. Verifique os dados.')
+            print("Formset errors detalhado:", formset.errors)
+            return self.form_invalid(form)
+
 
 class VendaListView(ListView):
     model = Venda
     template_name = 'vendas/listar_venda.html'
     context_object_name = 'vendas'
     ordering = ['-data']
+    paginate_by = 20
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        query = self.request.GET.get('q') # Get the search query from the URL parameter 'q'
+        queryset = super().get_queryset().select_related('cliente', 'funcionario')
+        query = self.request.GET.get('q')
 
         if query:
-            # Filter sales based on client name, funcionario name, or produto name
             queryset = queryset.filter(
-                Q(cliente__nome__icontains=query) | # Case-insensitive search in client name
-                Q(funcionario__nome__icontains=query) | # Case-insensitive search in funcionario name
-                Q(produto__nome__icontains=query) | # Case-insensitive search in product name
-                Q(valor_total__icontains=query) # Allow searching by part of the total value (if numeric search is desired)
-            ).distinct() # Use distinct() to avoid duplicate results if a sale matches multiple conditions
+                Q(cliente__nome__icontains=query) |
+                Q(funcionario__nome__icontains=query) |
+                Q(itens_venda__produto__nome__icontains=query) |
+                Q(valor_total__icontains=query)
+            ).distinct()
 
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['query'] = self.request.GET.get('q', '') # Pass the current query back to the template for display
+        context['query'] = self.request.GET.get('q', '')
         return context
+
 
 class VendaUpdateView(UpdateView):
     model = Venda
@@ -56,14 +126,69 @@ class VendaUpdateView(UpdateView):
     template_name = 'vendas/cadastrar_venda.html'
     success_url = reverse_lazy(URL_VENDAS)
 
-    def form_valid(self, form):
-        messages.success(self.request, '✔ Venda editada com sucesso!')
-        return super().form_valid(form)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['formset'] = ItemVendaFormSet(self.request.POST, instance=self.object)
+        else:
+            context['formset'] = ItemVendaFormSet(instance=self.object)
+        
+        context['produtos'] = Produtos.objects.select_related('categoria').all()
         context['title'] = 'Editar Venda'
         return context
+
+    @transaction.atomic
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context['formset']
+
+        if formset.is_valid():
+            # Restaura estoque dos itens antigos (se aplicável)
+            itens_antigos = ItemVenda.objects.filter(venda=self.object)
+            for item in itens_antigos:
+                if hasattr(item.produto, 'estoque'):
+                    item.produto.estoque += item.quantidade
+                    item.produto.save()
+
+            # Salva a venda atualizada
+            self.object = form.save(commit=False)
+            self.object.valor_total = 0
+            self.object.save()
+
+            # Deleta itens antigos
+            itens_antigos.delete()
+
+            # Salva novos itens
+            formset.instance = self.object
+            itens = formset.save(commit=False)
+            
+            valor_total = 0
+            for item in itens:
+                # Verifica estoque
+                if hasattr(item.produto, 'estoque') and item.produto.estoque < item.quantidade:
+                    messages.error(
+                        self.request, 
+                        f'❌ Estoque insuficiente para {item.produto.nome}'
+                    )
+                    return self.form_invalid(form)
+                
+                item.save()
+                valor_total += item.produto.preco * item.quantidade
+                
+                # Atualiza estoque
+                if hasattr(item.produto, 'estoque'):
+                    item.produto.estoque -= item.quantidade
+                    item.produto.save()
+
+            self.object.valor_total = valor_total
+            self.object.save()
+
+            messages.success(self.request, '✅ Venda editada com sucesso!')
+            return redirect(self.success_url)
+        else:
+            messages.error(self.request, '❌ Erro ao editar a venda.')
+            return self.form_invalid(form)
+
 
 class VendaDeleteView(DeleteView):
     model = Venda
@@ -71,10 +196,17 @@ class VendaDeleteView(DeleteView):
     success_url = reverse_lazy(URL_VENDAS)
     context_object_name = 'venda'
 
+    @transaction.atomic
     def form_valid(self, form):
-        messages.success(self.request, '✔ Venda excluída com sucesso!')
+        # Restaura estoque antes de deletar (se aplicável)
+        itens = ItemVenda.objects.filter(venda=self.object)
+        for item in itens:
+            if hasattr(item.produto, 'estoque'):
+                item.produto.estoque += item.quantidade
+                item.produto.save()
+        
+        messages.success(self.request, '✅ Venda excluída com sucesso!')
         return super().form_valid(form)
 
     def post(self, request, *args, **kwargs):
-        messages.success(self.request, '✔ Venda excluída com sucesso!')
-        return super().post(request, *args, **kwargs)
+        return self.delete(request, *args, **kwargs)
